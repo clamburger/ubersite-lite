@@ -1,5 +1,4 @@
 <?php
-
 	error_reporting(E_ALL);
 	include_once("../libraries/bTemplate.php");
 	
@@ -33,7 +32,7 @@
 	
 	# Check required directories
 	
-	$directories = array("camp-data", "camp-data/photos", "camp-data/photos/cache", "camp-data/profiles", "camp-data/uploads", "camp-data/config", "camp-data/uploads/codechallenge", "camp-data/uploads/codechallenge/admin");
+	$directories = array("camp-data", "camp-data/config");
 	
 	foreach ($directories as $dirName) {
 		if (file_exists("../$dirName")) {
@@ -62,16 +61,7 @@
 		$checks["mysql"] = "you may need to install <tt>php-mysql</tt>. Installation cannot continue.";
 		$criticalError = true;
 	}
-	if (!function_exists("ssh2_connect")) {
-		$checks["ssh"] = "SSH authentication will be unavailable.";
-	}
-	if (!function_exists("ldap_connect")) {
-		$checks["ldap"] = "LDAP authentication will be unavailable.";
-	}
-	
-	$tpl->set("ldap", $checks["ldap"] === true);
-	$tpl->set("ssh", $checks["ssh"] === true);
-	
+
 	foreach ($checks as $key => $value) {
 		if ($key == "php") {
 			continue;
@@ -79,11 +69,7 @@
 		if ($value === true) {
 			$checks[$key] = "<span class='label success'>yes</span>";
 		} else {
-			if ($key == "ssh" || $key == "ldap") {
-				$checks[$key] = "<span class='label warning'>no</span> - $value";
-			} else {
-				$checks[$key] = "<span class='label important'>no</span> - $value";
-			}
+			$checks[$key] = "<span class='label important'>no</span> - $value";
 		}
 	}
 	
