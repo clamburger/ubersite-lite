@@ -15,5 +15,5 @@ if (count($questionnaires) === 1) {
   exit;
 }
 
-$tpl->set('questionnaires', $questionnaires);
+$tpl->set('questionnaires', $questionnaires, false);
 fetch();

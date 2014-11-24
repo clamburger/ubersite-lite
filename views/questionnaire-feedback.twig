@@ -1,0 +1,11 @@
+{% if user.leader %}
+  {% if smallgroup %}
+  <h3><a href="/questionnaire-feedback/{{ id }}">View feedback from all campers</a></h3>
+  {% else %}
+  <h3><a href="/questionnaire-feedback/{{ id }}/smallgroup">View only feedback from your study group</a></h3>
+  {% endif %}
+  {{ output | raw }}
+{% else %}
+  <h2>Questionairre Feedback:</h2>
+  You must be a leader to see this page.
+{% endif %}

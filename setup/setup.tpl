@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title><tag:software /> Setup</title>
+        <title>{{ software }} Setup</title>
 
         <link rel="icon" type="image/png" href="../resources/img/icon.png" />
 

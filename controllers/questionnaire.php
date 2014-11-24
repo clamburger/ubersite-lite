@@ -6,7 +6,6 @@ use Ubersite\Questionnaire\Question;
 
 $title = 'Questionnaire';
 $tpl->set('title', $title);
-$tpl->set('usersname', $people[$username]->Name);
 
 // These will almost certainly be overidden.
 $submitted = false;
@@ -32,7 +31,6 @@ if (!$row = $stmt->fetch()) {
 
 $title = $row['Name'];
 $tpl->set('intro', $row['Intro']);
-$tpl->set('outro', $row['Outro']);
 
 $details = json_decode($row['Pages']);
 $questions = [];
@@ -124,7 +122,7 @@ $tpl->set("start", false, true);
 $tpl->set("end", false, true);
 $tpl->set("questions", false, true);
 $tpl->set("stage", $stage);
-$tpl->set("progress", $progress);
+$tpl->set("progress", $progress, false);
 if ($stage === 0) {
   $tpl->set("start", true);
 } else if ($stage > $totalStages) {
@@ -138,8 +136,5 @@ if ($stage === 0) {
   $tpl->set("title", $pageOrder[$stage-1]->title);
   $tpl->set("questions", $pageOrder[$stage-1]->renderHTML());
 }
-
-// Display "delete current progress" for leaders
-$tpl->set("deleteButton", $user->isLeader(), true);
 
 fetch("questionnaire");

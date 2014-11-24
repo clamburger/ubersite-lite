@@ -132,9 +132,6 @@ if ($username) {
   $tpl->set('currentName', $people[$username]->Name);
 }
 
-$tpl->set('leader', $user->isLeader());
-$tpl->set('camper', $user->isCamper());
-
 // TODO: remove this when possible
 $tpl->set('softwareFullName', Software::getFullName());
 

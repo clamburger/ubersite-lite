@@ -9,7 +9,7 @@ $tpl->set('editing', false, true);
 $tpl->set('edit-ID', false);
 $tpl->set('edit-name', false);
 $tpl->set('edit-disabled', false);
-$tpl->set('edit-dutyteam', false);
+$tpl->set('edit-dutyteam', '', false);
 $tpl->set('submit', "Create User");
 
 $groups = array("leader" => "blue", "director" => "red", "camper" => "green", "cook" => "gray", "visitor" => "gray");
@@ -22,8 +22,8 @@ $selectNone = false;
 
 if (isset($_POST['action']) && $user->isLeader()) {
   $tpl->set('edit-ID', $_POST['userID']);
-  $tpl->set('edit-name', str_replace("'", "&#39;", $_POST['name']));
-  $tpl->set('edit-duyteam', $_POST['dutyTeam']);
+  $tpl->set('edit-name', $_POST['name']);
+  $tpl->set('edit-duyteam', $_POST['dutyTeam'], false);
 
   # New account submission
   if ($_POST['action'] == "new") {
@@ -72,15 +72,15 @@ if (isset($_POST['action']) && $user->isLeader()) {
 if ($SEGMENTS[1] == "edit") {
   $tpl->set('editing', true, true);
   $stmt = $dbh->prepare('SELECT * FROM users WHERE UserID = ?');
-  $stmt->execute([$ID]);
+  $stmt->execute([$SEGMENTS[2]]);
   if (!$row = $stmt->fetch()) {
     header("Location: /accounts");
   }
 
   $tpl->set('edit-disabled', 'disabled="disabled"');
   $tpl->set('edit-ID', $row['UserID']);
-  $tpl->set('edit-dutyteam', $row['DutyTeam']);
-  $tpl->set('edit-name', str_replace("'", "&#39;", $row['Name']));
+  $tpl->set('edit-dutyteam', $row['DutyTeam'], false);
+  $tpl->set('edit-name', $row['Name']);
   $tpl->set('submit', "Modify User");
 }
 
@@ -131,7 +131,7 @@ foreach ($groups as $id => $colour) {
   }
   $categories .= "<option value='$id'$selected>".ucfirst($id)."</option>\n";
 }
-$tpl->set('categories', $categories);
+$tpl->set('categories', $categories, false);
 
 # Grab the complete unabridged list of people
 $query = "SELECT * FROM users ORDER BY (Category = 'director' OR `Category` = 'leader') DESC,
@@ -154,6 +154,6 @@ while ($row = $stmt->fetch()) {
              "Delete" => $delete);
 }
 
-$tpl->set('people', $peoplee);
+$tpl->set('people', $peoplee, false);
 
 fetch();

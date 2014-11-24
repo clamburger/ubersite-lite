@@ -112,6 +112,7 @@ if (isset($_POST['submit'])) {
 
     $messages->addMessage(new Message("success",
       "The new electives were succesfully added to the <code>`questionnaire`</code> table."));
+    refresh();
 
   # Removing old electives
   } else if ($_POST['submit'] == "Remove Old Electives" && count($remove) > 0) {
@@ -133,12 +134,13 @@ if (isset($_POST['submit'])) {
       $messages->addMessage(new Message('success',
         'The old electives were succesfully removed from the Elective Feedback page.')
       );
+      refresh();
     }
   }
   unset($_POST);
 }
 
-$tpl->set('columns', $columnHTML, true);
+$tpl->set('columns', $columnHTML, false);
 
 $HTML = '';
 
@@ -173,6 +175,6 @@ if (count($add) === 0 && count($remove) === 0) {
   }
 }
 
-$tpl->set('actions', $HTML);
+$tpl->set('actions', $HTML, false);
 
 fetch();

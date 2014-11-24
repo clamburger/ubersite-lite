@@ -1,0 +1,5 @@
+<ul>
+{% for questionnaire in questionnaires %}
+  <li><a href="{{ redirect }}/{{ questionnaire.Id }}">{{ questionnaire.Name }}</a></li>
+{% endfor %}
+</ul>

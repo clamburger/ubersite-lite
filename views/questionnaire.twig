@@ -1,0 +1,48 @@
+<table style='float: right;' class='progress'>
+<tr><th colspan='2'>Questionnaire Progress:</th></tr>
+{% for row in progress %}
+  <tr>{{ row | raw }}</tr>
+{% endfor %}
+{% if user.leader %}
+<tr><td colspan='2'><a href='/questionnaire/{{ ID }}/delete'>Delete current progress</a></td></tr>
+<tr><td colspan='2'><a href='/questionnaire-check/{{ ID }}' style='color: maroon;'>Check camper progress</a></td></tr>
+{% endif %}
+</table>
+
+{% if start %}
+  {{ intro | raw }}
+  <br>
+  <br>
+  <h3><a href='/questionnaire/{{ ID }}/begin'>Begin the Questionnaire</a></h3>
+  {% if user.leader %}
+  <h3><a href='/questionnaire-update/{{ ID }}' style='color: maroon;'>Synchronise Questionnaire Tables</a></h3>
+  {% endif %}
+{% endif %}
+
+{% if questions %}
+<form action="/questionnaire/{{ ID }}" method="POST">
+<input type="hidden" name="stage" value="{{ stage }}" />
+{{ questions | raw }}
+<input type="submit"
+    value="Submit your responses and move onto the next section"
+    style="font-size:150%;" />
+</form>
+{% endif %}
+
+{% if end %}
+  <h3>Your questionnaire has been submitted!</h3>
+  <h3>Thank you for all your responses!</h3>
+  If you made a mistake you would like to correct, please contact the nearest leader for assistance.
+{% endif %}
+
+<script type="text/javascript">
+  $(".optquest legend").click(function (event) {
+    event.preventDefault();
+    $(this).next().toggle();
+    if ($(this).next().is(":visible")) {
+      $(this).find(".help").text("click to hide questions");
+    } else {
+      $(this).find(".help").text("click to view questions");
+    }
+  });
+</script>
