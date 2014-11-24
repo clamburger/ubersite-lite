@@ -12,7 +12,7 @@ $(function () {
         var msg = $("#processing");
         msg.show();
 
-        //$("#save-config").attr("disabled", "disabled");
+        $("#save-config").attr("disabled", "disabled");
 
 		$.post("verify.php", $(this).serialize(), function (data) {
 			data = jQuery.parseJSON(data);

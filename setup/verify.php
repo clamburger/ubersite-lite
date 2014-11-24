@@ -1,6 +1,6 @@
 <?php
 function valid($var) {
-    global $config;
+  global $config;
 
 	if (!isset($_POST[$var])) {
 		return false;
@@ -52,7 +52,7 @@ function fail()
 
 $results = $details = $config = $v = [];
 
-$items = ["campName", "campYear", "mysqlHost", "mysqlUser", "mysqlPassword", "mysqlDatabase"];
+$items = ["campName", "mysqlHost", "mysqlUser", "mysqlPassword", "mysqlDatabase"];
 checkMissing();
 if (!checkSuccess()) {
     fail();
@@ -60,10 +60,10 @@ if (!checkSuccess()) {
 
 try {
     $dsn = sprintf('mysql:host=%s', $config['mysqlHost']);
-    $db = @new PDO($dsn, $config['mysqlUser'], $config['mysqlPassword']);
-    $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-    $db->query("CREATE DATABASE IF NOT EXISTS `{$config['mysqlDatabase']}`");
-    $db->query("USE `{$config['mysqlDatabase']}`");
+    $dbh = @new PDO($dsn, $config['mysqlUser'], $config['mysqlPassword']);
+    $dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    $dbh->query("CREATE DATABASE IF NOT EXISTS `{$config['mysqlDatabase']}`");
+    $dbh->query("USE `{$config['mysqlDatabase']}`");
 } catch (PDOException $e) {
     $error = $e->getCode();
 
@@ -83,35 +83,17 @@ try {
     fail();
 }
 
-$stmt = $db->query("SHOW TABLES LIKE 'people'");
+$stmt = $dbh->query("SHOW TABLES LIKE 'people'");
 if ($stmt->fetch()) {
     $results["mysqlDatabase"] = "error";
     $details["mysqlDatabase"] = "Database already in use";
     fail();
 }
 
-$CONFIG_FILE = "../camp-data/config/config.json";
+$CONFIG_FILE = "../config/config/config.php";
 
-$db->exec(file_get_contents("database.sql"));
+$dbh->exec(file_get_contents("database.sql"));
 
-# Other default config options
-$config["questionnaireCondition"] = '$day == "Fri"';
-
-# MySQL username and password stored in separate file for security
-file_put_contents("../camp-data/config/database.php",
-    '<?php
-$MYSQL_USER = "'.$config["mysqlUser"].'";
-$MYSQL_PASSWORD = "'.$config["mysqlPassword"].'";
-$MYSQL_HOST = "'.$config["mysqlHost"].'";
-$MYSQL_DATABASE = "'.$config["mysqlDatabase"].'";
-?>');
-
-unset($config["mysqlUser"]);
-unset($config["mysqlPassword"]);
-unset($config["mysqlHost"]);
-unset($config["mysqlDatabase"]);
-
-file_put_contents("../camp-data/config/config.json", json_encode($config));
-copy("menu.json", "../camp-data/config/menu.json");
+file_put_contents("../config/config/config.php", json_encode($config));
 
 echo json_encode(["results" => $results, "details" => $details, "success" => true]);

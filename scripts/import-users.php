@@ -1,7 +1,11 @@
 <?php
+require '../vendor/autoload.php';
+
+use Ubersite\DatabaseManager;
+
 /**
  * This script imports users from accounts.txt.
- * It should in a format just like that of /etc/passwd
+ * It should be in a format just like that of /etc/passwd
  */
 
 if (PHP_SAPI != "cli") {
@@ -10,23 +14,20 @@ if (PHP_SAPI != "cli") {
   exit;
 }
 
-require_once("../camp-data/config/database.php");
-$mysql = new MySQLi($MYSQL_HOST, $MYSQL_USER, $MYSQL_PASSWORD, $MYSQL_DATABASE);
+require_once("../config/config/config.php");
 
-$query = "INSERT INTO `people` (`UserID`, `Name`, `Category`, `Password`, `PasswordChanged`) VALUES (?, ?, \"camper\", NULL, 1)";
-$stmt = $mysql->prepare($query);
-$stmt->bind_param("ss", $userID, $name);
+$dbh = DatabaseManager::get();
+
+$query = "INSERT INTO `users` (`UserID`, `Name`, `Category`, `Password`) VALUES (?, ?, 'camper', NULL)";
+$stmt = $dbh->prepare($query);
 
 $data = explode("\n", trim(file_get_contents("accounts.txt")));
 
 foreach ($data as $line) {
-  $info = explode(":", $line);
-  $userID = $info[0];
-  $name = $info[4];
-  $stmt->execute();
+    $info = explode(":", $line);
+    $userID = $info[0];
+    $name = $info[4];
+    $stmt->execute([$userID, $name]);
 }
 
-
 echo "All done";
-
-?>

@@ -1,4 +1,8 @@
 <?php
+require '../vendor/autoload.php';
+
+use Ubersite\DatabaseManager;
+
 /**
  * This script resets the password of a specified user.
  * It takes two parameters: the username (required) and the new password (optional)
@@ -17,40 +21,30 @@ if ($argc < 2 || $argc > 3) {
   exit;
 }
 
+$dbh = DatabaseManager::get();
+
 $username = $argv[1];
 // Use the password if specified, otherwise use the username
 $password = $argc == 3 ? $argv[2] : $argv[1];
 
-require_once("../camp-data/config/database.php");
-$mysql = new MySQLi($MYSQL_HOST, $MYSQL_USER, $MYSQL_PASSWORD, $MYSQL_DATABASE);
-$query = "SELECT EXISTS(SELECT 1 FROM `people` WHERE `UserID` = ?)";
-$stmt = $mysql->prepare($query);
-$stmt->bind_param("s", $username);
-$stmt->execute();
-$result = $stmt->get_result()->fetch_row();
+// Check if the row exists
+$stmt = $dbh->prepare('SELECT EXISTS(SELECT 1 FROM users WHERE UserID = ?)');
+$stmt->execute([$username]);
+$row = $stmt->fetch();
 
-if (!$result[0]) {
+if (!$row[0]) {
   echo "Error: user $username not found\n";
   exit(1);
 }
 
-require_once("../libraries/password_compat.php");
 $hash = password_hash($password, PASSWORD_DEFAULT);
-if (!$hash) {
-  echo "Error: could not generate password hash\n";
-  exit(1);
-}
 
-$query = "UPDATE `people` SET `Password` = ?, `PasswordChanged` = 0 WHERE `UserID` = ?";
-$stmt = $mysql->prepare($query);
-$stmt->bind_param("ss", $hash, $username);
-$stmt->execute();
+$stmt = $dbh->prepare('UPDATE users SET Password = ? WHERE UserID = ?');
+$stmt->execute([$hash, $username]);
 
-if ($stmt->affected_rows) {
+if ($stmt->rowCount()) {
   echo "Password for $username successfully updated.\n";
   echo "They will be prompted to change their password the next time they log in.\n";
 } else {
   echo "Error: zero affected rows.\n";
 }
-
-?>

@@ -40,10 +40,9 @@
             Once all tabs are complete, open the final tab in order to save your configuration and proceed to the next configuration stage.
             <br />
             <ul>
-                <li>PHP version at least 5.3... <tag:checks.php /></li>
+                <li>PHP version at least 5.5... <tag:checks.php /></li>
                 <li>Config directory writable... <tag:checks.configWritable /></li>
-                <li>MySQL functions available... <tag:checks.mysql /></li>
-                <li>MySQLi functions available... <tag:checks.mysqli /></li>
+                <li>MySQL available... <tag:checks.mysql /></li>
             </ul>
 
             <if:error>

@@ -1211,9 +1211,8 @@ textarea {
 }
 
 /* Questionnaire Editor */
-fieldset.preview {
-  max-height: 150px;
-  overflow-y: hidden;
+fieldset.preview h3 {
+  margin-top: 0px;
 }
 
 .questionnaire-editor-left {
@@ -1224,4 +1223,81 @@ fieldset.preview {
 
 .questionnaire-editor-left textarea {
   width: 550px;
+}
+
+textarea.editor {
+  width: 95%;
+  height: 100px;
+  font-size: 11px;
+  border-style: groove;
+  border-width: 2px;
+  margin-left: 2px;
+}
+
+.sortable-container {
+  margin: 0;
+  padding: 5px 0px 5px 0px;
+  width: 250px;
+  border: 2px solid black;
+}
+
+.sortable-container ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+
+.sortable-container li {
+  margin: 0 5px 5px 5px;
+  padding: 5px;
+  font-size: 1.2em;
+  height: 1.5em;
+  background: #DDD;
+  border: 1px solid #B4B4B4;
+  cursor: move;
+}
+
+.sortable li:last-child {
+  margin-bottom: 0px;
+}
+
+ul.sortable-new {
+  margin-bottom: 10px;
+}
+
+ul.sortable-delete {
+  margin-top: 10px;
+}
+
+.sortable-delete li {
+  background: #FDD;
+  border: 1px solid #FFB4B4;
+  cursor: default;
+}
+
+li.sortable-delete-hover {
+  font-weight: bold;
+  border-color: maroon;
+  border-width: 2px;
+  background-color: red;
+}
+
+html>body .sortable li {
+  height: 1.5em;
+  line-height: 1.2em;
+}
+
+li.sortable-list-placeholder {
+  height: 1.5em;
+  line-height: 1.2em;
+  background: white;
+}
+
+li#pages_new {
+  background: white;
+}
+
+.giant-submit {
+  font-size: 20px;
+  padding: 10px 20px 10px 20px;
 }
