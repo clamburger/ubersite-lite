@@ -256,3 +256,25 @@
   display: block;
 }
 /* line 1737 */
+
+.label {
+  padding: 1px 3px 2px;
+  font-size: 9.75px;
+  font-weight: bold;
+  color: #ffffff;
+  text-transform: uppercase;
+  white-space: nowrap;
+  background-color: #bfbfbf;
+  border-radius: 3px;
+  position: relative;
+  top: -2px;
+}
+.label.important {
+  background-color: #c43c35;
+}
+.label.warning {
+  background-color: #f89406;
+}
+.label.success {
+  background-color: #46a546;
+}
