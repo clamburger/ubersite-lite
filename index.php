@@ -48,31 +48,17 @@ if (!file_exists('config/config.php')) {
 $tpl = new bTemplate();
 
 $tpl->set('campname', CAMP_NAME);
-$tpl->set('stylesheet', 'winter');
 
 $messages = new MessageQueue();
 
 $user = new NullUser();
-$feedback = false;
-$questionnaire = false;
 $script = explode("/", $_SERVER['SCRIPT_NAME']);
 $pageName = $PAGE;
 
-# Process user session and details
+// Process user session and details
 session_start();
 
-if (isset($_SESSION['message'])) {
-  $_msgType = $_SESSION['message'][0];
-  $_msgText = $_SESSION['message'][1];
-  if (isset($_SESSION['message'][2])) {
-    $storedValue = $_SESSION['message'][2];
-  }
-
-  $messages->addMessage(new Message($_msgType, $_msgText));
-  unset($_SESSION['message']);
-}
-
-# Populate array of users (UserID => Name)
+// Populate array of users (UserID => Name)
 $stmt = $dbh->query('SELECT * FROM users');
 $people = array();
 while ($row = $stmt->fetch()) {
@@ -83,22 +69,22 @@ if (isset($_SESSION['username'])) {
   $username = $_SESSION['username'];
   // If the logged in user no longer exists, something bad happened.
   if (!isset($people[$username])) {
-    header("Location: /logout");
+    header('Location: /logout');
   }
   $user = $people[$username];
 
 } else {
-  # Redirect to login page if not logged in
-  if ($pageName != "login") {
-    if ($pageName == "logout") {
-      header("Location: /login");
+  // Redirect to login page if not logged in
+  if ($pageName != 'login') {
+    if ($pageName == 'logout') {
+      header('Location: /login');
     } else {
       header("Location: /login/$pageName");
     }
   }
 }
 
-# Disable error reporting for non-admins
+// Disable error reporting for campers
 if (!$user->isLeader()) {
   error_reporting(0);
 }
@@ -123,11 +109,7 @@ if (!$user->isLeader()) {
   });
 }
 
-if ($user->LoggedIn) {
-  $loginURL = "";
-} else {
-  $loginURL = "/login";
-}
+$loginURL = $user->LoggedIn ? '/login' : '';
 
 // Construct the HTML for the navigation bar.
 $menuHTML = "";
@@ -169,5 +151,6 @@ $twig->addGlobal("software", new Software());
 if (file_exists("controllers/$PAGE.php")) {
   require_once("controllers/$PAGE.php");
 } else {
-  echo "404 File Not Found";
+  header('HTTP/1.0 404 Not Found');
+  echo '404 Not Found';
 }

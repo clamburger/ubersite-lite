@@ -10,9 +10,6 @@ if (file_exists("../config/config/config.php") && !isset($_GET['override'])) {
   header("Location: ../");
 }
 
-# Grab version information
-include_once("../includes/classes/Software.php");
-
 $tpl = new bTemplate();
 
 $tpl->set("version", Software::$version);

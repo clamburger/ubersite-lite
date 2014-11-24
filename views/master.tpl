@@ -85,9 +85,8 @@
 	<!-- Content -->
 	
 	<div id="content">
-                <if:contenttile>
+                <if:contenttitle>
                   <h2><tag:contenttitle />:</h2>
-                  <tag:titleuber />
                 </if:contenttitle>
 		<tag:content />
 	</div>
