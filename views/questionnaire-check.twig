@@ -1,0 +1,26 @@
+{% if user.leader %}
+<table>
+<tr>
+	<th>Person</th>
+    {% for page in pages %}
+	<th width='80px'>{{ page }}</th>
+	{% endfor %}
+</tr>
+{% for row in status %}
+<tr>
+	<td>{{ row.name }}</td>
+    {% for page in row.stages %}
+        {{ page | raw }}
+    {% endfor %}
+</tr>
+{% endfor %}
+<tr>
+	<th>Totals:</th>
+	{% for total in totals %}
+		<th>{{ total }}</th>
+	{% endfor %}
+</tr>
+</table>
+{% else %}
+You must be a leader to view this page.
+{% endif %}

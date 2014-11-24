@@ -25,7 +25,7 @@ foreach ($details->PageOrder as $pageID) {
   }
 }
 
-$tpl->set("pages", $pages);
+$tpl->set("pages", $pages, false);
 
 $rawStatus = [];
 
@@ -60,8 +60,8 @@ foreach ($totals as $key => $total) {
   $totals[$key] = "$total / ".count($rawStatus);
 }
 
-$tpl->set('status', $status);
-$tpl->set('totals', $totals);
+$tpl->set('status', $status, false);
+$tpl->set('totals', $totals, false);
 $tpl->set('head', '<meta http-equiv="refresh" content="5;/questionnaire-check/'.$id.'?autorefresh" >');
 
 fetch();
