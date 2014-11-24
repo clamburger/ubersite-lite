@@ -2,3 +2,5 @@
 config/
 vendor/
 scripts/accounts.txt
+database.db
+database.db-journal

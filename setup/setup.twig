@@ -1,105 +1,52 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <title>{{ software }} Setup</title>
+  <head>
+    <title>{{ software }} Setup</title>
 
-        <link rel="icon" type="image/png" href="../resources/img/icon.png" />
+    <link rel="icon" type="image/png" href="../resources/img/icon.png" />
 
-        <link rel="stylesheet" type="text/css" href="../external/bootstrap.css" />
-        <link rel="stylesheet" type="text/css" href="../resources/css/layout.css" />
-        <link rel="stylesheet" type="text/css" href="../resources/css/winter.css" />
+    <link rel="stylesheet" type="text/css" href="../external/bootstrap.css" />
+    <link rel="stylesheet" type="text/css" href="../resources/css/layout.css" />
+    <link rel="stylesheet" type="text/css" href="../resources/css/winter.css" />
 
-        <script src="../external/jquery-1.7.js"></script>
-        <script src="setup.js"></script>
+    <script src="../external/jquery-1.7.js"></script>
+    <script src="setup.js"></script>
 
-        <meta HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=utf-8" />
-    </head>
+    <meta HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=utf-8" />
+  </head>
 
-    <body id="module">
+  <body id="module">
 
-        <div id="headerContainer">
-            <div id="header" style='width: 100%;'>
-                <img src="../resources/img/logo.png" class="logo" border="0" alt="Übertweak Logo" />
-                <div class="title">
-                &Uuml;berSite Setup<br />
-                <div class="version">Version {{ version }} {% if codename %}({{ codename }}){% endif %}</strong></div></div>
-            </div>
-        </div>
+    <div id="headerContainer">
+      <div id="header" style='width: 100%;'>
+        <img src="../resources/img/logo.png" class="logo" border="0" alt="Übertweak Logo" />
+        <div class="title">
+        {{ software }} Setup<br />
+        <div class="version">Version {{ version }} {% if codename %}({{ codename }}){% endif %}</strong></div></div>
+      </div>
+    </div>
 
-        <div id="content">
+    <div id="content">
 
-            <h2>Prerequisite Check:</h2>
+      <h2>Environment Check:</h2>
 
-            Welcome to {{ software }}. This short setup process will help configure your website - simply enter in the information for each tab.
-            Once all tabs are complete, open the final tab in order to save your configuration and proceed to the next configuration stage.
-            <br />
-            <ul>
-                <li>PHP version at least 5.5... {{ checks.php | raw }}</li>
-                <li>Config directory writable... {{ checks.configWritable | raw }}</li>
-                <li>MySQL available... {{ checks.mysql | raw }}</li>
-            </ul>
+      <ul>
+          <li>PHP version at least 5.5... {{ checks.php | raw }}</li>
+          <li>Config directory writable... {{ checks.config | raw }}</li>
+          <li>SQLite available... {{ checks.sqlite | raw }}</li>
+      </ul>
 
-            {% if error %}
-            <h3>An essential requirement is not available: the setup process cannot continue.</h3>
-            {% else %}
+      {% if error %}
+      <h3>There's an issue with the environment. The problems above will need to be rectified before {{ software }} can be setup.</h3>
+      {% else %}
+      <h3>Just fill in the camp name and you're good to go!</h3>
+      <form method="post">
+        <input id="campName" class="span4" type="text" name="campName" placeholder="&Uuml;bertweak Summer 2015" required>
+        <input type="submit">
+      </form>
+      {% endif %}
 
-            <h2>Configuration:</h2>
+    </div>
 
-            <form>
-                <div class="row">
-                    <div class="span4">
-                    {{ software }} uses a MySQL database to store data. Once the information has been verified as correct, the database structure will be created.<br /><br />
-                    If the selected database does not already exist, make sure the user has CREATE DATABASE permissions.
-                    </div>
-
-                    <div class="span12">
-                      <div class="clearfix">
-                        <label for="campName">Camp name:</label>
-                        <div class="input">
-                          <input id="campName" class="span4" type="text" name="campName" placeholder="&Uuml;bertweak Summer 2015" required/>
-                        </div>
-                      </div>
-                        <div class="clearfix">
-                            <label for="mysqlHost">MySQL Host:</label>
-                            <div class="input">
-                                <input id="mysqlHost" class="span4" type="text" name="mysqlHost" placeholder="localhost" required />
-                            </div>
-                        </div>
-                        <div class="clearfix">
-                            <label for="mysqlUser">Username:</label>
-                            <div class="input">
-                                <input id="mysqlUser" class="span4" type="text" name="mysqlUser" placeholder="root" required />
-                            </div>
-                        </div>
-                        <div class="clearfix">
-                            <label for="mysqlPassword">Password:</label>
-                            <div class="input">
-                                <input id="mysqlPassword" class="span4" type="password" name="mysqlPassword" placeholder="password" required />
-                            </div>
-                        </div>
-                        <div class="clearfix">
-                            <label for="mysqlDatabase">Database:</label>
-                            <div class="input">
-                                <input id="mysqlDatabase" class="span4" type="text" name="mysqlDatabase" placeholder="ubertweak_su15" required />
-                            </div>
-                        </div>
-                        <div class="clearfix">
-                            <div class="input">
-                                <input type="submit" class="btn" value="Verify and save configuration" id="save-config" />
-                            </div>
-                        </div>
-
-                        <div class="alert-message info" id="processing" style="display: none;">Processing...</div>
-                        <br />
-                        <input type="submit" class="btn primary" value="Go to the website!" id="refresh-page" style="display: none;" />
-                    </div>
-                </div>
-
-             </form>
-
-            {% endif %}
-
-        </div>
-
-    </body>
+  </body>
 </html>

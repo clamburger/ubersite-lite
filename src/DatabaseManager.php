@@ -2,7 +2,7 @@
 namespace Ubersite;
 
 /**
- * A singleton used to hand out a connection to the MySQL server using PDO.
+ * A singleton used to hand out a connection to the SQLite database using PDO.
  * @return \PDO
  */
 class DatabaseManager {
@@ -16,12 +16,7 @@ class DatabaseManager {
       return self::$dbh;
     }
 
-    $server = DB_HOST;
-    $username = DB_USER;
-    $password = DB_PASS;
-    $database = DB_DATABASE;
-
-    $dbh = new \PDO("mysql:host=$server; dbname=$database; charset=UTF8", $username, $password);
+    $dbh = new \PDO('sqlite:config/database.db');
     $dbh->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
     $dbh->setAttribute(\PDO::ATTR_EMULATE_PREPARES, true);
     $dbh->setAttribute(\PDO::ATTR_DEFAULT_FETCH_MODE, \PDO::FETCH_BOTH);

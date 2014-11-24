@@ -33,7 +33,7 @@ foreach ($groups as $ID) {
 }
 
 // Now cross-reference with the electives table.
-$query = 'SELECT ShortName, LongName FROM questionnaire_electives ORDER BY `Order` ASC';
+$query = 'SELECT ShortName, LongName FROM questionnaire_electives ORDER BY Sorting ASC';
 $stmt = $dbh->query($query);
 
 while ($row = $stmt->fetch()) {

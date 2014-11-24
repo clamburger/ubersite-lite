@@ -14,7 +14,7 @@ if (PHP_SAPI != "cli") {
   exit;
 }
 
-require_once("../config/config/config.php");
+require_once("../config/config.php");
 
 $dbh = DatabaseManager::get();
 

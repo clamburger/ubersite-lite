@@ -2,7 +2,6 @@
 require 'vendor/autoload.php';
 require 'includes/functions.php';
 
-use Ubersite\bTemplate;
 use Ubersite\DatabaseManager;
 use Ubersite\MessageQueue;
 use Ubersite\NullUser;
@@ -10,7 +9,7 @@ use Ubersite\Software;
 use Ubersite\User;
 
 if (!file_exists('config/config.php')) {
-  header('Location: /setup/setup.php');
+  header('Location: /setup');
 }
 
 require 'config/config.php';
@@ -55,6 +54,11 @@ $pageName = $PAGE;
 // Process user session and details
 session_start();
 
+if ($pageName == 'logout') {
+  session_destroy();
+  header('Location: /');
+}
+
 // Populate array of users (UserID => Name)
 $stmt = $dbh->query('SELECT * FROM users');
 $people = array();
@@ -73,11 +77,7 @@ if (isset($_SESSION['username'])) {
 } else {
   // Redirect to login page if not logged in
   if ($pageName != 'login') {
-    if ($pageName == 'logout') {
-      header('Location: /login');
-    } else {
-      header("Location: /login/$pageName");
-    }
+    header("Location: /login/$pageName");
   }
 }
 

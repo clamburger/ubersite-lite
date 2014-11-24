@@ -7,9 +7,8 @@ This is the lite version which comes with the bare minimum parts to make the que
 ## Requirements
 
 * A web server with `mod_rewrite` (or compatible extension) enabled. Apache 2.2 or above is highly recommended.
-* A MySQL server.
 * PHP 5.5 or higher
-* PDO and the MySQL driver must be available.
+* PDO and the SQLite3 driver must be available.
 
 ## Installation
 
