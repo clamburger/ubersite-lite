@@ -5,7 +5,7 @@ use Ubersite\Questionnaire\Page;
 use Ubersite\Questionnaire\Question;
 
 $title = 'Questionnaire';
-$tpl->set('title', $title);
+$twig->addGlobal('title', $title);
 
 // These will almost certainly be overidden.
 $submitted = false;
@@ -30,7 +30,7 @@ if (!$row = $stmt->fetch()) {
 }
 
 $title = $row['Name'];
-$tpl->set('intro', $row['Intro']);
+$twig->addGlobal('intro', $row['Intro']);
 
 $details = json_decode($row['Pages']);
 $questions = [];
@@ -59,7 +59,7 @@ foreach ($details->PageOrder as $pageID) {
 
 $totalStages = count($pageOrder);
 
-$tpl->set("ID", $id);
+$twig->addGlobal("ID", $id);
 
 // Get the current page for the user.
 $stmt = $dbh->prepare('SELECT * FROM questionnaire WHERE UserID = ? AND QuizId = ?');
@@ -117,24 +117,24 @@ for ($i = 1; $i <= $totalStages; ++$i) {
   $progress[] = $line;
 }
 
-$tpl->set("title", $title);
-$tpl->set("start", false, true);
-$tpl->set("end", false, true);
-$tpl->set("questions", false, true);
-$tpl->set("stage", $stage);
-$tpl->set("progress", $progress, false);
+$twig->addGlobal("title", $title);
+$twig->addGlobal("start", false);
+$twig->addGlobal("end", false);
+$twig->addGlobal("questions", false);
+$twig->addGlobal("stage", $stage);
+$twig->addGlobal("progress", $progress);
 if ($stage === 0) {
-  $tpl->set("start", true);
+  $twig->addGlobal("start", true);
 } else if ($stage > $totalStages) {
   $messages->addMessage(new Message("alert", "Congratulations. The test is now over. ".
     "All Aperture technologies remain safely operational up to 4000 degrees Kelvin. ".
     "Rest assured that there is absolutely no chance of a dangerous equipment malfunction ".
     "prior to your victory candescence. Thank you for participating in this Aperture Science ".
     "computer-aided enrichment activity. Goodbye."));
-  $tpl->set("end", true);
+  $twig->addGlobal("end", true);
 } else {
-  $tpl->set("title", $pageOrder[$stage-1]->title);
-  $tpl->set("questions", $pageOrder[$stage-1]->renderHTML());
+  $twig->addGlobal("title", $pageOrder[$stage-1]->title);
+  $twig->addGlobal("questions", $pageOrder[$stage-1]->renderHTML());
 }
 
-fetch("questionnaire");
+fetch();

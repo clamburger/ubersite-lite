@@ -3,14 +3,14 @@ use Ubersite\DatabaseManager;
 use Ubersite\Message;
 
 $title = "Account Management";
-$tpl->set('title', $title);
+$twig->addGlobal('title', $title);
 
-$tpl->set('editing', false, true);
-$tpl->set('edit-ID', false);
-$tpl->set('edit-name', false);
-$tpl->set('edit-disabled', false);
-$tpl->set('edit-dutyteam', '', false);
-$tpl->set('submit', "Create User");
+$twig->addGlobal('editing', false);
+$twig->addGlobal('edit-ID', false);
+$twig->addGlobal('edit-name', false);
+$twig->addGlobal('edit-disabled', false);
+$twig->addGlobal('edit-dutyteam', '', false);
+$twig->addGlobal('submit', "Create User");
 
 $groups = array("leader" => "blue", "director" => "red", "camper" => "green", "cook" => "gray", "visitor" => "gray");
 
@@ -21,13 +21,13 @@ $USER_LIMIT = 1;
 $selectNone = false;
 
 if (isset($_POST['action']) && $user->isLeader()) {
-  $tpl->set('edit-ID', $_POST['userID']);
-  $tpl->set('edit-name', $_POST['name']);
-  $tpl->set('edit-duyteam', $_POST['dutyTeam'], false);
+  $twig->addGlobal('edit-ID', $_POST['userID']);
+  $twig->addGlobal('edit-name', $_POST['name']);
+  $twig->addGlobal('edit-duyteam', $_POST['dutyTeam']);
 
   # New account submission
   if ($_POST['action'] == "new") {
-    $tpl->set('edit-ID', $_POST['userIDinput']);
+    $twig->addGlobal('edit-ID', $_POST['userIDinput']);
     $ID = $_POST['userIDinput'];
     if (isset($people[$ID])) {
       $messages->addMessage(new Message("error", "That ID already exists!"));
@@ -50,8 +50,8 @@ if (isset($_POST['action']) && $user->isLeader()) {
 
   # Edit account submission
   } else {
-    $tpl->set('editing', true, true);
-    $tpl->set('edit-disabled', 'disabled="disabled"');
+    $twig->addGlobal('editing', true);
+    $twig->addGlobal('edit-disabled', 'disabled="disabled"');
 
     $ID = $_POST['userID'];
     $name = trim($_POST['name']);
@@ -70,18 +70,18 @@ if (isset($_POST['action']) && $user->isLeader()) {
 
 # Edit link clicked
 if ($SEGMENTS[1] == "edit") {
-  $tpl->set('editing', true, true);
+  $twig->addGlobal('editing', true);
   $stmt = $dbh->prepare('SELECT * FROM users WHERE UserID = ?');
   $stmt->execute([$SEGMENTS[2]]);
   if (!$row = $stmt->fetch()) {
     header("Location: /accounts");
   }
 
-  $tpl->set('edit-disabled', 'disabled="disabled"');
-  $tpl->set('edit-ID', $row['UserID']);
-  $tpl->set('edit-dutyteam', $row['DutyTeam'], false);
-  $tpl->set('edit-name', $row['Name']);
-  $tpl->set('submit', "Modify User");
+  $twig->addGlobal('edit-disabled', 'disabled="disabled"');
+  $twig->addGlobal('edit-ID', $row['UserID']);
+  $twig->addGlobal('edit-dutyteam', $row['DutyTeam']);
+  $twig->addGlobal('edit-name', $row['Name']);
+  $twig->addGlobal('submit', "Modify User");
 }
 
 # Delete link clicked
@@ -114,7 +114,7 @@ if ($SEGMENTS[1] == "delete") {
       } else {
           $_SESSION['deleteID'] = $userToDelete;
           $_SESSION['deleteTime'] = time();
-          $tpl->set('warning', "Are you absolutely positive that you want to delete {$people[$userToDelete]}'s account?" .
+          $twig->addGlobal('warning', "Are you absolutely positive that you want to delete {$people[$userToDelete]}'s account?" .
               " | <a href='/accounts/delete/$userToDelete/confirm'>Confirm deletion</a>.");
       }
     }
@@ -131,7 +131,7 @@ foreach ($groups as $id => $colour) {
   }
   $categories .= "<option value='$id'$selected>".ucfirst($id)."</option>\n";
 }
-$tpl->set('categories', $categories, false);
+$twig->addGlobal('categories', $categories);
 
 # Grab the complete unabridged list of people
 $query = "SELECT * FROM users ORDER BY (Category = 'director' OR `Category` = 'leader') DESC,
@@ -154,6 +154,6 @@ while ($row = $stmt->fetch()) {
              "Delete" => $delete);
 }
 
-$tpl->set('people', $peoplee, false);
+$twig->addGlobal('people', $peoplee);
 
 fetch();

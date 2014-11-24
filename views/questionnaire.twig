@@ -1,3 +1,6 @@
+{% extends "master.twig" %}
+
+{% block content %}
 <table style='float: right;' class='progress'>
 <tr><th colspan='2'>Questionnaire Progress:</th></tr>
 {% for row in progress %}
@@ -46,3 +49,4 @@
     }
   });
 </script>
+{% endblock %}

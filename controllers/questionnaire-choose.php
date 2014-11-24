@@ -1,12 +1,12 @@
 <?php
 $title = 'Choose Questionnaire';
-$tpl->set('title', $title);
+$twig->addGlobal('title', $title);
 
 $stmt = $dbh->query('SELECT Id, Name FROM questionnaires');
 $questionnaires = $stmt->fetchAll();
 
 $redirect = isset($_GET['src']) ? $_GET['src'] : 'questionnaire';
-$tpl->set('redirect', $redirect);
+$twig->addGlobal('redirect', $redirect);
 
 // Only one questionnaire exists, so automatically select it
 if (count($questionnaires) === 1) {
@@ -15,5 +15,5 @@ if (count($questionnaires) === 1) {
   exit;
 }
 
-$tpl->set('questionnaires', $questionnaires, false);
+$twig->addGlobal('questionnaires', $questionnaires);
 fetch();

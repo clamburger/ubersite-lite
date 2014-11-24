@@ -20,7 +20,7 @@ if (!$row = $stmt->fetch()) {
 }
 
 $title = $row["Name"];
-$tpl->set('title', $title);
+$twig->addGlobal('title', $title);
 $details = json_decode($row["Pages"]);
 
 $questions = [];
@@ -136,8 +136,8 @@ foreach ($pageOrder as $page) {
   }
 }
 
-$tpl->set("id", $id);
-$tpl->set("output", $output);
-$tpl->set("smallgroup", $smallgroup);
+$twig->addGlobal("id", $id);
+$twig->addGlobal("output", $output);
+$twig->addGlobal("smallgroup", $smallgroup);
 
 fetch();

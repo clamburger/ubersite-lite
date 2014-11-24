@@ -2,7 +2,7 @@
 use Ubersite\Message;
 
 $title = 'Synchronise Questionnaire Tables';
-$tpl->set('title', $title);
+$twig->addGlobal('title', $title);
 
 $id = $SEGMENTS[1];
 
@@ -140,7 +140,7 @@ if (isset($_POST['submit'])) {
   unset($_POST);
 }
 
-$tpl->set('columns', $columnHTML, false);
+$twig->addGlobal('columns', $columnHTML);
 
 $HTML = '';
 
@@ -175,6 +175,6 @@ if (count($add) === 0 && count($remove) === 0) {
   }
 }
 
-$tpl->set('actions', $HTML, false);
+$twig->addGlobal('actions', $HTML);
 
 fetch();

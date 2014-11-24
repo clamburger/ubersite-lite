@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>{{ campname }}: {{ title }}</title>
+
+    {% if standalone %}
+      <link rel="icon" type="image/png" href="{{ standalone-icon }}" />
+      <style type="text/css">
+        {{ standalone-style | raw }}
+      </style>
+    {% else %}
+      <link rel="icon" type="image/png" href="/resources/img/icon.png" />
+      <link rel="stylesheet" type="text/css" href="/resources/css/bootstrap-refined.css" />
+      <link rel="stylesheet" type="text/css" href="/resources/css/layout.css" />
+      <link rel="stylesheet" type="text/css" href="/resources/css/winter.css" />
+    {% endif %}
+
+    {% if head %}
+      {{ head | raw }}
+    {% endif %}
+    
+    {% if not standalone %}
+      <script src='/external/jquery-1.7.js'></script>
+    {% endif %}
+
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  </head>
+  <body>
+    {% if standalone %}
+      <!-- Header -->
+      <div id="headerContainer">
+        <div id="header" style='width: 100%;'>
+          <img src="{{ standalone-logo }}" class="logo" border="0" alt="Übertweak Logo" />
+          <div class="title">
+            {{ campname }} - {{ title }}<br />
+            <div class="version">Powered by <strong>{{ softwareFullName }}</strong></div></div>
+        </div>
+      </div>
+    {% else %}
+      <!-- Header -->
+      <div id="headerContainer">
+        <div id="header">
+          <a href='/'><img src="/resources/img/logo.png" class="logo" border="0" alt="Übertweak Logo" width="96px" height="96px" /></a>
+
+          <div class="title">
+            <span>{{ campname }} - {{ title }}</span><br />
+            <div class="version">
+              Powered by <strong>{{ softwareFullName }}</strong></a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Menu -->
+      <div id="menu">
+        <ul id="nav">
+          <li style='width: 10px;'>&nbsp;</li>
+          {{ menu | raw }}
+          {% if user.LoggedIn %}
+            <li class="right"><a href='/logout'>Logout</a></li>
+            <li class="right"><span class='text'>Current User: {{ user.Name }}</li>
+          {% endif %}
+          </ul>
+      </div>
+      <br clear="both" />
+      <!-- Content -->
+      {{ messages | raw }}
+    {% endif %}
+
+    <!-- Content -->
+    <div id="content">
+      {% if title %}
+        <h2>{{ title }}:</h2>
+      {% endif %}
+      {% block content %}{% endblock %}
+    </div>
+
+    {% if not standalone %}
+      <script src='/resources/js/ubersite.js'></script>
+    {% endif %}
+  </body>
+</html>

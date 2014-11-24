@@ -1,3 +1,6 @@
+{% extends "master.twig" %}
+
+{% block content %}
 {% if user.leader %}
 <table>
 <tr>
@@ -24,3 +27,4 @@
 {% else %}
 You must be a leader to view this page.
 {% endif %}
+{% endblock %}

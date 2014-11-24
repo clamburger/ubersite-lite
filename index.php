@@ -1,16 +1,21 @@
 <?php
 require 'vendor/autoload.php';
-require 'config/config.php';
 require 'includes/functions.php';
 
 use Ubersite\bTemplate;
 use Ubersite\DatabaseManager;
-use Ubersite\Message;
 use Ubersite\MessageQueue;
 use Ubersite\NullUser;
 use Ubersite\Software;
 use Ubersite\User;
 
+if (!file_exists('config/config.php')) {
+  header('Location: /setup/setup.php');
+}
+
+require 'config/config.php';
+
+ini_set('display_errors', 'On');
 $dbh = DatabaseManager::get();
 
 // URL rewriter
@@ -39,15 +44,7 @@ header("Content-Type: text/html; charset=utf-8");
 $loader = new Twig_Loader_Filesystem('views');
 $twig = new Twig_Environment($loader);
 
-// Set some default values and include some files
-ini_set('display_errors', 'On');
-if (!file_exists('config/config.php')) {
-  header('Location: /setup/setup.php');
-}
-
-$tpl = new bTemplate();
-
-$tpl->set('campname', CAMP_NAME);
+$twig->addGlobal('campname', CAMP_NAME);
 
 $messages = new MessageQueue();
 
@@ -90,15 +87,15 @@ if (!$user->isLeader()) {
 }
 
 if (isset($_GET['standalone'])) {
-  $tpl->set('standalone', false, true);
+  $twig->addGlobal('standalone', true);
   $standalone = true;
-  $tpl->set('standalone-logo', dataURI("resources/img/logo.png", "image/png"));
-  $tpl->set('stand-alone-icon', dataURI("resources/img/icon.png", "image/png"));
+  $twig->addGlobal('standalone-logo', dataURI("resources/img/logo.png", "image/png"));
+  $twig->addGlobal('stand-alone-icon', dataURI("resources/img/icon.png", "image/png"));
   $layoutCSS = file_get_contents("resources/css/layout.css");
   $colourCSS = file_get_contents("resources/css/winter.css");
-  $tpl->set('standalone-style', $layoutCSS . "\n\n" . $colourCSS);
+  $twig->addGlobal('standalone-style', $layoutCSS . "\n\n" . $colourCSS);
 } else {
-  $tpl->set('standalone', true, true);
+  $twig->addGlobal('standalone', false);
   $standalone = false;
 }
 
@@ -119,26 +116,19 @@ foreach ($menu as $filename => $menuItem) {
   $menuHTML .= "</li>\n";
 }
 
-$tpl->set('menu', $menuHTML);
+$twig->addGlobal('menu', $menuHTML);
 
-$tpl->set('head', false);
+$twig->addGlobal('head', false);
 
-$tpl->set('js', false);
-$tpl->set('loggedin', $user->LoggedIn);
-$tpl->set('loginURL', $loginURL);
-
-$tpl->set('currentUser', $username);
-if ($username) {
-  $tpl->set('currentName', $people[$username]->Name);
-}
+$twig->addGlobal('loginURL', $loginURL);
 
 // TODO: remove this when possible
-$tpl->set('softwareFullName', Software::getFullName());
+$twig->addGlobal('softwareFullName', Software::getFullName());
 
 // New stuff! Part of the 2012 refactor
 // TODO: we probably shouldn't be using $twig->addGlobal so much
 $twig->addGlobal("user", $user);
-$tpl->set("messages", $messages->getAllMessageHTML());
+$twig->addGlobal("messages", $messages->getAllMessageHTML());
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
   $twig->addGlobal("form", $_POST);
 }

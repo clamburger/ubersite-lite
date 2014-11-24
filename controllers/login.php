@@ -3,7 +3,7 @@ use Ubersite\DatabaseManager;
 use Ubersite\Message;
 
 $title = 'Login';
-$tpl->set('title', $title);
+$twig->addGlobal('title', $title);
 
 $redirect = $SEGMENTS[1];
 
@@ -12,7 +12,7 @@ if (isset($_SESSION['username'])) {
   header("Location: /$redirect");
 }
 
-$tpl->set('form-username', false);
+$twig->addGlobal('form-username', false);
 
 if (isset($_POST['username']) && isset($_POST['password'])) {
   # Look up the user and validate them.
@@ -31,7 +31,7 @@ if (isset($_POST['username']) && isset($_POST['password'])) {
   } else {
     var_dump($row);
     $messages->addMessage(new Message("error", "The specified password was incorrect."));
-    $tpl->set("form-username", $_POST['username']);
+    $twig->addGlobal("form-username", $_POST['username']);
   }
 }
 

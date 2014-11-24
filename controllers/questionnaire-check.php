@@ -1,6 +1,6 @@
 <?php
 $title = 'Questionnaire Status';
-$tpl->set('title', $title);
+$twig->addGlobal('title', $title);
 
 $id = $SEGMENTS[1];
 
@@ -25,7 +25,7 @@ foreach ($details->PageOrder as $pageID) {
   }
 }
 
-$tpl->set("pages", $pages, false);
+$twig->addGlobal("pages", $pages);
 
 $rawStatus = [];
 
@@ -60,8 +60,8 @@ foreach ($totals as $key => $total) {
   $totals[$key] = "$total / ".count($rawStatus);
 }
 
-$tpl->set('status', $status, false);
-$tpl->set('totals', $totals, false);
-$tpl->set('head', '<meta http-equiv="refresh" content="5;/questionnaire-check/'.$id.'?autorefresh" >');
+$twig->addGlobal('status', $status);
+$twig->addGlobal('totals', $totals);
+$twig->addGlobal('head', '<meta http-equiv="refresh" content="5;/questionnaire-check/'.$id.'?autorefresh" >');
 
 fetch();
