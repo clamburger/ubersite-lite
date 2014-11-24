@@ -50,11 +50,11 @@ tr.alt td {
   background-color: #b5b3ff;
 }
 
-table.content, table.ladder, table.timetable, table.formTable, table.progress {
+table.content, table.timetable, table.formTable, table.progress {
   border-color: #2A2AA5;
 }
 
-.content th, .ladder th, .timetable th, .progress th {
+.content th, .timetable th, .progress th {
   background-color: #60A4F4;
   border-color: #2A2AA5;
 }
@@ -78,15 +78,6 @@ table.content, table.ladder, table.timetable, table.formTable, table.progress {
 
 .formTable .header {
   background-color: #60a4f4;
-}
-
-.ladder input, .ladder select {
-  border-color: #2A2AA5;
-}
-
-.ladder .submitRow {
-  background-color: #60a4f4;
-  border-color: #2A2AA5;
 }
 
 .timetable td, .progress td {
