@@ -58,7 +58,7 @@
       <div class="alert alert-{{ type }}">
         <ul class="unstyled nomargin">
           {% for message in messageGroup %}
-            <li>{{ message }}</li>
+            <li>{{ message | raw }}</li>
           {% endfor %}
         </ul>
       </div>

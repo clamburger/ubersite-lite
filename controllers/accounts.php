@@ -1,18 +1,10 @@
 <?php
 use Ubersite\Message;
 
-$twig->addGlobal('editing', false);
-$twig->addGlobal('edit-ID', false);
-$twig->addGlobal('edit-name', false);
-$twig->addGlobal('edit-disabled', false);
-$twig->addGlobal('edit-dutyteam', '', false);
 $twig->addGlobal('submit', "Create User");
 
-$groups = array("leader" => "blue", "director" => "red", "camper" => "green", "cook" => "gray", "visitor" => "gray");
-
 # Check how many people there are in the database right now
-$userCount = $dbh->query('SELECT COUNT(*) FROM users')->fetch()[0];
-$USER_LIMIT = 1;
+$userCount = count($people);
 
 $selectNone = false;
 
@@ -105,49 +97,39 @@ if ($SEGMENTS[1] == "delete") {
       unset($_SESSION['deleteID']);
       unset($_SESSION['deleteTime']);
     } else {
-      if ($userToDelete == $username) {
+      if ($userToDelete == $user->UserID) {
           $messages->addMessage(new Message("error", "You cannot delete your own account!"));
       } else {
           $_SESSION['deleteID'] = $userToDelete;
           $_SESSION['deleteTime'] = time();
-          $twig->addGlobal('warning', "Are you absolutely positive that you want to delete {$people[$userToDelete]}'s account?" .
-              " | <a href='/accounts/delete/$userToDelete/confirm'>Confirm deletion</a>.");
+          $messages->addMessage(new Message("warning", "Are you absolutely positive that you want to delete {$people[$userToDelete]->Name}'s account?" .
+              " | <a href='/accounts/delete/$userToDelete/confirm'>Confirm deletion</a>."));
       }
     }
   }
 }
 
 # Populate the "category" dropdown list
-$categories = "";
-foreach ($groups as $id => $colour) {
-  $selected = "";
-  if ((isset($_GET['edit']) && $id == $row['Category']) or
-     (isset($_POST['action']) && $id == $_POST['category']) and (!$selectNone)) {
-    $selected = " selected";
-  }
-  $categories .= "<option value='$id'$selected>".ucfirst($id)."</option>\n";
+$categories = [];
+foreach (['camper', 'leader', 'director', 'cook', 'visitor'] as $category) {
+  $categories[$category] = false;
 }
 $twig->addGlobal('categories', $categories);
 
-# Grab the complete unabridged list of people
-$query = "SELECT * FROM users ORDER BY (Category = 'director' OR `Category` = 'leader') DESC,
-          Category = 'camper' DESC, users.UserID ASC";
-$stmt = $dbh->query($query);
-$peoplee = array();
+// This sorts the list of people by role.
+usort($people, function($user1, $user2) {
+  $precedence = array_flip(['director', 'leader', 'camper', 'cook', 'visitor']);
 
-while ($row = $stmt->fetch()) {
-  $userID = $row['UserID'];
-  $category = "<span style='color: {$groups[$row['Category']]};'>".ucfirst($row['Category'])."</span>";
-  $name = $row['Name'];
+  // The max(1) in each of these will make directors be sorted the same as leaders.
+  $c = max(1, $precedence[$user1->Category]);
+  $d = max(1, $precedence[$user2->Category]);
 
-  if ($userID != $username) {
-    $delete = "| <a href='/accounts/delete/$userID'>Delete</a>";
-  } else {
-    $delete = "";
+  // If the category is the same, sort by the username.
+  if ($c === $d) {
+    return strcmp($user1->UserID, $user2->UserID);
   }
 
-  $peoplee[] = array("UserID" => $userID, "Name" => $name, "Category" => $category,
-             "Delete" => $delete);
-}
+  return ($c < $d) ? -1 : 1;
+});
 
-$twig->addGlobal('people', $peoplee);
+$twig->addGlobal('users', $people);

@@ -298,19 +298,19 @@ table.formTable {
 }
 
 /* Category colours */
-.category-generic {
+.userRole {
   color: grey;
 }
 
-.category-leader {
+.userRole.leader {
   color: blue;
 }
 
-.category-camper {
+.userRole.camper {
   color: green;
 }
 
-.category-director {
+.userRole.director {
   color: red;
 }
 

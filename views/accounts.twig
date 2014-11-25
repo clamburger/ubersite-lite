@@ -6,19 +6,24 @@
 {% if user.leader %}
   <table>
   <tr>
-    <th>Category</th>
+    <th>Role</th>
     <th>User ID</th>
     <th>Name</th>
     <th>Duty Team</th>
     <th>Manage</th>
   </tr>
-  {% for person in people %}
+  {% for row in users %}
   <tr>
-    <td>{{ person.Category | raw }}</td>
-    <td><strong>{{ person.UserID }}</strong></td>
-    <td>{{ person.Name }}</td>
-    <td>{{ person.DutyTeam }}</td>
-    <td><a href='/accounts/edit/{{ person.UserID }}#new'>Edit</a> {{ person.Delete | raw}}</td>
+    <td class="userRole {{ row.Category }}">{{ row.Category }}</td>
+    <td><strong>{{ row.UserID }}</strong></td>
+    <td>{{ row.Name }}</td>
+    <td>{{ row.DutyTeam }}</td>
+    <td>
+      <a href='/accounts/edit/{{ row.UserID }}#new'>Edit</a>
+      {% if row.UserID != user.UserID %}
+      | <a href='/accounts/delete/{{ row.UserID }}'>Delete</a>
+      {% endif %}
+    </td>
   </tr>
   {% endfor %}
   </table>
@@ -26,30 +31,34 @@
   <form method="POST" action="/accounts">
   {% if editing %}
     <h2 id="new">Editing User:</h2>
-    <input type="hidden" name='action' value='edit' />
+    <input type="hidden" name='action' value='edit'>
   {% else %}
     <h2 id="new">New User:</h2>
-    <input type="hidden" name='action' value='new' />
+    <input type="hidden" name='action' value='new'>
   {% endif %}
-  <input type="hidden" name='userID' value='<tag:edit-ID />' />
+  <input type="hidden" name='userID' value='<tag:edit-ID />'>
   <table class='formTable'>
     <tr>
       <th><label for="userIDinput">User ID:</label></th>
-      <td><input type='text' name='userIDinput' id='userIDinput' size='6' value='{{ edit-id }}'{{ edit-disabled | raw }} /></td>
+      <td><input type='text' name='userIDinput' id='userIDinput' size='6' value='{{ form.id }}' {{ editing ? 'disabled' : '' }}></td>
     </tr>
     <tr>
       <th><label for="name">Name:</label></th>
-      <td><input type='text' name='name' id='name' value='{{ edit-name }}' /></td>
+      <td><input type='text' name='name' id='name' value='{{ form.name }}'></td>
     </tr>
     <tr>
       <th><label for="category">Category:</label></th>
-      <td><select name='category' id="category">
-        {{ categories | raw }}
-      </select></td>
+      <td>
+        <select name='category' id="category">
+          {% for category, selected in categories %}
+          <option value='{{ category }}' {{ selected ? 'selected' : '' }}>{{ category | capitalize  }}</option>
+          {% endfor %}
+        </select>
+      </td>
     </tr>
     <tr>
       <th><label for="dutyteam">Duty Team:</label></th>
-      <td><input type='text' name='dutyteam' id='dutyteam' value='{{ edit-dutyteam }}' /></td>
+      <td><input type='text' name='dutyteam' id='dutyteam' value='{{ form.dutyteam }}' /></td>
     </tr>
     <tr>
       <th colspan="2" class="submitRow">
