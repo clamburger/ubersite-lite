@@ -9,10 +9,7 @@ function dataURI($file, $mime) {
 function fetch() {
   global $PAGE;
   global $twig;
-  global $messages;
 
-  $twig->addGlobal('messages', $messages->getAllMessageHTML());
-  echo $twig->render("$PAGE.twig");
 }
 
 function refresh() {

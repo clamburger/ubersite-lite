@@ -3,7 +3,7 @@ require 'vendor/autoload.php';
 require 'includes/functions.php';
 
 use Ubersite\DatabaseManager;
-use Ubersite\MessageQueue;
+use Ubersite\MessageBank;
 use Ubersite\NullUser;
 use Ubersite\Software;
 use Ubersite\User;
@@ -43,25 +43,26 @@ header("Content-Type: text/html; charset=utf-8");
 $loader = new Twig_Loader_Filesystem('views');
 $twig = new Twig_Environment($loader);
 
+// Process user session and details
+session_start();
+
 $twig->addGlobal('campname', CAMP_NAME);
 
-$messages = new MessageQueue();
+$messages = new MessageBank();
 
 $user = new NullUser();
 $script = explode("/", $_SERVER['SCRIPT_NAME']);
 $pageName = $PAGE;
 
-// Process user session and details
-session_start();
-
 if ($pageName == 'logout') {
   session_destroy();
   header('Location: /');
+  exit;
 }
 
 // Populate array of users (UserID => Name)
 $stmt = $dbh->query('SELECT * FROM users');
-$people = array();
+$people = [];
 while ($row = $stmt->fetch()) {
   $people[$row['UserID']] = new User($row);
 }
@@ -99,7 +100,7 @@ if (isset($_GET['standalone'])) {
   $standalone = false;
 }
 
-if (!$user->sLeader()) {
+if (!$user->isLeader()) {
   // Menu items with the "restricted" attribute will only be shown to leaders.
   $menu = array_filter($menu, function($menuItem) {
     return !isset($menuItem['restricted']);
@@ -128,15 +129,18 @@ $twig->addGlobal('softwareFullName', Software::getFullName());
 // New stuff! Part of the 2012 refactor
 // TODO: we probably shouldn't be using $twig->addGlobal so much
 $twig->addGlobal("user", $user);
-$twig->addGlobal("messages", $messages->getAllMessageHTML());
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
   $twig->addGlobal("form", $_POST);
 }
 $twig->addGlobal("software", new Software());
 
+print_r($messages);
+
 // Include the specified page
 if (file_exists("controllers/$PAGE.php")) {
   require_once("controllers/$PAGE.php");
+  $twig->addGlobal('messagebank', $messages);
+  echo $twig->render("$PAGE.twig");
 } else {
   header('HTTP/1.0 404 Not Found');
   echo '404 Not Found';

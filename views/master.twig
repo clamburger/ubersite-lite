@@ -64,7 +64,15 @@
       </div>
       <br clear="both" />
       <!-- Content -->
-      {{ messages | raw }}
+      {% for type, messageGroup in messagebank.messages %}
+      <div class="alert alert-{{ type }}">
+        <ul class="unstyled nomargin">
+          {% for message in messageGroup %}
+            <li>{{ message }}</li>
+          {% endfor %}
+        </ul>
+      </div>
+      {% endfor %}
     {% endif %}
 
     <!-- Content -->
