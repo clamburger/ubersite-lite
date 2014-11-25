@@ -34,5 +34,3 @@ if (isset($_POST['username']) && isset($_POST['password'])) {
     $twig->addGlobal("form-username", $_POST['username']);
   }
 }
-
-fetch();

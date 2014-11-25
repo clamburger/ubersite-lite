@@ -154,5 +154,3 @@ while ($row = $stmt->fetch()) {
 }
 
 $twig->addGlobal('people', $peoplee);
-
-fetch();

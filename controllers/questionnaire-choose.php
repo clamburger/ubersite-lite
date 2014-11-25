@@ -16,4 +16,3 @@ if (count($questionnaires) === 1) {
 }
 
 $twig->addGlobal('questionnaires', $questionnaires);
-fetch();

@@ -6,12 +6,6 @@ function dataURI($file, $mime) {
   return "data:$mime;base64,$base64";
 }
 
-function fetch() {
-  global $PAGE;
-  global $twig;
-
-}
-
 function refresh() {
   header("Location: http://{$_SERVER['HTTP_HOST']}{$_SERVER['REQUEST_URI']}");
   exit;

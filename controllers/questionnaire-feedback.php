@@ -139,5 +139,3 @@ foreach ($pageOrder as $page) {
 $twig->addGlobal("id", $id);
 $twig->addGlobal("output", $output);
 $twig->addGlobal("smallgroup", $smallgroup);
-
-fetch();

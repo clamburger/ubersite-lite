@@ -174,5 +174,3 @@ if (count($add) === 0 && count($remove) === 0) {
 }
 
 $twig->addGlobal('actions', $HTML);
-
-fetch();

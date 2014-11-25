@@ -136,5 +136,3 @@ if ($stage === 0) {
   $twig->addGlobal("title", $pageOrder[$stage-1]->title);
   $twig->addGlobal("questions", $pageOrder[$stage-1]->renderHTML());
 }
-
-fetch();
