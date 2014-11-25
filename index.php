@@ -87,17 +87,18 @@ if (!$user->isLeader()) {
   error_reporting(0);
 }
 
+// Standalone mode includes all relevant resources directly onto the page so that only the HTML
+// file needs to be saved to get a complete copy.
 if (isset($_GET['standalone'])) {
-  $twig->addGlobal('standalone', true);
-  $standalone = true;
-  $twig->addGlobal('standalone-logo', dataURI("resources/img/logo.png", "image/png"));
-  $twig->addGlobal('stand-alone-icon', dataURI("resources/img/icon.png", "image/png"));
   $layoutCSS = file_get_contents("resources/css/layout.css");
   $colourCSS = file_get_contents("resources/css/winter.css");
-  $twig->addGlobal('standalone-style', $layoutCSS . "\n\n" . $colourCSS);
-} else {
-  $twig->addGlobal('standalone', false);
-  $standalone = false;
+
+  $standalone = [
+    'logo' => dataURI("resources/img/logo.png", "image/png"),
+    'icon' => dataURI("resources/img/icon.png", "image/png"),
+    'css' => $layoutCSS . "\n\n" . $colourCSS
+  ];
+  $twig->addGlobal('standalone', $standalone);
 }
 
 if (!$user->isLeader()) {
@@ -120,7 +121,6 @@ foreach ($menu as $filename => $menuItem) {
 // TODO: we probably shouldn't be using $twig->addGlobal so much
 
 $twig->addGlobal('menu', $menuHTML);
-$twig->addGlobal('head', false);
 $twig->addGlobal('loginURL', $loginURL);
 $twig->addGlobal("software", new Software());
 $twig->addGlobal("user", $user);

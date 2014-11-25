@@ -122,7 +122,6 @@ th, td {
 
 #content {
   display: block;
-  position: relative;
   margin: 0 10px;
 }
 
@@ -184,6 +183,7 @@ th, td {
   margin-top: 0;
   border-top: none;
 }
+
 
 /* Top-Nav */
 

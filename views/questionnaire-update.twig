@@ -1,5 +1,7 @@
 {% extends "master.twig" %}
 
+{% block title %}Synchronise Electives{% endblock %}
+
 {% block content %}
 {% if user.leader %}
   This page will update the Elective Feedback page in the questionnaire with information from the <code>`questionnaire_electives`</code> table.

@@ -4,9 +4,9 @@
     <title>{% block title title %} - {{ software.name }}</title>
 
     {% if standalone %}
-      <link rel="icon" type="image/png" href="{{ standalone-icon }}" />
+      <link rel="icon" type="image/png" href="{{ standalone.icon }}" />
       <style type="text/css">
-        {{ standalone-style | raw }}
+        {{ standalone.css | raw }}
       </style>
     {% else %}
       <link rel="icon" type="image/png" href="/resources/img/icon.png" />
@@ -26,31 +26,21 @@
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
   </head>
   <body>
-    {% if standalone %}
-      <!-- Header -->
-      <div id="headerContainer">
-        <div id="header" style='width: 100%;'>
-          <img src="{{ standalone-logo }}" class="logo" border="0" alt="Übertweak Logo" />
-          <div class="title">
-            {{ campname }} - {{ block('title') }}<br />
-            <div class="version">Powered by <strong>{{ software.fullName }}</strong></div></div>
-        </div>
-      </div>
-    {% else %}
       <!-- Header -->
       <div id="headerContainer">
         <div id="header">
+          {% if standalone %}
+          <img src="{{ standalone.logo }}" class="logo" border="0" alt="Übertweak Logo" />
+          {% else %}
           <a href='/'><img src="/resources/img/logo.png" class="logo" border="0" alt="Übertweak Logo" width="96" height="96" /></a>
-
+          {% endif %}
           <div class="title">
-            <span>{{ campname }} - {{ block('title') }}</span><br />
-            <div class="version">
-              Powered by <strong>{{ software.fullName }}</strong>
-            </div>
-          </div>
+            {{ campname }}
+            <div class="version">Powered by <strong>{{ software.fullName }}</strong></div></div>
         </div>
       </div>
 
+    {% if not standalone %}
       <!-- Menu -->
       <div id="menu">
         <ul id="nav">
@@ -62,8 +52,9 @@
           {% endif %}
           </ul>
       </div>
-      <br clear="both" />
-      <!-- Content -->
+
+      <br clear="all">
+
       {% for type, messageGroup in messagebank.messages %}
       <div class="alert alert-{{ type }}">
         <ul class="unstyled nomargin">
@@ -77,9 +68,7 @@
 
     <!-- Content -->
     <div id="content">
-      {% if title %}
-        <h2>{{ title }}:</h2>
-      {% endif %}
+      <h2>{{ block('title') }}:</h2>
       {% block content %}{% endblock %}
     </div>
   </body>
