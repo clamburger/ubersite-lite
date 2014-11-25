@@ -60,7 +60,7 @@ $twig->addGlobal("ID", $id);
 
 // Get the current page for the user.
 $stmt = $dbh->prepare('SELECT * FROM questionnaire_responses WHERE Username = ? AND QuizId = ?');
-$stmt->execute([$username, $id]);
+$stmt->execute([$user->Username, $id]);
 if ($row = $stmt->fetch()) {
   $stage = intval($row['QuestionStage']);
   $currentData = json_decode($row['Responses'], true);
@@ -71,14 +71,14 @@ if ($SEGMENTS[2] == 'begin' && $row === false) {
   $query = "INSERT INTO questionnaire_responses (Username, QuizId, QuestionStage, Responses)
             VALUES (?, ?, 1, '{}')";
   $stmt = $dbh->prepare($query);
-  $stmt->execute([$username, $id]);
+  $stmt->execute([$user->Username, $id]);
   $stage = 1;
 }
 
 // Delete current progress
 if ($SEGMENTS[2] == 'delete' && $user->isLeader()) {
   $stmt = $dbh->prepare('DELETE FROM questionnaire_responses WHERE Username = ? AND `QuizId` = ?');
-  $stmt->execute([$username, $id]);
+  $stmt->execute([$user->Username, $id]);
   $stage = 0;
   $messages->addMessage(new Message("success", "Hopes deleted."));
 }
@@ -91,7 +91,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $query = 'UPDATE questionnaire_responses SET Responses = ?, QuestionStage = ?
               WHERE QuizId = ? AND Username = ?';
     $stmt = $dbh->prepare($query);
-    $stmt->execute([$responses, ++$stage, $id, $username]);
+    $stmt->execute([$responses, ++$stage, $id, $user->Username]);
     $messages->addMessage(new Message("success", $pageOrder[$stage-2]->title." successfully submitted."));
     refresh();
   }

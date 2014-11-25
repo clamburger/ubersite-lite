@@ -35,7 +35,17 @@ CREATE TABLE questionnaires (
   Intro TEXT
 );
 
-INSERT INTO questionnaires (Id, Name, Pages, Intro) VALUES (1, 'Camp Questionnaire', '{}', 'At the end of each Übertweak we get all campers to fill out a questionnaire about camp.\r\nYour feedback is extremely useful and all of the leaders spend time after camp reviewing it to ensure that the next Übertweak is better than ever!<br><br>\r\nWe encourage you to be completely honest: if you had a terrible time and hated all the leaders, make sure you tell us that. We will not hold any of this feedback against you.<br><br>\r\nThe questionnaire is broken up into a number of sections. Take as much time as you need for each section and please be completely honest! Keep in mind that once you complete a session you <strong>cannot go back to that section</strong>.<br><br>\r\nYour specimen has been processed and we are now ready to begin the test proper.');
+INSERT INTO `questionnaires` (`Id`, `Name`, `Pages`, `Intro`) VALUES
+  (1, 'Camp Questionnaire', '{
+    "Questions": {},
+    "Groups": {},
+    "Pages": {},
+    "PageOrder": []
+}', 'At the end of each Übertweak we get all campers to fill out a questionnaire about camp.
+Your feedback is extremely useful and all of the leaders spend time after camp reviewing it to ensure that the next Übertweak is better than ever!<br><br>
+We encourage you to be completely honest: if you had a terrible time and hated all the leaders, make sure you tell us that. We will not hold any of this feedback against you.<br><br>
+The questionnaire is broken up into a number of sections. Take as much time as you need for each section and please be completely honest! Keep in mind that once you complete a session you <strong>cannot go back to that section</strong>.<br><br>
+Your specimen has been processed and we are now ready to begin the test proper.');
 
 CREATE TABLE users (
   Username TEXT NOT NULL PRIMARY KEY,
