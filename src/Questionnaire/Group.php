@@ -15,7 +15,7 @@ class Group {
       if (isset($questions[$questionID])) {
         $this->questions[] = $questions[$questionID];
       } else {
-        error("Could not find question with ID \"$questionID\"");
+        throw new \Exception("Couldn't find question with ID $questionID");
       }
     }
     if (isset($details->Collapsible)) {
@@ -36,9 +36,12 @@ class Group {
     } else {
       $out .= "<legend>{$this->title}</legend>";
     }
+
+    /** @var Question $question */
     foreach ($this->questions as $key => $question) {
       $out .= $question->renderHTML(($key+1).". ");
     }
+
     if ($this->comments) {
       $out .= "<label for='question-{$this->groupID}-comments' class='spacing'>Any other comments?</label>";
       $out .= "<textarea rows=3 name='{$this->groupID}-comments' id='question-{$this->groupID}-comments'></textarea>";
@@ -95,7 +98,9 @@ class Group {
         $output .= "<tr>\n";
         $output .= "  <td>$person</td>";
         for ($i = 0; $i < $dropdowns; $i++) {
+          /** @var Question $question */
           $question = $this->questions[$i];
+
           if (isset($allResponses[$question->questionID][$userID])) {
             $response = $allResponses[$question->questionID][$userID]['Answer'];
             $bgColour = $question->getColour($response);

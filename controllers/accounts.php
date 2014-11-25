@@ -1,5 +1,4 @@
 <?php
-use Ubersite\DatabaseManager;
 use Ubersite\Message;
 
 $title = "Account Management";

@@ -94,7 +94,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $query = 'UPDATE questionnaire_responses SET Responses = ?, QuestionStage = ?
               WHERE QuizId = ? AND `UserID` = ?';
     $stmt = $dbh->prepare($query);
-    $stmt->execute([$response, ++$stage, $id, $username]);
+    $stmt->execute([$responses, ++$stage, $id, $username]);
     $messages->addMessage(new Message("success", $pageOrder[$stage-2]->title." successfully submitted."));
     refresh();
   }

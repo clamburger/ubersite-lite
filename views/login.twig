@@ -7,11 +7,11 @@
 <form method="POST" action="">
     <table class='timetable'>
         <tr>
-            <th>Username:</th>
-            <td><input type="text" name="username" value='{{ form.username }}' /></td></tr>
+            <th><label for="username">Username:</label></th>
+            <td><input type="text" name="username" id="username" value='{{ form.username }}' /></td></tr>
         <tr>
-            <th>Password:</th>
-            <td><input type="password" name="password" /></td>
+            <th><label for="password">Password:</label></th>
+            <td><input type="password" name="password" id="password" /></td>
         </tr>
         <tr>
             <th colspan="2" style='text-align:right'><input type='submit' value="Login" /></th>

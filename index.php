@@ -99,7 +99,7 @@ if (isset($_GET['standalone'])) {
   $standalone = false;
 }
 
-if (!$user->isLeader()) {
+if (!$user->sLeader()) {
   // Menu items with the "restricted" attribute will only be shown to leaders.
   $menu = array_filter($menu, function($menuItem) {
     return !isset($menuItem['restricted']);

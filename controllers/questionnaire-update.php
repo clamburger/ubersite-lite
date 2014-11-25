@@ -80,8 +80,6 @@ if (isset($_POST['submit'])) {
 
   // Adding new electives
   if ($_POST['submit'] == 'Add New Electives' && count($add) > 0) {
-
-    $query = "ALTER TABLE questionnaire_responses";
     $newQuestions = [];
     $newGroups = [];
     foreach ($add as $info) {
@@ -149,7 +147,7 @@ if (count($add) === 0 && count($remove) === 0) {
   $HTML .= 'Both tables are currently in sync: no changes need to be made.';
 } else {
   if (count($add)) {
-    $HTML .= 'The following electives are not present in the <tt>`questionnaire`</tt> table.\n';
+    $HTML .= 'The following electives are not present in the <code>`questionnaires`</code> table.\n';
     $HTML .= "<ul style='margin: 0;'>\n";
     foreach ($add as $ID) {
       $HTML .= "\t<li>{$ID[1]}</li>\n";
@@ -160,7 +158,7 @@ if (count($add) === 0 && count($remove) === 0) {
   if (count($remove)) {
     $HTML .= "The following electives no longer need to be on the Elective Feedback page.";
     if ($count) {
-      $HTML .= " They cannot be removed until the <tt>`questionnaire`</tt> table is empty.";
+      $HTML .= " They cannot be removed until the <code>`questionnaire_responses`</code> table is empty.";
     }
     $HTML .= "\n<ul style='margin: 0;'>\n";
     foreach ($remove as $ID) {

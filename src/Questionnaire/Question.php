@@ -6,8 +6,8 @@ class Question {
   public $question;
   public $questionShort;
   public $answerType;
-  public $answerOptions = false;
-  public $answerOther = false;
+  public $answerOptions = null;
+  public $answerOther = null;
 
   const OTHER_RESPONSE = 42;
   const DEFAULT_COLOUR = "white";
@@ -140,7 +140,7 @@ class Question {
       return $this->answerOptions[$response - 1];
     }
 
-    return "<span style='font-color: red;'>Not yet implemented: {$this->answerType}</span>";
+    return "<span style='color: red;'>Not yet implemented: {$this->answerType}</span>";
 
   }
 

@@ -16,7 +16,7 @@ class Page {
       } else if (isset($questions[$ID])) {
         $this->questions[] = $questions[$ID];
       } else {
-        error("Could not find group or question with ID \"$ID\"");
+        throw new \Exception("Couldn't find group or question with ID $ID");
       }
     }
     if (isset($details->Intro)) {
@@ -29,6 +29,7 @@ class Page {
     if ($this->intro) {
       $out .= "<p>$this->intro</p>";
     }
+    /** @var Group|Question $item */
     foreach ($this->questions as $item) {
       $out .= $item->renderHTML();
     }

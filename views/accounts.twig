@@ -32,22 +32,22 @@
   <input type="hidden" name='userID' value='<tag:edit-ID />' />
   <table class='formTable'>
     <tr>
-      <th>User ID:</th>
-      <td><input type='text' name='userIDinput' maxlength='6' size='6' value='{{ edit-id }}'{{ edit-disabled | raw }} /></td>
+      <th><label for="userIDinput">User ID:</label></th>
+      <td><input type='text' name='userIDinput' id='userIDinput' size='6' value='{{ edit-id }}'{{ edit-disabled | raw }} /></td>
     </tr>
     <tr>
-      <th>Name:</th>
-      <td><input type='text' name='name' value='{{ edit-name }}' /></td>
+      <th><label for="name">Name:</label></th>
+      <td><input type='text' name='name' id='name' value='{{ edit-name }}' /></td>
     </tr>
     <tr>
-      <th>Category:</th>
-      <td><select name='category'>
+      <th><label for="category">Category:</label></th>
+      <td><select name='category' id="category">
         {{ categories | raw }}
       </select></td>
     </tr>
     <tr>
-      <th>Duty Team:</th>
-      <td><input type='text' name='name' value='{{ edit-dutyteam }}' /></td>
+      <th><label for="dutyteam">Duty Team:</label></th>
+      <td><input type='text' name='dutyteam' id='dutyteam' value='{{ edit-dutyteam }}' /></td>
     </tr>
     <tr>
       <th colspan="2" class="submitRow">
