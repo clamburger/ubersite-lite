@@ -1,4 +1,4 @@
-# ÜberSite Lite
+# Übersite Lite
 
 An internal website designed for use on [&Uuml;bertweak](http://ubertweak.org.au) and [related camps](http://crutech.org.au).
 
