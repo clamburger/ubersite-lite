@@ -134,8 +134,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 }
 $twig->addGlobal("software", new Software());
 
-print_r($messages);
-
 // Include the specified page
 if (file_exists("controllers/$PAGE.php")) {
   require_once("controllers/$PAGE.php");
