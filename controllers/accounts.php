@@ -3,7 +3,7 @@ use Ubersite\Message;
 
 $twig->addGlobal('submit', "Create User");
 
-$roles = ['director', 'leader', 'camper', 'cook', 'visitor'];
+$roles = ['camper', 'leader', 'director', 'cook', 'visitor'];
 
 // This stores the values for the role dropdown list as well as which role is selected
 $roleList = array_fill_keys($roles, false);
@@ -15,7 +15,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && $user->isLeader()) {
     // Creating a new user
     $username = $_POST['userID'];
     $name = $_POST['name'];
-    $role = $_POST['category'];
+    $role = $_POST['role'];
     if (in_array($role, $roles)) {
       $roleList[$role] = true;
     }
@@ -30,7 +30,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && $user->isLeader()) {
     } else {
       // The default password is the same as the username.
       $password = password_hash($username, PASSWORD_DEFAULT);
-      $query = 'INSERT INTO users (UserID, Name, Password, Category, DutyTeam)
+      $query = 'INSERT INTO users (UserID, Name, Password, Role, DutyTeam)
                 VALUES(?, ?, ?, ?, ?)';
       $stmt = $dbh->prepare($query);
       $stmt->execute([$username, $name, $password, $role, $_POST['dutyTeam']]);
@@ -44,7 +44,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && $user->isLeader()) {
     $editing = true;
     $username = $_POST['userID'];
     $name = $_POST['name'];
-    $role = $_POST['category'];
+    $role = $_POST['role'];
     if (in_array($role, $roles)) {
       $roleList[$role] = true;
     }
@@ -56,7 +56,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && $user->isLeader()) {
     } else if ($role !== '' && !in_array($role, $roles)) {
       $messages->addMessage(new Message("error", "Invalid role provided."));
     } else {
-      $query = 'UPDATE users SET Name = ?, Category = ?, DutyTeam = ? WHERE UserID = ?';
+      $query = 'UPDATE users SET Name = ?, Role = ?, DutyTeam = ? WHERE UserID = ?';
       $stmt = $dbh->prepare($query);
       $stmt->execute([$name, $role, $_POST['dutyTeam'], $username]);
       $messages->addMessage(new Message('success', 'Account successfully modified.'));
@@ -78,15 +78,15 @@ if ($SEGMENTS[1] == "edit") {
   $form = [
     'userID' => $row['UserID'],
     'name' => $row['Name'],
-    'category' => $row['Category'],
+    'role' => $row['Role'],
     'dutyTeam' => $row['DutyTeam']
   ];
-  $roleList[$row['Category']] = true;
+  $roleList[$row['Role']] = true;
   $twig->addGlobal('form', $form);
 }
 
 $twig->addGlobal('editing', $editing);
-$twig->addGlobal('categories', $roleList);
+$twig->addGlobal('roles', $roleList);
 
 # Delete link clicked
 if ($SEGMENTS[1] == "delete") {
@@ -131,10 +131,10 @@ usort($people, function($user1, $user2) {
   $precedence = array_flip(['director', 'leader', 'camper', 'cook', 'visitor']);
 
   // The max(1) in each of these will make directors be sorted the same as leaders.
-  $c = max(1, $precedence[$user1->Category]);
-  $d = max(1, $precedence[$user2->Category]);
+  $c = max(1, $precedence[$user1->Role]);
+  $d = max(1, $precedence[$user2->Role]);
 
-  // If the category is the same, sort by the username.
+  // If the role is the same, sort by the username.
   if ($c === $d) {
     return strcmp($user1->UserID, $user2->UserID);
   }

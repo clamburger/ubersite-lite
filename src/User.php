@@ -7,23 +7,19 @@ namespace Ubersite;
 class User {
   public $UserID;
   public $Name;
-  public $Category;
+  public $Role;
   public $DutyTeam;
 
   public $LoggedIn = true;
 
-  function __construct($row) {
+  public function __construct($row) {
     $this->UserID = $row['UserID'];
     $this->Name = $row['Name'];
-    $this->Category = $row['Category'];
+    $this->Role = $row['Role'];
     $this->DutyTeam = $row['DutyTeam'];
   }
 
-  function isCamper() {
-    return $this->Category == "camper";
-  }
-
-  function isLeader() {
-    return !$this->isCamper();
+  public function isLeader() {
+    return in_array($this->Role, ['leader', 'director']);
   }
 }

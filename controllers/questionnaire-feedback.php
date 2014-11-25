@@ -57,14 +57,14 @@ $smallgroup = $SEGMENTS[2] == 'smallgroup';
 
 // Find the responses
 $query = "SELECT Name, UserID, Responses FROM questionnaire_responses
-          INNER JOIN `users` USING(UserID) WHERE Category = ? $where
+          INNER JOIN `users` USING(UserID) WHERE Role = 'camper' $where
           AND QuizId = ? ORDER BY Name ASC";
 $stmt = $dbh->prepare($query);
 
 if ($smallgroup) {
-  $stmt->execute(['camper', $id, $username]);
+  $stmt->execute([$id, $user->UserID]);
 } else {
-  $stmt->execute(['camper', $id]);
+  $stmt->execute([$id]);
 }
 
 $allResponses = [];

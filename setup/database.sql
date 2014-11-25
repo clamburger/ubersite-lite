@@ -40,7 +40,7 @@ INSERT INTO questionnaires (Id, Name, Pages, Intro) VALUES (1, 'Camp Questionnai
 CREATE TABLE users (
   UserID TEXT NOT NULL PRIMARY KEY,
   Name TEXT NOT NULL,
-  Category TEXT NOT NULL DEFAULT 'camper',
+  Role TEXT NOT NULL DEFAULT 'camper',
   DutyTeam TEXT,
   Password TEXT
 );

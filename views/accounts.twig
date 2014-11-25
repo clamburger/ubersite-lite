@@ -14,7 +14,7 @@
   </tr>
   {% for row in users %}
   <tr>
-    <td class="userRole {{ row.Category }}">{{ row.Category }}</td>
+    <td class="userRole {{ row.Role }}">{{ row.Role }}</td>
     <td><strong>{{ row.UserID }}</strong></td>
     <td>{{ row.Name }}</td>
     <td>{{ row.DutyTeam }}</td>
@@ -52,11 +52,11 @@
       <td><input type='text' name='name' id='name' value='{{ form.name }}' placeholder="Required" required></td>
     </tr>
     <tr>
-      <th><label for="category">Role:</label></th>
+      <th><label for="role">Role:</label></th>
       <td>
-        <select name='category' id="category">
-          {% for category, selected in categories %}
-          <option value='{{ category }}' {{ selected ? 'selected' : '' }}>{{ category | capitalize }}</option>
+        <select name='role' id="role">
+          {% for role, selected in roles %}
+          <option value='{{ role }}' {{ selected ? 'selected' : '' }}>{{ role | capitalize }}</option>
           {% endfor %}
         </select>
       </td>

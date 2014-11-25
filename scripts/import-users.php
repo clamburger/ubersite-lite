@@ -18,7 +18,7 @@ require_once("../config/config.php");
 
 $dbh = DatabaseManager::get();
 
-$query = "INSERT INTO `users` (`UserID`, `Name`, `Category`, `Password`) VALUES (?, ?, 'camper', NULL)";
+$query = "INSERT INTO users (UserID, Name, Role, Password) VALUES (?, ?, 'camper', NULL)";
 $stmt = $dbh->prepare($query);
 
 $data = explode("\n", trim(file_get_contents("accounts.txt")));
