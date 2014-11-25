@@ -13,10 +13,6 @@ h2 {
   border-color: #000CC0;
 }
 
-ins {
-  color: #4a629e;
-}
-
 th {
   background-color: #cfe0e0;
 }
@@ -25,7 +21,7 @@ tr.alt td {
   background-color: #dfeaea;
 }
 
-#headerContainer {
+#header {
   background-color: #87B8DE;
 }
 
@@ -40,10 +36,6 @@ tr.alt td {
 #menu li a:hover, #menu li a:active {
   color: #ffffff;
   background-color: #000080;
-}
-
-#menu li.special a {
-  color: #D00000;
 }
 
 #messages  {
@@ -80,29 +72,8 @@ table.content, table.timetable, table.formTable, table.progress {
   background-color: #60a4f4;
 }
 
-.timetable td, .progress td {
+.progress td {
   border-color: #2A2AA5;
-}
-
-.timetable td div {
-  border-color: #2A2AA5;
-}
-
-div.view {
-  border-color: #2A2AA5;
-}
-
-div.not {
-  background-color: #B7FFB7;
-  border-color: #008000;
-}
-
-div.img img, div.not img {
-  border-color: #2A2AA5;
-}
-
-div.img a:hover img, div.not a:hover img {
-  border-color: #A52A2A;
 }
 
 .optquest {
@@ -112,16 +83,4 @@ div.img a:hover img, div.not a:hover img {
 div.progress {
   background-color: #87B8DE;
   border-color: #6798BE;
-}
-
-.progress .bar {
-  background-color: #6798BE;
-}
-
-#nav a {
-  color: #E7E5E5;
-}
-
-#nav ul a:hover {
-  background-color: #0399D4 !important;
 }

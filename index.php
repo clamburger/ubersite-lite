@@ -120,7 +120,7 @@ foreach ($menu as $filename => $menuItem) {
 
 // TODO: we probably shouldn't be using $twig->addGlobal so much
 
-$twig->addGlobal('menu', $menuHTML);
+$twig->addGlobal('menu', $menu);
 $twig->addGlobal('loginURL', $loginURL);
 $twig->addGlobal("software", new Software());
 $twig->addGlobal("user", $user);

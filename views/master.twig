@@ -26,31 +26,30 @@
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
   </head>
   <body>
-      <!-- Header -->
-      <div id="headerContainer">
-        <div id="header">
-          {% if standalone %}
-          <img src="{{ standalone.logo }}" class="logo" border="0" alt="Übertweak Logo" />
-          {% else %}
-          <a href='/'><img src="/resources/img/logo.png" class="logo" border="0" alt="Übertweak Logo" width="96" height="96" /></a>
-          {% endif %}
-          <div class="title">
-            {{ campname }}
-            <div class="version">Powered by <strong>{{ software.fullName }}</strong></div></div>
-        </div>
-      </div>
+    <!-- Header -->
+    <div id="header">
+      {% if standalone %}
+      <img src="{{ standalone.logo }}" class="logo" border="0" alt="Übertweak Logo" />
+      {% else %}
+      <a href='/'><img src="/resources/img/logo.png" class="logo" border="0" alt="Übertweak Logo" width="96" height="96" /></a>
+      {% endif %}
+      <div class="title">
+        {{ campname }}
+        <div class="version">Powered by <strong>{{ software.fullName }}</strong> - {{ software.version }}</div></div>
+    </div>
 
     {% if not standalone %}
       <!-- Menu -->
       <div id="menu">
-        <ul id="nav">
-          <li style='width: 10px;'>&nbsp;</li>
-          {{ menu | raw }}
-          {% if user.LoggedIn %}
-            <li class="right"><a href='/logout'>Logout</a></li>
-            <li class="right"><span class='text'>Current User: {{ user.Name }}</li>
-          {% endif %}
-          </ul>
+        <ul>
+        {% for link, item in menu %}
+          <li><a href="/{{ link }}">{{ item.name }}</a></li>
+        {% endfor %}
+        {% if user.LoggedIn %}
+          <li class="right"><a href='/logout'>Logout</a></li>
+          <li class="right"><strong>{{ user.Name }}</strong></li>
+        {% endif %}
+        </ul>
       </div>
 
       <br clear="all">
