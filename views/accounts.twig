@@ -7,7 +7,7 @@
   <table>
   <tr>
     <th>Role</th>
-    <th>User ID</th>
+    <th>Username</th>
     <th>Name</th>
     <th>Duty Team</th>
     <th>Manage</th>
@@ -18,8 +18,7 @@
     <td><strong>{{ row.UserID }}</strong></td>
     <td>{{ row.Name }}</td>
     <td>{{ row.DutyTeam }}</td>
-    <td>
-      <a href='/accounts/edit/{{ row.UserID }}#new'>Edit</a>
+    <td><a href='/accounts/edit/{{ row.UserID }}#new'>Edit</a>
       {% if row.UserID != user.UserID %}
       | <a href='/accounts/delete/{{ row.UserID }}'>Delete</a>
       {% endif %}
@@ -32,38 +31,44 @@
   {% if editing %}
     <h2 id="new">Editing User:</h2>
     <input type="hidden" name='action' value='edit'>
+    <input type="hidden" name='userID' value='{{ form.userID }}'>
   {% else %}
     <h2 id="new">New User:</h2>
     <input type="hidden" name='action' value='new'>
   {% endif %}
-  <input type="hidden" name='userID' value='<tag:edit-ID />'>
   <table class='formTable'>
     <tr>
-      <th><label for="userIDinput">User ID:</label></th>
-      <td><input type='text' name='userIDinput' id='userIDinput' size='6' value='{{ form.id }}' {{ editing ? 'disabled' : '' }}></td>
+      <th><label for="userID">Username:</label></th>
+      <td>
+      {% if editing %}
+        <input id="userID" value="{{ form.userID }}" disabled>
+      {% else %}
+        <input type='text' id='userID' name="userID" value="{{ form.userID }}" placeholder="Required" required>
+      {% endif %}
+      </td>
     </tr>
     <tr>
       <th><label for="name">Name:</label></th>
-      <td><input type='text' name='name' id='name' value='{{ form.name }}'></td>
+      <td><input type='text' name='name' id='name' value='{{ form.name }}' placeholder="Required" required></td>
     </tr>
     <tr>
-      <th><label for="category">Category:</label></th>
+      <th><label for="category">Role:</label></th>
       <td>
         <select name='category' id="category">
           {% for category, selected in categories %}
-          <option value='{{ category }}' {{ selected ? 'selected' : '' }}>{{ category | capitalize  }}</option>
+          <option value='{{ category }}' {{ selected ? 'selected' : '' }}>{{ category | capitalize }}</option>
           {% endfor %}
         </select>
       </td>
     </tr>
     <tr>
-      <th><label for="dutyteam">Duty Team:</label></th>
-      <td><input type='text' name='dutyteam' id='dutyteam' value='{{ form.dutyteam }}' /></td>
+      <th><label for="dutyTeam">Duty Team:</label></th>
+      <td><input type='text' name='dutyTeam' id='dutyTeam' value='{{ form.dutyTeam }}' placeholder="Optional"></td>
     </tr>
     <tr>
       <th colspan="2" class="submitRow">
       <input type='button' value="Cancel" onclick="document.location = '/accounts'" />
-      <input type='submit' value="{{ submit }}" />
+      <input type='submit' value="{{ editing ? 'Save User' : 'Create User' }}" />
       </th>
     </tr>
   </table>

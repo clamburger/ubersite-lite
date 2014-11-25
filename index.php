@@ -54,6 +54,7 @@ $user = new NullUser();
 $script = explode("/", $_SERVER['SCRIPT_NAME']);
 $pageName = $PAGE;
 
+// Special handling for logout page
 if ($pageName == 'logout') {
   session_destroy();
   header('Location: /');
