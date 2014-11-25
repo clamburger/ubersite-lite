@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>{{ software }} Setup</title>
+    <title>{{ software.name }} Setup</title>
 
     <link rel="icon" type="image/png" href="../resources/img/icon.png" />
 
@@ -18,8 +18,11 @@
       <div id="header" style='width: 100%;'>
         <img src="../resources/img/logo.png" class="logo" border="0" alt="Übertweak Logo" />
         <div class="title">
-        {{ software }} Setup<br />
-        <div class="version">Version {{ version }} {% if codename %}({{ codename }}){% endif %}</strong></div></div>
+          {{ software.name }} Setup
+          <div class="version">
+            <strong>{{ software.name }} {{ software.version }}</strong> - {{ software.codename }}
+          </div>
+        </div>
       </div>
     </div>
 

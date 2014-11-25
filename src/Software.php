@@ -2,11 +2,23 @@
 namespace Ubersite;
 
 class Software {
-  static $name = "ÜberSite";
-  static $version = "2.1.0";
-  static $codename = "Fenix";
+  public static $name = "ÜberSite";
+  public static $version = "2.1.0";
+  public static $codename = "Fenix";
 
-  static function getFullName() {
-    return Software::$name . " " . Software::$codename;
+  public function getFullName() {
+    return self::$name . " " . self::$codename;
+  }
+
+  public function getName() {
+    return self::$name;
+  }
+
+  public function getVersion() {
+    return self::$version;
+  }
+
+  public function getCodename() {
+    return self::$codename;
   }
 }

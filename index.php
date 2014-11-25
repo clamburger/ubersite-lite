@@ -117,22 +117,17 @@ foreach ($menu as $filename => $menuItem) {
   $menuHTML .= "</li>\n";
 }
 
-$twig->addGlobal('menu', $menuHTML);
-
-$twig->addGlobal('head', false);
-
-$twig->addGlobal('loginURL', $loginURL);
-
-// TODO: remove this when possible
-$twig->addGlobal('softwareFullName', Software::getFullName());
-
-// New stuff! Part of the 2012 refactor
 // TODO: we probably shouldn't be using $twig->addGlobal so much
+
+$twig->addGlobal('menu', $menuHTML);
+$twig->addGlobal('head', false);
+$twig->addGlobal('loginURL', $loginURL);
+$twig->addGlobal("software", new Software());
 $twig->addGlobal("user", $user);
+
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
   $twig->addGlobal("form", $_POST);
 }
-$twig->addGlobal("software", new Software());
 
 // Include the specified page
 if (file_exists("controllers/$PAGE.php")) {

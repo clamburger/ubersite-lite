@@ -34,9 +34,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 $loader = new Twig_Loader_Filesystem('.');
 $twig = new Twig_Environment($loader);
 
-$twig->addGlobal('version', Software::$version);
-$twig->addGlobal('codename', Software::$codename);
-$twig->addGlobal('software', Software::$name);
+$twig->addGlobal('software', new Software());
 
 $checks = [];
 if (PHP_VERSION_ID < 50500) {
