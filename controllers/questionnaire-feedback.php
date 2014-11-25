@@ -48,7 +48,7 @@ foreach ($details->PageOrder as $pageID) {
 }
 
 if ($SEGMENTS[2] == 'smallgroup') {
-  $where = "AND DutyTeam = (SELECT DutyTeam FROM users WHERE UserID = ?)";
+  $where = "AND DutyTeam = (SELECT DutyTeam FROM users WHERE Username = ?)";
 } else {
   $where = '';
 }
@@ -56,13 +56,13 @@ if ($SEGMENTS[2] == 'smallgroup') {
 $smallgroup = $SEGMENTS[2] == 'smallgroup';
 
 // Find the responses
-$query = "SELECT Name, UserID, Responses FROM questionnaire_responses
-          INNER JOIN `users` USING(UserID) WHERE Role = 'camper' $where
+$query = "SELECT Name, Username, Responses FROM questionnaire_responses
+          INNER JOIN `users` USING(Username) WHERE Role = 'camper' $where
           AND QuizId = ? ORDER BY Name ASC";
 $stmt = $dbh->prepare($query);
 
 if ($smallgroup) {
-  $stmt->execute([$id, $user->UserID]);
+  $stmt->execute([$id, $user->Username]);
 } else {
   $stmt->execute([$id]);
 }
@@ -72,7 +72,7 @@ $allResponders = [];
 
 while ($row = $stmt->fetch()) {
   $responses = json_decode($row['Responses']);
-  $allResponders[$row['UserID']] = $people[$row['UserID']];
+  $allResponders[$row['Username']] = $people[$row['Username']];
   foreach ($responses as $questionID => $answer) {
     if (!$answer) {
       continue;
@@ -80,7 +80,7 @@ while ($row = $stmt->fetch()) {
     if (!isset($allResponses[$questionID])) {
       $allResponses[$questionID] = [];
     }
-    $allResponses[$questionID][$row['UserID']] = ["UserID" => $row['UserID'], "Answer" => $answer];
+    $allResponses[$questionID][$row['Username']] = ["Username" => $row['Username'], "Answer" => $answer];
   }
 }
 
@@ -98,19 +98,19 @@ if (isset($details->FeedbackTable)) {
     $output .= "  <th>{$question->questionShort}</th>\n";
   }
   $output .= "</tr>\n";
-  foreach ($allResponders as $userID => $name) {
+  foreach ($allResponders as $username => $name) {
     $output .= "<tr>\n";
     $output .= "  <td style='white-space: nowrap;'>$name</td>\n";
     foreach ($details->FeedbackTable as $questionID) {
 
       /** @var Question $question */
       $question = $questions[$questionID];
-      if (isset($allResponses[$questionID][$userID])) {
-        $response = $allResponses[$questionID][$userID]['Answer'];
+      if (isset($allResponses[$questionID][$username])) {
+        $response = $allResponses[$questionID][$username]['Answer'];
         $stringResponse = $question->getAnswerString($response);
         $other = "";
-        if (isset($allResponses[$questionID."-other"][$userID]['Answer'])) {
-          $other = "<br><small>".$allResponses[$questionID."-other"][$userID]['Answer']."</small>";
+        if (isset($allResponses[$questionID."-other"][$username]['Answer'])) {
+          $other = "<br><small>".$allResponses[$questionID."-other"][$username]['Answer']."</small>";
         }
         if ($stringResponse === Question::OTHER_RESPONSE) {
           $stringResponse = "Other";

@@ -61,20 +61,19 @@ if ($pageName == 'logout') {
   exit;
 }
 
-// Populate array of users (UserID => Name)
+// Populate array of users (Username => User object)
 $stmt = $dbh->query('SELECT * FROM users');
 $people = [];
 while ($row = $stmt->fetch()) {
-  $people[$row['UserID']] = new User($row);
+  $people[$row['Username']] = new User($row);
 }
 
 if (isset($_SESSION['username'])) {
-  $username = $_SESSION['username'];
   // If the logged in user no longer exists, something bad happened.
-  if (!isset($people[$username])) {
+  if (!isset($people[$_SESSION['username']])) {
     header('Location: /logout');
   }
-  $user = $people[$username];
+  $user = $people[$_SESSION['username']];
 
 } else {
   // Redirect to login page if not logged in

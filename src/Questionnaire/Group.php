@@ -77,7 +77,7 @@ class Group {
           continue;
         }
         foreach ($allResponses[$question->questionID] as $response) {
-          $responders[$response['UserID']] = $users[$response['UserID']]->Name;
+          $responders[$response['Username']] = $users[$response['Username']]->Name;
         }
       } else {
         break;
@@ -94,15 +94,15 @@ class Group {
         $output .= "  <th style='width: 100px;'>{$this->questions[$i]->questionShort}</th>\n";
       }
       $output .= "</tr>\n";
-      foreach ($responders as $userID => $person) {
+      foreach ($responders as $username => $person) {
         $output .= "<tr>\n";
         $output .= "  <td>$person</td>";
         for ($i = 0; $i < $dropdowns; $i++) {
           /** @var Question $question */
           $question = $this->questions[$i];
 
-          if (isset($allResponses[$question->questionID][$userID])) {
-            $response = $allResponses[$question->questionID][$userID]['Answer'];
+          if (isset($allResponses[$question->questionID][$username])) {
+            $response = $allResponses[$question->questionID][$username]['Answer'];
             $bgColour = $question->getColour($response);
             $response = $question->getAnswerString($response);
             $output .= "  <td style='background-color: $bgColour;'>$response</td>\n";

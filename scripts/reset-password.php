@@ -28,7 +28,7 @@ $username = $argv[1];
 $password = $argc == 3 ? $argv[2] : $argv[1];
 
 // Check if the row exists
-$stmt = $dbh->prepare('SELECT EXISTS(SELECT 1 FROM users WHERE UserID = ?)');
+$stmt = $dbh->prepare('SELECT EXISTS(SELECT 1 FROM users WHERE Username = ?)');
 $stmt->execute([$username]);
 $row = $stmt->fetch();
 
@@ -39,7 +39,7 @@ if (!$row[0]) {
 
 $hash = password_hash($password, PASSWORD_DEFAULT);
 
-$stmt = $dbh->prepare('UPDATE users SET Password = ? WHERE UserID = ?');
+$stmt = $dbh->prepare('UPDATE users SET Password = ? WHERE Username = ?');
 $stmt->execute([$hash, $username]);
 
 if ($stmt->rowCount()) {

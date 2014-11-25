@@ -27,19 +27,19 @@ $twig->addGlobal("pages", $pages);
 $rawStatus = [];
 
 // Fetch the latest stage for each camper
-$query = "SELECT UserID, QuestionStage FROM users LEFT JOIN questionnaire_responses USING(UserID)
+$query = "SELECT Username, QuestionStage FROM users LEFT JOIN questionnaire_responses USING(Username)
           WHERE (QuizId = ? OR QuizId IS NULL) AND Role = 'camper'";
 $stmt = $dbh->prepare($query);
 $stmt->execute([$id]);
 while ($row = $stmt->fetch()) {
   $stage = intval($row['QuestionStage']);
-  $rawStatus[$row['UserID']] = $stage;
+  $rawStatus[$row['Username']] = $stage;
 }
 
 $status = [];
 $totals = array_fill(1, count($pages), 0);
-foreach ($rawStatus as $userID => $userStatus) {
-  $temp = array("name" => $people[$userID]->Name);
+foreach ($rawStatus as $username => $userStatus) {
+  $temp = array("name" => $people[$username]->Name);
   for ($i = 1; $i <= count($pages); $i++) {
     if ($i > $userStatus) {
       $temp["stages"][] = "<td style='text-align: center;'>---</td>";

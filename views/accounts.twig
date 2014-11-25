@@ -15,12 +15,12 @@
   {% for row in users %}
   <tr>
     <td class="userRole {{ row.Role }}">{{ row.Role }}</td>
-    <td><strong>{{ row.UserID }}</strong></td>
+    <td><strong>{{ row.Username }}</strong></td>
     <td>{{ row.Name }}</td>
     <td>{{ row.DutyTeam }}</td>
-    <td><a href='/accounts/edit/{{ row.UserID }}#new'>Edit</a>
-      {% if row.UserID != user.UserID %}
-      | <a href='/accounts/delete/{{ row.UserID }}'>Delete</a>
+    <td><a href='/accounts/edit/{{ row.Username }}#new'>Edit</a>
+      {% if row.Username != user.Username %}
+      | <a href='/accounts/delete/{{ row.Username }}'>Delete</a>
       {% endif %}
     </td>
   </tr>
@@ -31,19 +31,19 @@
   {% if editing %}
     <h2 id="new">Editing User:</h2>
     <input type="hidden" name='action' value='edit'>
-    <input type="hidden" name='userID' value='{{ form.userID }}'>
+    <input type="hidden" name='username' value='{{ form.Username }}'>
   {% else %}
     <h2 id="new">New User:</h2>
     <input type="hidden" name='action' value='new'>
   {% endif %}
   <table class='formTable'>
     <tr>
-      <th><label for="userID">Username:</label></th>
+      <th><label for="username">Username:</label></th>
       <td>
       {% if editing %}
-        <input id="userID" value="{{ form.userID }}" disabled>
+        <input id="username" value="{{ form.Username }}" disabled>
       {% else %}
-        <input type='text' id='userID' name="userID" value="{{ form.userID }}" placeholder="Required" required>
+        <input type='text' id='username' name="username" value="{{ form.Username }}" placeholder="Required" required>
       {% endif %}
       </td>
     </tr>

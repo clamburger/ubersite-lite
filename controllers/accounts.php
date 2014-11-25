@@ -13,7 +13,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && $user->isLeader()) {
 
   if ($_POST['action'] == "new") {
     // Creating a new user
-    $username = $_POST['userID'];
+    $username = $_POST['username'];
     $name = $_POST['name'];
     $role = $_POST['role'];
     if (in_array($role, $roles)) {
@@ -30,7 +30,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && $user->isLeader()) {
     } else {
       // The default password is the same as the username.
       $password = password_hash($username, PASSWORD_DEFAULT);
-      $query = 'INSERT INTO users (UserID, Name, Password, Role, DutyTeam)
+      $query = 'INSERT INTO users (Username, Name, Password, Role, DutyTeam)
                 VALUES(?, ?, ?, ?, ?)';
       $stmt = $dbh->prepare($query);
       $stmt->execute([$username, $name, $password, $role, $_POST['dutyTeam']]);
@@ -42,7 +42,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && $user->isLeader()) {
   } else {
     // Editing an account
     $editing = true;
-    $username = $_POST['userID'];
+    $username = $_POST['username'];
     $name = $_POST['name'];
     $role = $_POST['role'];
     if (in_array($role, $roles)) {
@@ -56,7 +56,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && $user->isLeader()) {
     } else if ($role !== '' && !in_array($role, $roles)) {
       $messages->addMessage(new Message("error", "Invalid role provided."));
     } else {
-      $query = 'UPDATE users SET Name = ?, Role = ?, DutyTeam = ? WHERE UserID = ?';
+      $query = 'UPDATE users SET Name = ?, Role = ?, DutyTeam = ? WHERE Username = ?';
       $stmt = $dbh->prepare($query);
       $stmt->execute([$name, $role, $_POST['dutyTeam'], $username]);
       $messages->addMessage(new Message('success', 'Account successfully modified.'));
@@ -71,12 +71,12 @@ if ($SEGMENTS[1] == "edit") {
   if (!isset($people[$SEGMENTS[2]])) {
     header("Location: /accounts");
   }
-  $stmt = $dbh->prepare('SELECT * FROM users WHERE UserID = ?');
+  $stmt = $dbh->prepare('SELECT * FROM users WHERE Username = ?');
   $stmt->execute([$SEGMENTS[2]]);
   $row = $stmt->fetch();
 
   $form = [
-    'userID' => $row['UserID'],
+    'username' => $row['username'],
     'name' => $row['Name'],
     'role' => $row['Role'],
     'dutyTeam' => $row['DutyTeam']
@@ -105,7 +105,7 @@ if ($SEGMENTS[1] == "delete") {
         $messages->addMessage(new Message("error",
           "You have confirmed the wrong ID. You will need to press \"delete\" again."));
       } else {
-        $stmt = $dbh->prepare('DELETE FROM users WHERE UserID = ?');
+        $stmt = $dbh->prepare('DELETE FROM users WHERE Username = ?');
         $stmt->execute([$username]);
         $messages->addMessage(new Message("success",
           "You have successfully deleted {$people[$username]->Name}'s account."));
@@ -114,7 +114,7 @@ if ($SEGMENTS[1] == "delete") {
       unset($_SESSION['deleteID']);
       unset($_SESSION['deleteTime']);
     } else {
-      if ($username == $user->UserID) {
+      if ($username == $user->Username) {
           $messages->addMessage(new Message("error", "You cannot delete your own account!"));
       } else {
           $_SESSION['deleteID'] = $username;
@@ -136,7 +136,7 @@ usort($people, function($user1, $user2) {
 
   // If the role is the same, sort by the username.
   if ($c === $d) {
-    return strcmp($user1->UserID, $user2->UserID);
+    return strcmp($user1->Username, $user2->Username);
   }
 
   return ($c < $d) ? -1 : 1;

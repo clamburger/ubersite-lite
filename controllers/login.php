@@ -17,7 +17,7 @@ if (isset($_POST['username']) && isset($_POST['password'])) {
   $password = $_POST['password'];
 
   $dbh = DatabaseManager::get();
-  $stmt = $dbh->prepare('SELECT Password FROM users WHERE UserID = ?');
+  $stmt = $dbh->prepare('SELECT Password FROM users WHERE Username = ?');
   $stmt->execute([$username]);
 
   if (!$row = $stmt->fetch()) {
