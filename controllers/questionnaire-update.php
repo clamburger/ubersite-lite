@@ -1,9 +1,6 @@
 <?php
 use Ubersite\Message;
 
-$title = 'Synchronise Questionnaire Tables';
-$twig->addGlobal('title', $title);
-
 $id = $SEGMENTS[1];
 
 if (!$id) {

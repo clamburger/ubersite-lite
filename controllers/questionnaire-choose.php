@@ -1,7 +1,4 @@
 <?php
-$title = 'Choose Questionnaire';
-$twig->addGlobal('title', $title);
-
 $stmt = $dbh->query('SELECT Id, Name FROM questionnaires');
 $questionnaires = $stmt->fetchAll();
 

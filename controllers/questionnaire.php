@@ -4,9 +4,6 @@ use Ubersite\Questionnaire\Group;
 use Ubersite\Questionnaire\Page;
 use Ubersite\Questionnaire\Question;
 
-$title = 'Questionnaire';
-$twig->addGlobal('title', $title);
-
 // These will almost certainly be overidden.
 $submitted = false;
 $stage = 0;

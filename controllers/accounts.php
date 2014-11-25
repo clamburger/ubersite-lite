@@ -1,9 +1,6 @@
 <?php
 use Ubersite\Message;
 
-$title = "Account Management";
-$twig->addGlobal('title', $title);
-
 $twig->addGlobal('editing', false);
 $twig->addGlobal('edit-ID', false);
 $twig->addGlobal('edit-name', false);

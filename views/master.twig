@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <title>{{ campname }}: {{ title }}</title>
+    <title>{% block title title %} - {{ software.name }}</title>
 
     {% if standalone %}
       <link rel="icon" type="image/png" href="{{ standalone-icon }}" />
@@ -32,7 +32,7 @@
         <div id="header" style='width: 100%;'>
           <img src="{{ standalone-logo }}" class="logo" border="0" alt="Übertweak Logo" />
           <div class="title">
-            {{ campname }} - {{ title }}<br />
+            {{ campname }} - {{ block('title') }}<br />
             <div class="version">Powered by <strong>{{ software.fullName }}</strong></div></div>
         </div>
       </div>
@@ -43,7 +43,7 @@
           <a href='/'><img src="/resources/img/logo.png" class="logo" border="0" alt="Übertweak Logo" width="96" height="96" /></a>
 
           <div class="title">
-            <span>{{ campname }} - {{ title }}</span><br />
+            <span>{{ campname }} - {{ block('title') }}</span><br />
             <div class="version">
               Powered by <strong>{{ software.fullName }}</strong>
             </div>

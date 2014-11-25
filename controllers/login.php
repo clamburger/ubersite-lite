@@ -2,9 +2,6 @@
 use Ubersite\DatabaseManager;
 use Ubersite\Message;
 
-$title = 'Login';
-$twig->addGlobal('title', $title);
-
 $redirect = $SEGMENTS[1];
 
 # If the user is already logged in, redirect them to the index.
