@@ -88,10 +88,6 @@ table.content, table.timetable, table.formTable, table.progress {
   border-color: #2A2AA5;
 }
 
-div.img {
-  border-color: #2A2AA5;
-}
-
 div.view {
   border-color: #2A2AA5;
 }
@@ -109,48 +105,8 @@ div.img a:hover img, div.not a:hover img {
   border-color: #A52A2A;
 }
 
-.person {
-  border-color: #2A2AA5;
-}
-
-#card {
-  border-color: #96B596;
-  background-color: #CCEECC;
-}
-
-#cardContact {
-  border-color: #B5873C;
-  background-color: #EEE1CC;
-}
-
 .optquest {
   background-color: #dfeaea;
-}
-
-.newprofileAbout {
-  border-color: #96B596;
-  background-color: #CCEECC;
-}
-
-.newprofileContacts {
-  border-color: #B5873C;
-  background-color: #EEE1CC;
-}
-
-div.newprofileSmallPhoto {
-  border-color: #2A2AA5;
-}
-
-div.newprofileSmallPhoto img {
-  border-color: #2A2AA5;
-}
-
-div.newprofileSmallPhoto a:hover img {
-  border-color: #A52A2A;
-}
-
-#dutygroups th {
-  background-color: #60A4F4;
 }
 
 div.progress {
@@ -162,31 +118,10 @@ div.progress {
   background-color: #6798BE;
 }
 
-.captioning img {
-  border-color: #2A2AA5;
-}
-
-.captioning .image {
-  background-color: #87B8DE;
-}
-
 #nav a {
   color: #E7E5E5;
 }
 
 #nav ul a:hover {
   background-color: #0399D4 !important;
-}
-
-.cellBackground {
-  background-color: #60A4F4;
-}
-
-.uber {
-  background-color: #87B8DE;
-}
-
-.ubered {
-  background-color: #2A2AA5;
-  color: white;
 }

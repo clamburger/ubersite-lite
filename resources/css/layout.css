@@ -20,35 +20,21 @@ a:hover, a:active {
 }
 
 .img a, .not a {
-  border: 0px none !important;
-  margin: 0px;
-}
-
-.img .desc, .not .desc {
-  margin-top: -3px;
+  border: 0 none !important;
+  margin: 0;
 }
 
 /* Html Elements */
 
 h1, h2, h3, h4 {
   display: block;
-  margin-top: 10px;
-  margin-left: 0px;
-  margin-bottom: 10px;
-  margin-right: 0px;
-
-  padding-top: 0px;
-  padding-left: 0px;
-  padding-bottom: 10px;
-  padding-right: 0px;
-
-  border-color: #000;
-  border-style: solid;
-  border-width: 0 0 0 0;
+  margin: 10px 0 10px 0;
+  padding: 0 0 10px 0;
+  border: 0 solid black;
 }
 
 h1 {
-  border-width: 0px;
+  border-width: 0;
   font-size: 28px;
   font-weight: normal;
   color: #000;
@@ -61,15 +47,15 @@ h2 {
 }
 
 h3 {
-  padding: 0px;
+  padding: 0;
   font-size: 16px;
   font-weight: normal;
   color: #000;
-  border-width: 0 0 0px 0;
+  border-width: 0 0 0 0;
 }
 
 h4 {
-  padding: 0px;
+  padding: 0;
   font-weight:bold;
   font-size: 12px;
   color: #000;
@@ -126,11 +112,6 @@ th, td {
   width: 80%;
 }
 
-#whatson {
-  float: right;
-  width: 20%;
-}
-
 #menu {
   float: left;
   width: 100%;
@@ -139,33 +120,15 @@ th, td {
   border-bottom: 1px solid #000000;
 }
 
-#wrapper {
-  clear: both;
-  width: 100%;
-  margin: 0 auto;
-}
-
-#content-wrapper {
-  width: 60%;
-  float: left;
-  line-height: 1.8em;
-}
-
 #content {
   display: block;
   position: relative;
-  margin: 0px 10px;
+  margin: 0 10px;
 }
-
-#sidebar-wrapper {
-  width: 40%;
-  float: left;
-}
-
 
 /* Message List */
 #messages {
-  margin: 0px;
+  margin: 0;
   padding: 5px;
   font-size: 11px;
   font-weight: bold;
@@ -175,7 +138,7 @@ th, td {
 
 .alert {
   padding: 5px 10px;
-  text-shadow: 0px 1px 0px rgba(255, 255, 255, 0.5);
+  text-shadow: 0 1px 0 rgba(255, 255, 255, 0.5);
   background-color: #FCF8E3;
   border: 1px solid #FBEED5;
   border-radius: 4px;
@@ -204,8 +167,8 @@ th, td {
 }
 
 .alert ul {
-  padding: 0px;
-  margin: 0px;
+  padding: 0;
+  margin: 0;
   list-style: none;
   color: black;
 }
@@ -217,8 +180,8 @@ th, td {
 }
 
 .alert ul li:first-child {
-  padding-top: 0px;
-  margin-top: 0px;
+  padding-top: 0;
+  margin-top: 0;
   border-top: none;
 }
 
@@ -232,7 +195,7 @@ th, td {
   margin: 0;
   width: 95%;
   float: right;
-  padding: 0px 5px;
+  padding: 0 5px;
   list-style-type: none;
 }
 
@@ -265,10 +228,7 @@ th, td {
 
 #header .bar {
   float: left;
-  padding-top: 7px;
-  padding-right: 20px;
-  padding-bottom: 10px;
-  padding-left: 0px;
+  padding: 7px 20px 10px 0;
 }
 
 #header h1 {
@@ -277,10 +237,7 @@ th, td {
   font-size: 300%;
   color: #333;
   margin: 0;
-  padding-top: 25px;
-  padding-right: 20px;
-  padding-bottom: 10px;
-  padding-left: 20px;
+  padding: 25px 20px 10px 20px;
   line-height: 75%;
 }
 
@@ -289,7 +246,7 @@ th, td {
   float: left;
   font-size: 300%;
   color: #333333;
-  margin: 0px;
+  margin: 0;
   padding: 25px 10px 10px 20px;
   line-height: 75%;
 }
@@ -302,10 +259,10 @@ th, td {
 /* Navigation */
 
 #menu ul {
-  margin: 0px;
+  margin: 0;
   width: 100%;
   float: left;
-  padding: 0px 00px 0px 0px;
+  padding: 0;
   list-style-type: none;
   z-index: 10;
 }
@@ -321,7 +278,7 @@ th, td {
   display: block;
   padding: 5px 8px;
   text-decoration: none;
-  border-bottom-width: 0px;
+  border-bottom-width: 0;
 }
 
 #menu li.special a:hover, #menu li.special a:active {
@@ -337,43 +294,9 @@ th, td {
   float: right;
 }
 
-#selectionList {
-  width: 400px;
-}
-
-#selectionList ul {
-  margin: 0px;
-  padding: 10px 0px;
-  list-style-type: none;
-}
-
-#selectionList li {
-  margin: 5px;
-}
-
-#selectionList a {
-  display: block;
-  padding: 3px;
-  width: 350px;
-  background-color: #cfe0e0;
-  border: 1px solid #000;
-  color: #000;
-  font-weight: normal;
-}
-
-#selectionList a:link, #selectionList a:visited {
-  text-decoration: none;
-  color: #000;
-}
-
-#selectionList a:hover {
-  background-color: #808284;
-  color: #fff;
-}
-
 table.content {
     width: 100%;
-    font-family: "Tahoma";
+    font-family: "Tahoma", Verdana, Arial, sans-serif;
     font-size: 12px;
     border: 2px solid;
     border-collapse: collapse;
@@ -391,7 +314,7 @@ table.content {
 }
 
 table.timetable, table.progress {
-    font-family: "Tahoma";
+    font-family: "Tahoma", Verdana, Arial, sans-serif;
     font-size: 14px;
     border: 2px solid;
     border-collapse: collapse;
@@ -429,7 +352,7 @@ table.progress td {
 }
 
 table.formTable {
-    font-family: "Tahoma";
+    font-family: "Tahoma", Verdana, Arial, sans-serif;
     font-size: 14px;
     border: 2px solid;
     border-collapse: collapse;
@@ -472,21 +395,6 @@ table.formTable {
   padding: 5px 25px 5px 25px;
 }
 
-td.active, div.active {
-  background-color: #0000bb;
-  font-weight: bold;
-  color: #ffffff;
-}
-
-div.img {
-  margin: 2px;
-  border: 2px solid;
-  height: 210px;
-  width: auto;
-  float: left;
-  text-align: center;
-}
-
 div.view {
   margin: 2px;
   border: 2px solid;
@@ -523,13 +431,6 @@ div.img a:hover img {
 
 div.not a:hover img {
   border: 1px solid;
-}
-
-div.desc {
-  text-align: center;
-  font-weight: normal;
-  width: 210px;
-  margin: 2px;
 }
 
 div.progress {
@@ -612,7 +513,7 @@ fieldset {
 fieldset legend {
   font-size: 15px;
   font-weight: bold;
-  padding: 0px 10px;
+  padding: 0 10px;
 }
 
 textarea {
@@ -623,6 +524,7 @@ textarea {
 .category-generic {
   color: grey;
 }
+
 .category-leader {
   color: blue;
 }
@@ -701,7 +603,7 @@ textarea {
 }
 
 .optquest legend:hover {
-  box-shadow: 0px 0px 6px black;
+  box-shadow: 0 0 6px black;
 }
 
 .optquest {

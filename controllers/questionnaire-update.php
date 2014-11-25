@@ -150,7 +150,7 @@ if (count($add) === 0 && count($remove) === 0) {
 } else {
   if (count($add)) {
     $HTML .= 'The following electives are not present in the <tt>`questionnaire`</tt> table.\n';
-    $HTML .= "<ul style='margin: 0px;'>\n";
+    $HTML .= "<ul style='margin: 0;'>\n";
     foreach ($add as $ID) {
       $HTML .= "\t<li>{$ID[1]}</li>\n";
     }
@@ -162,7 +162,7 @@ if (count($add) === 0 && count($remove) === 0) {
     if ($count) {
       $HTML .= " They cannot be removed until the <tt>`questionnaire`</tt> table is empty.";
     }
-    $HTML .= "\n<ul style='margin: 0px;'>\n";
+    $HTML .= "\n<ul style='margin: 0;'>\n";
     foreach ($remove as $ID) {
       $HTML .= "\t<li>$ID</li>\n";
     }
