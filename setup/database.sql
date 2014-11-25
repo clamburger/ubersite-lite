@@ -1,4 +1,4 @@
-CREATE TABLE questionnaire (
+CREATE TABLE questionnaire_responses (
   UserID TEXT NOT NULL,
   QuizId INTEGER NOT NULL,
   QuestionStage INTEGER NOT NULL DEFAULT 0,

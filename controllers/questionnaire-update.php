@@ -24,12 +24,12 @@ $page = &$details['Pages']['elective-feedback'];
 
 $groups = $page['Questions'];
 
-$columns = array();
+$columns = [];
 foreach ($groups as $ID) {
   if ($ID == 'electives') {
     continue;
   }
-  $columns[$ID] = array(true, false, false);
+  $columns[$ID] = [true, false, false];
 }
 
 // Now cross-reference with the electives table.
@@ -41,16 +41,16 @@ while ($row = $stmt->fetch()) {
     $columns[$row['ShortName']][1] = true;
     $columns[$row['ShortName']][2] = $row['LongName'];
   } else {
-    $columns[$row['ShortName']] = array(false, true, $row['LongName']);
+    $columns[$row['ShortName']] = [false, true, $row['LongName']];
   }
 }
 
-$columnHTML = array();
-$add = array();
-$remove = array();
+$columnHTML = [];
+$add = [];
+$remove = [];
 
 // Check if any questionnaires have been submitted
-$stmt = $dbh->prepare('SELECT COUNT(*) FROM questionnaire WHERE QuizId = ?');
+$stmt = $dbh->prepare('SELECT COUNT(*) FROM questionnaire_responses WHERE QuizId = ?');
 $stmt->execute([$id]);
 $count = $stmt->fetch()[0];
 
@@ -81,7 +81,7 @@ if (isset($_POST['submit'])) {
   // Adding new electives
   if ($_POST['submit'] == 'Add New Electives' && count($add) > 0) {
 
-    $query = "ALTER TABLE `questionnaire`";
+    $query = "ALTER TABLE questionnaire_responses";
     $newQuestions = [];
     $newGroups = [];
     foreach ($add as $info) {
