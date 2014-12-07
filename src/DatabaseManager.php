@@ -16,11 +16,18 @@ class DatabaseManager {
       return self::$dbh;
     }
 
-    $dbh = new \PDO('sqlite:config/database.db');
+    // PDO's sqlite driver is very particular, so make sure we're in the directory with the database.
+    $workingDirectory = getcwd();
+    chdir(__DIR__ . '/../config');
+
+    $dbh = new \PDO('sqlite:database.db');
     $dbh->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
     $dbh->setAttribute(\PDO::ATTR_EMULATE_PREPARES, true);
     $dbh->setAttribute(\PDO::ATTR_DEFAULT_FETCH_MODE, \PDO::FETCH_BOTH);
     self::$dbh = $dbh;
+
+    chdir($workingDirectory);
+
     return $dbh;
   }
 

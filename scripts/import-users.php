@@ -14,8 +14,6 @@ if (PHP_SAPI != "cli") {
   exit;
 }
 
-require_once("../config/config.php");
-
 $dbh = DatabaseManager::get();
 
 $query = "INSERT INTO users (Username, Name, Role, Password) VALUES (?, ?, 'camper', NULL)";
@@ -24,10 +22,13 @@ $stmt = $dbh->prepare($query);
 $data = explode("\n", trim(file_get_contents("accounts.txt")));
 
 foreach ($data as $line) {
-    $info = explode(":", $line);
-    $username = $info[0];
-    $name = $info[4];
-    $stmt->execute([$username, $name]);
+  if (strlen($line) === 0) {
+    continue;
+  }
+  $info = explode(":", $line);
+  $username = $info[0];
+  $name = $info[4];
+  $stmt->execute([$username, $name]);
 }
 
-echo "All done";
+echo "All done\n";
