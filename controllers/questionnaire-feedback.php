@@ -56,7 +56,7 @@ if ($SEGMENTS[2] == 'smallgroup') {
 $smallgroup = $SEGMENTS[2] == 'smallgroup';
 
 // Find the responses
-$query = "SELECT Name, Username, Responses FROM questionnaire_responses
+$query = "SELECT Name, Username, Responses FROM responses
           INNER JOIN `users` USING(Username) WHERE Role = 'camper' $where
           AND QuizId = ? ORDER BY Name ASC";
 $stmt = $dbh->prepare($query);

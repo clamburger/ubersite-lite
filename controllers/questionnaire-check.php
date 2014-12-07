@@ -27,7 +27,7 @@ $twig->addGlobal("pages", $pages);
 $rawStatus = [];
 
 // Fetch the latest stage for each camper
-$query = "SELECT Username, QuestionStage FROM users LEFT JOIN questionnaire_responses USING(Username)
+$query = "SELECT Username, QuestionStage FROM users LEFT JOIN responses USING(Username)
           WHERE (QuizId = ? OR QuizId IS NULL) AND Role = 'camper'";
 $stmt = $dbh->prepare($query);
 $stmt->execute([$id]);

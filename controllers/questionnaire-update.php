@@ -30,7 +30,7 @@ foreach ($groups as $ID) {
 }
 
 // Now cross-reference with the electives table.
-$query = 'SELECT ShortName, LongName FROM questionnaire_electives ORDER BY Sorting ASC';
+$query = 'SELECT ShortName, LongName FROM electives ORDER BY Sorting ASC';
 $stmt = $dbh->query($query);
 
 while ($row = $stmt->fetch()) {
@@ -47,7 +47,7 @@ $add = [];
 $remove = [];
 
 // Check if any questionnaires have been submitted
-$stmt = $dbh->prepare('SELECT COUNT(*) FROM questionnaire_responses WHERE QuizId = ?');
+$stmt = $dbh->prepare('SELECT COUNT(*) FROM responses WHERE QuizId = ?');
 $stmt->execute([$id]);
 $count = $stmt->fetch()[0];
 
@@ -155,7 +155,7 @@ if (count($add) === 0 && count($remove) === 0) {
   if (count($remove)) {
     $HTML .= "The following electives no longer need to be on the Elective Feedback page.";
     if ($count) {
-      $HTML .= " They cannot be removed until the <code>`questionnaire_responses`</code> table is empty.";
+      $HTML .= " They cannot be removed until the <code>`responses`</code> table is empty.";
     }
     $HTML .= "\n<ul style='margin: 0;'>\n";
     foreach ($remove as $ID) {

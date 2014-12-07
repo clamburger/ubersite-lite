@@ -59,7 +59,7 @@ $totalStages = count($pageOrder);
 $twig->addGlobal("ID", $id);
 
 // Get the current page for the user.
-$stmt = $dbh->prepare('SELECT * FROM questionnaire_responses WHERE Username = ? AND QuizId = ?');
+$stmt = $dbh->prepare('SELECT * FROM responses WHERE Username = ? AND QuizId = ?');
 $stmt->execute([$user->Username, $id]);
 if ($row = $stmt->fetch()) {
   $stage = intval($row['QuestionStage']);
@@ -68,7 +68,7 @@ if ($row = $stmt->fetch()) {
 
 // Add a skeleton entry to the database
 if ($SEGMENTS[2] == 'begin' && $row === false) {
-  $query = "INSERT INTO questionnaire_responses (Username, QuizId, QuestionStage, Responses)
+  $query = "INSERT INTO responses (Username, QuizId, QuestionStage, Responses)
             VALUES (?, ?, 1, '{}')";
   $stmt = $dbh->prepare($query);
   $stmt->execute([$user->Username, $id]);
@@ -77,7 +77,7 @@ if ($SEGMENTS[2] == 'begin' && $row === false) {
 
 // Delete current progress
 if ($SEGMENTS[2] == 'delete' && $user->isLeader()) {
-  $stmt = $dbh->prepare('DELETE FROM questionnaire_responses WHERE Username = ? AND `QuizId` = ?');
+  $stmt = $dbh->prepare('DELETE FROM responses WHERE Username = ? AND `QuizId` = ?');
   $stmt->execute([$user->Username, $id]);
   $stage = 0;
   $messages->addMessage(new Message("success", "Hopes deleted."));
@@ -88,7 +88,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     unset($_POST['stage']);
     // Merge the data that currently exists with the newly submitted data
     $responses = json_encode(array_merge($currentData, $_POST));
-    $query = 'UPDATE questionnaire_responses SET Responses = ?, QuestionStage = ?
+    $query = 'UPDATE responses SET Responses = ?, QuestionStage = ?
               WHERE QuizId = ? AND Username = ?';
     $stmt = $dbh->prepare($query);
     $stmt->execute([$responses, ++$stage, $id, $user->Username]);

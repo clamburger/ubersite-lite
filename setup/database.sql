@@ -1,4 +1,4 @@
-CREATE TABLE questionnaire_responses (
+CREATE TABLE responses (
   Username TEXT NOT NULL,
   QuizId INTEGER NOT NULL,
   QuestionStage INTEGER NOT NULL DEFAULT 0,
@@ -6,26 +6,11 @@ CREATE TABLE questionnaire_responses (
   PRIMARY KEY (Username, QuizId)
 );
 
-CREATE TABLE questionnaire_electives (
+CREATE TABLE electives (
   ShortName TEXT NOT NULL PRIMARY KEY,
   LongName TEXT NOT NULL,
   Type TEXT NOT NULL,
   Sorting double unsigned NOT NULL
-);
-
-CREATE TABLE questionnaire_pages (
-  Id INTEGER NOT NULL PRIMARY KEY,
-  Name TEXT NOT NULL
-);
-
-CREATE TABLE questionnaire_questions (
-  Id INTEGER NOT NULL PRIMARY KEY,
-  Name TEXT,
-  HideName INTEGER DEFAULT 0,
-  Questions TEXT,
-  PageId INTEGER,
-  Position INTEGER,
-  Expandable INTEGER DEFAULT 0
 );
 
 CREATE TABLE questionnaires (
