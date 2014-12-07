@@ -70,6 +70,7 @@ if ($SEGMENTS[1] == "edit") {
   $editing = true;
   if (!isset($people[$SEGMENTS[2]])) {
     header("Location: /accounts");
+    exit;
   }
   $stmt = $dbh->prepare('SELECT * FROM users WHERE Username = ?');
   $stmt->execute([$SEGMENTS[2]]);
@@ -93,6 +94,7 @@ if ($SEGMENTS[1] == "delete") {
   $username = $SEGMENTS[2];
   if (!isset($people[$username])) {
     header("Location: /accounts");
+    exit;
   } else {
     if ($SEGMENTS[3] == "confirm") {
       if (!isset($_SESSION['deleteID'])) {

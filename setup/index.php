@@ -7,6 +7,7 @@ error_reporting(E_ALL);
 
 if (file_exists("../config/config.php") && !isset($_GET['override'])) {
   header("Location: ../");
+  exit;
 }
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {

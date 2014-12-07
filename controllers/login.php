@@ -7,6 +7,7 @@ $redirect = $SEGMENTS[1];
 # If the user is already logged in, redirect them to the index.
 if (isset($_SESSION['username'])) {
   header("Location: /$redirect");
+  exit;
 }
 
 $twig->addGlobal('form-username', false);
@@ -25,6 +26,7 @@ if (isset($_POST['username']) && isset($_POST['password'])) {
   } else if ((is_null($row['Password']) && $password === $username) || password_verify($password, $row['Password'])) {
     $_SESSION['username'] = $username;
     header("Location: $redirect");
+    exit;
   } else {
     var_dump($row);
     $messages->addMessage(new Message("error", "The specified password was incorrect."));

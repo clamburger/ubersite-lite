@@ -10,6 +10,7 @@ use Ubersite\User;
 
 if (!file_exists('config/config.php')) {
   header('Location: /setup');
+  exit;
 }
 
 require 'config/config.php';
@@ -72,6 +73,7 @@ if (isset($_SESSION['username'])) {
   // If the logged in user no longer exists, something bad happened.
   if (!isset($people[$_SESSION['username']])) {
     header('Location: /logout');
+    exit;
   }
   $user = $people[$_SESSION['username']];
 
@@ -79,6 +81,7 @@ if (isset($_SESSION['username'])) {
   // Redirect to login page if not logged in
   if ($pageName != 'login') {
     header("Location: /login/$pageName");
+    exit;
   }
 }
 
