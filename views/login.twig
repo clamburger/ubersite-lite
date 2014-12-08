@@ -7,17 +7,18 @@
 <p>Your username and password should be written on your nametag; if you're unsure, ask a leader for
     assistance.</p>
 <form method="POST" action="">
-    <table class='progress'>
-        <tr>
-            <th><label for="username">Username:</label></th>
-            <td><input type="text" name="username" id="username" value='{{ form.username }}' /></td></tr>
-        <tr>
-            <th><label for="password">Password:</label></th>
-            <td><input type="password" name="password" id="password" /></td>
-        </tr>
-        <tr>
-            <th colspan="2" style='text-align:right'><input type='submit' value="Login" /></th>
-        </tr>
-    </table>
+  <table class='progress'>
+    <tr>
+      <th><label for="username">Username:</label></th>
+      <td><input type="text" name="username" id="username" value='{{ form.username }}' required></td>
+    </tr>
+    <tr>
+      <th><label for="password">Password:</label></th>
+      <td><input type="password" name="password" id="password" required></td>
+    </tr>
+    <tr>
+      <th colspan="2" style='text-align:right'><input type='submit' value="Login"></th>
+    </tr>
+  </table>
 </form>
 {% endblock %}
