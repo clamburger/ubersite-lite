@@ -5,7 +5,7 @@ use Ubersite\Software;
 
 error_reporting(E_ALL);
 
-if (file_exists("../config/config.php") && !isset($_GET['override'])) {
+if (file_exists("../config/config.php")) {
   header("Location: ../");
   exit;
 }
@@ -65,7 +65,7 @@ if (!isset($checks['config'])) {
 if (!in_array('sqlite', PDO::getAvailableDrivers()) || !class_exists('SQLite3')) {
   $checks['sqlite'] = ['no', 'important', 'you may need to install <code>php5-sqlite3</code>.'];
 } else if (file_exists('../config/database.db')) {
-  $checks['sqlite'] = ['warning', 'warning', 'the database already exists. It will not be overriden.'];
+  $checks['sqlite'] = ['warning', 'warning', 'the database already exists. It will not be overwritten.'];
 } else {
   $checks['sqlite'] = ['yes', 'success'];
 }
