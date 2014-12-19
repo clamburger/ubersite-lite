@@ -34,7 +34,7 @@
       <a href='/'><img src="/resources/img/logo.png" class="logo" border="0" alt="Übertweak Logo" width="96" height="96" /></a>
       {% endif %}
       <div class="title">
-        {{ campname }}
+        {{ config.campName }}
         <div class="version">Powered by <strong>{{ software.fullName }}</strong> - {{ software.version }}</div></div>
     </div>
 
@@ -42,7 +42,7 @@
       <!-- Menu -->
       <div id="menu">
         <ul>
-        {% for link, item in menu %}
+        {% for link, item in config.menu %}
           <li><a href="/{{ link }}">{{ item.name }}</a></li>
         {% endfor %}
         {% if user.LoggedIn %}

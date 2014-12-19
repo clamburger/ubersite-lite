@@ -1,11 +1,13 @@
 <?php
 require '../vendor/autoload.php';
 
+use Ubersite\Config;
 use Ubersite\Software;
 
 error_reporting(E_ALL);
 
-if (file_exists("../config/config.php")) {
+$config = new Config();
+if ($config->isLoaded()) {
   header("Location: ../");
   exit;
 }

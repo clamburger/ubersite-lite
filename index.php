@@ -1,7 +1,7 @@
 <?php
 require 'vendor/autoload.php';
-require 'includes/functions.php';
 
+use Ubersite\Config;
 use Ubersite\DatabaseManager;
 use Ubersite\MessageBank;
 use Ubersite\NullUser;
@@ -9,12 +9,12 @@ use Ubersite\Software;
 use Ubersite\User;
 use Ubersite\Utils;
 
-if (!file_exists('config/config.php')) {
+$config = new Config();
+
+if (!$config->isLoaded()) {
   header('Location: /setup');
   exit;
 }
-
-require 'config/config.php';
 
 ini_set('display_errors', 'On');
 $dbh = DatabaseManager::get();
@@ -47,8 +47,6 @@ $twig = new Twig_Environment($loader);
 
 // Process user session and details
 session_start();
-
-$twig->addGlobal('campname', CAMP_NAME);
 
 $messages = new MessageBank();
 
@@ -89,6 +87,7 @@ if (isset($_SESSION['username'])) {
 // Disable error reporting for campers
 if (!$user->isLeader()) {
   error_reporting(0);
+  $config->removeRestrictedMenuItems();
 }
 
 // Standalone mode includes all relevant resources directly onto the page so that only the HTML
@@ -105,18 +104,11 @@ if (isset($_GET['standalone'])) {
   $twig->addGlobal('standalone', $standalone);
 }
 
-if (!$user->isLeader()) {
-  // Menu items with the "restricted" attribute will only be shown to leaders.
-  $menu = array_filter($menu, function($menuItem) {
-    return !isset($menuItem['restricted']);
-  });
-}
-
 $loginURL = $user->LoggedIn ? '/login' : '';
 
 // Construct the HTML for the navigation bar.
 $menuHTML = "";
-foreach ($menu as $filename => $menuItem) {
+foreach ($config->getMenu() as $filename => $menuItem) {
   $menuHTML .= "<li>";
   $menuHTML .= "\t<li><a href='{$loginURL}/{$filename}'>{$menuItem['name']}</a></li>\n";
   $menuHTML .= "</li>\n";
@@ -124,7 +116,7 @@ foreach ($menu as $filename => $menuItem) {
 
 // TODO: we probably shouldn't be using $twig->addGlobal so much
 
-$twig->addGlobal('menu', $menu);
+$twig->addGlobal('config', $config);
 $twig->addGlobal('loginURL', $loginURL);
 $twig->addGlobal("software", new Software());
 $twig->addGlobal("user", $user);
