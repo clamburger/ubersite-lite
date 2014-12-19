@@ -15,6 +15,7 @@ $fileUploadErrors = [
   8 => 'A PHP extension stopped the file upload.'
 ];
 
+// Allow access if there are no users in the database
 if (count($people) === 0) {
   $twig->addGlobal('noUsers', true);
 }
@@ -29,12 +30,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $reader->setFlags(SplFileObject::READ_AHEAD | SplFileObject::SKIP_EMPTY);
     $error = false;
 
+    // Use a transaction, so that if any of the rows fail to process the whole thing is cancelled.
     $dbh = DatabaseManager::get();
     $dbh->beginTransaction();
 
     $stmt = $dbh->prepare('REPLACE INTO users VALUES(?, ?, ?, ?, ?)');
 
     foreach ($reader as $index => $row) {
+      // Check that the row has the right number of columns
       if (count($row) !== 5) {
         $message = sprintf("Row %d has the wrong number of columns (expected 5, got %d)",
           $index + 1, count($row));
@@ -47,6 +50,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         break;
       }
 
+      // Handle default values for role, password and duty team
       list($username, $fullName, $role, $password, $dutyTeam) = $row;
       $role = ($role === '' ? 'camper' : strtolower($role));
       $password = ($password === '' ? null : password_hash($password, PASSWORD_DEFAULT));
@@ -55,9 +59,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
       $stmt->execute([$username, $fullName, $role, $dutyTeam, $password]);
     }
 
+    // If there were no errors, commit the transaction.
     if (!$error) {
       $dbh->commit();
-
       $rows = count($reader->fetchAll());
       $message = sprintf('Success! %d user%s were imported.', $rows, $rows === 1 ? '' : 's');
       $messages->addMessage(new Message('success', $message));
