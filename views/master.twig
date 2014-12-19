@@ -39,6 +39,8 @@
     </div>
 
     {% if not standalone %}
+
+      {% if menu %}
       <!-- Menu -->
       <div id="menu">
         <ul>
@@ -53,6 +55,7 @@
       </div>
 
       <br clear="all">
+      {% endif %}
 
       {% for type, messageGroup in messagebank.messages %}
       <div class="alert alert-{{ type }}">
