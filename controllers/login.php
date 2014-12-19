@@ -12,10 +12,6 @@ if (isset($_SESSION['username'])) {
 
 $twig->addGlobal('form-username', false);
 
-if (count($people) === 0) {
-  $messages->addMessage(new Message('warning', 'Warning: There are no users in the database.'));
-}
-
 if (isset($_POST['username']) && isset($_POST['password'])) {
   # Look up the user and validate them.
   $username = strtolower($_POST['username']);

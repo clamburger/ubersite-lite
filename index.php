@@ -68,19 +68,28 @@ while ($row = $stmt->fetch()) {
   $people[$row['Username']] = new User($row);
 }
 
-if (isset($_SESSION['username'])) {
-  // If the logged in user no longer exists, something bad happened.
-  if (!isset($people[$_SESSION['username']])) {
-    header('Location: /logout');
+if (count($people) === 0) {
+  if ($PAGE != 'account-import') {
+    header('Location: /account-import');
     exit;
   }
-  $user = $people[$_SESSION['username']];
-
+  $config->hideMenu();
 } else {
-  // Redirect to login page if not logged in
-  if ($pageName != 'login') {
-    header("Location: /login/$pageName");
-    exit;
+  if (isset($_SESSION['username'])) {
+    // If the logged in user no longer exists, something bad happened.
+    if (!isset($people[$_SESSION['username']])) {
+      header('Location: /logout');
+      exit;
+    }
+    $user = $people[$_SESSION['username']];
+
+  } else {
+    // Redirect to login page if not logged in
+    if ($pageName != 'login') {
+      header("Location: /login/$pageName");
+      exit;
+    }
+    $config->hideMenu();
   }
 }
 

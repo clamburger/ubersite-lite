@@ -1,0 +1,11 @@
+{% extends "master.twig" %}
+
+{% block title %}Import Accounts{% endblock %}
+
+{% block content %}
+  {% if user.leader or noUsers %}
+    Hello carrot
+  {% else %}
+    You must be a leader to view this page.
+  {% endif %}
+{% endblock %}
