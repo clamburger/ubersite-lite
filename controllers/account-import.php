@@ -65,8 +65,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
       $rows = count($reader->fetchAll());
       $message = sprintf('Success! %d user%s were imported.', $rows, $rows === 1 ? '' : 's');
       $messages->addMessage(new Message('success', $message));
-      header('Location: /');
-      exit;
+
+      // Redirect to the login page if this was the initial import, otherwise just refresh
+      if (count($people) === 0) {
+        header('Location: /');
+        exit;
+      } else {
+        Utils::refresh();
+      }
     }
   }
 }
