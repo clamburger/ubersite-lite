@@ -28,7 +28,6 @@ if (isset($_POST['username']) && isset($_POST['password'])) {
     header("Location: $redirect");
     exit;
   } else {
-    var_dump($row);
     $messages->addMessage(new Message("error", "The specified password was incorrect."));
     $twig->addGlobal("form-username", $_POST['username']);
   }

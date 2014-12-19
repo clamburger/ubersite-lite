@@ -5,7 +5,7 @@
 {% block content %}
   {% if user.leader or noUsers %}
     This page is used to import accounts from a CSV file.
-    The CSV must contain the following columns:
+    The CSV must contain the following columns, in this exact order:
 
     <table class='progress'>
       <tr>
@@ -40,7 +40,8 @@
       <li>There should not be a header row</li>
       <li>There should not be spaces between fields</li>
       <li>Optional columns must be included, but they can be left blank</li>
-      <li>The fields must be not be surrounding by quotation marks (&quot;)</li>
+      <li>The fields must be not be enclosed by quotation marks (&quot;)</li>
+      <li>Duplicate users will be overwritten.</li>
     </ul>
 
     <form enctype="multipart/form-data" method="POST">
