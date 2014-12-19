@@ -1,5 +1,6 @@
 <?php
 use Ubersite\Message;
+use Ubersite\Utils;
 
 $twig->addGlobal('submit', "Create User");
 
@@ -36,7 +37,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && $user->isLeader()) {
       $stmt->execute([$username, $name, $password, $role, $_POST['dutyTeam']]);
       $messages->addMessage(new Message('success', 'Account successfully created!'));
 
-      refresh();
+      Utils::refresh();
     }
 
   } else {
@@ -50,7 +51,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && $user->isLeader()) {
     }
     if (!isset($people[$username])) {
       $messages->addMessage(new Message("error", "That user no longer exists."));
-      refresh();
+      Utils::refresh();
     } else if ($name === '') {
       $messages->addMessage(new Message("error", "The name cannot be blank."));
     } else if ($role !== '' && !in_array($role, $roles)) {
@@ -60,7 +61,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && $user->isLeader()) {
       $stmt = $dbh->prepare($query);
       $stmt->execute([$name, $role, $_POST['dutyTeam'], $username]);
       $messages->addMessage(new Message('success', 'Account successfully modified.'));
-      refresh();
+      Utils::refresh();
     }
   }
 }

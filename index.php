@@ -7,6 +7,7 @@ use Ubersite\MessageBank;
 use Ubersite\NullUser;
 use Ubersite\Software;
 use Ubersite\User;
+use Ubersite\Utils;
 
 if (!file_exists('config/config.php')) {
   header('Location: /setup');
@@ -97,8 +98,8 @@ if (isset($_GET['standalone'])) {
   $colourCSS = file_get_contents("resources/css/winter.css");
 
   $standalone = [
-    'logo' => dataURI("resources/img/logo.png", "image/png"),
-    'icon' => dataURI("resources/img/icon.png", "image/png"),
+    'logo' => Utils::dataURI("resources/img/logo.png", "image/png"),
+    'icon' => Utils::dataURI("resources/img/icon.png", "image/png"),
     'css' => $layoutCSS . "\n\n" . $colourCSS
   ];
   $twig->addGlobal('standalone', $standalone);

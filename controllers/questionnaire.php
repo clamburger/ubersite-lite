@@ -3,6 +3,7 @@ use Ubersite\Message;
 use Ubersite\Questionnaire\Group;
 use Ubersite\Questionnaire\Page;
 use Ubersite\Questionnaire\Question;
+use Ubersite\Utils;
 
 // These will almost certainly be overidden.
 $submitted = false;
@@ -93,7 +94,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $stmt = $dbh->prepare($query);
     $stmt->execute([$responses, ++$stage, $id, $user->Username]);
     $messages->addMessage(new Message("success", $pageOrder[$stage-2]->title." successfully submitted."));
-    refresh();
+    Utils::refresh();
   }
 }
 
