@@ -31,6 +31,11 @@ $title = $row['Name'];
 $twig->addGlobal('intro', $row['Intro']);
 
 $details = json_decode($row['Pages']);
+
+if (json_last_error() != JSON_ERROR_NONE) {
+  throw new Exception('Failed to parse questionnaire JSON. The following error was given: ' . json_last_error_msg());
+}
+
 $questions = [];
 $groups = [];
 $pages = [];
