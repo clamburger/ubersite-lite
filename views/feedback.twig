@@ -2,10 +2,12 @@
 
 {% block content %}
 {% if user.leader %}
-  {% if smallgroup %}
-  <h3><a href="/feedback/{{ id }}">View feedback from all campers</a></h3>
-  {% else %}
-  <h3><a href="/feedback/{{ id }}/smallgroup">View only feedback from your study group</a></h3>
+  {% if not standalone %}
+    {% if smallgroup %}
+      <h3><a href="/feedback/{{ id }}">View feedback from all campers</a></h3>
+    {% else %}
+      <h3><a href="/feedback/{{ id }}/smallgroup">View feedback from your small group only</a></h3>
+    {% endif %}
   {% endif %}
   {{ output | raw }}
 {% else %}
