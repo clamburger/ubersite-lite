@@ -152,7 +152,7 @@ class Question {
       $output .= "<li><em style='color: silver;'>No responses for this question</em></li>";
     } else {
       foreach ($allResponses[$this->questionID] as $response) {
-        $sig = "- <em>{$users[$response['Username']]}</em>";
+        $sig = "- <em>" . $users[$response['Username']]->Name . "</em>";
         $stringResponse = $this->getAnswerString($response['Answer']);
         if ($stringResponse === self::OTHER_RESPONSE) {
           $output .= "<li>Other: ".$allResponses[$this->questionID."-other"]
