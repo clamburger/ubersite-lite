@@ -6,13 +6,6 @@ CREATE TABLE responses (
   PRIMARY KEY (Username, QuizId)
 );
 
-CREATE TABLE electives (
-  ShortName TEXT NOT NULL PRIMARY KEY,
-  LongName TEXT NOT NULL,
-  Type TEXT NOT NULL,
-  Sorting double unsigned NOT NULL
-);
-
 CREATE TABLE questionnaires (
   Id INTEGER NOT NULL PRIMARY KEY,
   Name TEXT,
