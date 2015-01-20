@@ -73,7 +73,6 @@ if (count($people) === 0) {
     header('Location: /account-import');
     exit;
   }
-  $config->hideMenu();
 } else {
   if (isset($_SESSION['username'])) {
     // If the logged in user no longer exists, something bad happened.
@@ -89,14 +88,12 @@ if (count($people) === 0) {
       header("Location: /login/$pageName");
       exit;
     }
-    $config->hideMenu();
   }
 }
 
 // Disable error reporting for campers
 if (!$user->isLeader()) {
   error_reporting(0);
-  $config->removeRestrictedMenuItems();
 }
 
 // Standalone mode includes all relevant resources directly onto the page so that only the HTML
@@ -114,14 +111,6 @@ if (isset($_GET['standalone'])) {
 }
 
 $loginURL = $user->LoggedIn ? '/login' : '';
-
-// Construct the HTML for the navigation bar.
-$menuHTML = "";
-foreach ($config->getMenu() as $filename => $menuItem) {
-  $menuHTML .= "<li>";
-  $menuHTML .= "\t<li><a href='{$loginURL}/{$filename}'>{$menuItem['name']}</a></li>\n";
-  $menuHTML .= "</li>\n";
-}
 
 // TODO: we probably shouldn't be using $twig->addGlobal so much
 

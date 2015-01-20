@@ -40,17 +40,17 @@
 
     {% if not standalone %}
 
-      {% if config.menu %}
+      {% if user.LoggedIn %}
       <!-- Menu -->
       <div id="menu">
         <ul>
-        {% for link, item in config.menu %}
-          <li><a href="/{{ link }}">{{ item.name }}</a></li>
-        {% endfor %}
-        {% if user.LoggedIn %}
-          <li class="right"><a href='/logout'>Logout</a></li>
-          <li class="right"><strong>{{ user.Name }}</strong></li>
+        {% if user.isLeader %}
+          {% for link, title in config.menu %}
+            <li><a href="/{{ link }}">{{ title }}</a></li>
+          {% endfor %}
         {% endif %}
+        <li class="right"><a href='/logout'>Logout</a></li>
+        <li class="right"><strong>{{ user.Name }}</strong></li>
         </ul>
       </div>
 

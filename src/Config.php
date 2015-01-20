@@ -30,23 +30,8 @@ class Config {
     return $this->config['menu'];
   }
 
-  /**
-   * Removes any menu items marked as restricted
-   */
-  public function removeRestrictedMenuItems() {
-    $this->config['menu'] = array_filter($this->getMenu(), function($menuItem) {
-      return !isset($menuItem['restricted']);
-    });
-  }
-
-  /**
-   * Remove all items from the menu, effectively hiding it from view.
-   */
-  public function hideMenu() {
-    $this->config['menu'] = [];
-  }
-
   public function getCampName() {
     return $this->config['campName'];
   }
+
 } 
