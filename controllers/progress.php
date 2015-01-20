@@ -2,7 +2,7 @@
 $id = $SEGMENTS[1];
 
 if (!$id) {
-  header('Location: /questionnaire-choose?src=questionnaire-check');
+  header('Location: /choose?src=progress');
   exit;
 }
 
@@ -10,7 +10,7 @@ if (!$id) {
 $stmt = $dbh->prepare('SELECT * FROM questionnaires WHERE Id = ?');
 $stmt->execute([$id]);
 if (!$row = $stmt->fetch()) {
-  header('Location: /questionnaire-choose?src=questionnaire-check');
+  header('Location: /choose?src=progress');
   exit;
 }
 
@@ -59,4 +59,4 @@ foreach ($totals as $key => $total) {
 
 $twig->addGlobal('status', $status);
 $twig->addGlobal('totals', $totals);
-$twig->addGlobal('head', '<meta http-equiv="refresh" content="5;/questionnaire-check/'.$id.'?autorefresh" >');
+$twig->addGlobal('head', '<meta http-equiv="refresh" content="5;/progress/'.$id.'?autorefresh" >');

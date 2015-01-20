@@ -9,11 +9,11 @@ return [
     'questionnaire' => [
       'name' => 'Questionnaire',
     ],
-    'questionnaire-check' => [
+    'progress' => [
       'name' => 'Camper Progress',
       'restricted' => true
     ],
-    'questionnaire-feedback' => [
+    'feedback' => [
       'name' => 'Feedback',
       'restricted' => true
     ]

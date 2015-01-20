@@ -15,7 +15,7 @@ $currentData = [];
 $id = $SEGMENTS[1];
 
 if (!$id) {
-  header('Location: /questionnaire-choose?src=questionnaire');
+  header('Location: /choose?src=questionnaire');
   exit;
 }
 
@@ -23,7 +23,7 @@ if (!$id) {
 $stmt = $dbh->prepare('SELECT * FROM questionnaires WHERE Id = ?');
 $stmt->execute([$id]);
 if (!$row = $stmt->fetch()) {
-  header('Location: /questionnaire-choose?src=questionnaire');
+  header('Location: /choose?src=questionnaire');
   exit;
 }
 

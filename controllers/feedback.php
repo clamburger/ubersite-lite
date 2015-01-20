@@ -6,7 +6,7 @@ use Ubersite\Questionnaire\Page;
 $id = $SEGMENTS[1];
 
 if (!$id) {
-  header('Location: /questionnaire-choose?src=questionnaire-feedback');
+  header('Location: /choose?src=feedback');
   exit;
 }
 
@@ -15,7 +15,7 @@ $id = intval($id);
 $stmt = $dbh->prepare('SELECT * FROM questionnaires WHERE Id = ?');
 $stmt->execute([$id]);
 if (!$row = $stmt->fetch()) {
-  header("Location: /questionnaire-choose?src=questionnaire-feedback");
+  header("Location: /choose?src=feedback");
   exit;
 }
 

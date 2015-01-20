@@ -3,9 +3,9 @@
 {% block content %}
 {% if user.leader %}
   {% if smallgroup %}
-  <h3><a href="/questionnaire-feedback/{{ id }}">View feedback from all campers</a></h3>
+  <h3><a href="/feedback/{{ id }}">View feedback from all campers</a></h3>
   {% else %}
-  <h3><a href="/questionnaire-feedback/{{ id }}/smallgroup">View only feedback from your study group</a></h3>
+  <h3><a href="/feedback/{{ id }}/smallgroup">View only feedback from your study group</a></h3>
   {% endif %}
   {{ output | raw }}
 {% else %}
