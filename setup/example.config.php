@@ -5,6 +5,7 @@ return [
     'accounts' => 'Accounts',
     'questionnaire' => 'Questionnaire',
     'progress' => 'Camper Progress',
-    'feedback' => 'Feedback'
+    'feedback' => 'Feedback',
+    'editor' => 'Editor'
   ]
 ];
