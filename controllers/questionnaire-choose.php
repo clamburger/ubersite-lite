@@ -12,4 +12,5 @@ if (count($questionnaires) === 1) {
   exit;
 }
 
+$twig->addGlobal('title', 'Select Questionnaire');
 $twig->addGlobal('questionnaires', $questionnaires);
