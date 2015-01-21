@@ -115,7 +115,7 @@ if (isset($details->FeedbackTable)) {
                 if ($stringResponse === Question::OTHER_RESPONSE) {
                     $stringResponse = "Other";
                 }
-                $output .= "<td style='".$question->getSpecialStyle($response)."'>$stringResponse $other</td>\n";
+                $output .= "<td>$stringResponse $other</td>\n";
             } else {
                 $output .= "  <td>--</td>";
             }

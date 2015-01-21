@@ -15,30 +15,30 @@ class Question
 
   // TODO: we shouldn't have any special cases for things like this (not here, anyway)
     public static $lengthLookup = [
-    "--",
-    "Far too short",
-    "A little too short",
-    "Just right",
-    "A little too long",
-    "Far too long"
+        "--",
+        "Far too short",
+        "A little too short",
+        "Just right",
+        "A little too long",
+        "Far too long"
     ];
 
     public static $coloursFive = [
-    "white",
-    "#F8696B",
-    "#FBAA77",
-    "#FFEB84",
-    "#B1D580",
-    "#63BE7B"
+        "white",
+        "#F8696B",
+        "#FBAA77",
+        "#FFEB84",
+        "#B1D580",
+        "#63BE7B"
     ];
 
     public static $coloursFiveTwo = [
-    "white",
-    "#F8696B",
-    "#FFEB84",
-    "#63BE7B",
-    "#FFEB84",
-    "#F8696B"
+        "white",
+        "#F8696B",
+        "#FFEB84",
+        "#63BE7B",
+        "#FFEB84",
+        "#F8696B"
     ];
 
     public function __construct($details)
@@ -182,38 +182,5 @@ class Question
         } else {
             return self::DEFAULT_COLOUR;
         }
-    }
-
-    // TODO: this isn't particularly nice but I'm not sure how it can be improved
-    public function getSpecialStyle($response)
-    {
-        if (!$response) {
-            return "";
-        }
-        if ($this->questionID == "see-poster" || $this->questionID == "send-info") {
-            $colours = ["black", "silver"];
-            return "color: ".$colours[$response-1];
-        } elseif ($this->questionID == "time-on-camp" || $this->questionID == "leaders-supportive") {
-            $colours = ["green", "#999900", "#CC9900", "#FF6600", "red", "red"];
-            return "color: ".$colours[$response-1];
-        } elseif ($this->questionID == "god") {
-            if ($response == 1) {
-                return "background-color: #FEE1FE";
-            }
-            if ($response == 2) {
-                return "font-weight: bold;";
-            }
-            if ($response == 3) {
-                return "background-color: #B0FCB0";
-            }
-            if ($response == 5) {
-                return "background-color: #E1FEE1";
-            }
-            if ($response == 4) {
-                return "background-color: green; color: white;";
-            }
-        }
-
-        return "";
     }
 }
