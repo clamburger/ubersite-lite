@@ -1,19 +1,21 @@
 <?php
 namespace Ubersite\Questionnaire;
 
-class Page {
+class Page
+{
   public $pageID;
   public $title;
   public $intro = false;
   public $questions = [];
   
-  function __construct($details, $questions, $groups) {
+  public function __construct($details, $questions, $groups)
+  {
     $this->pageID = $details->PageID;
     $this->title = $details->Title;
     foreach ($details->Questions as $ID) {
       if (isset($groups[$ID])) {
         $this->questions[] = $groups[$ID];
-      } else if (isset($questions[$ID])) {
+      } elseif (isset($questions[$ID])) {
         $this->questions[] = $questions[$ID];
       } else {
         throw new \Exception("Couldn't find group or question with ID $ID");
@@ -24,7 +26,8 @@ class Page {
     }
   }
 
-  function renderHTML() {
+  public function renderHTML()
+  {
     $out = "";
     if ($this->intro) {
       $out .= "<p>$this->intro</p>";
@@ -36,7 +39,8 @@ class Page {
     return $out;
   }
   
-  function __toString() {
+  public function __toString()
+  {
     return $this->title;
   }
 }

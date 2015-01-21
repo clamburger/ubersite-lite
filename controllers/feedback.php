@@ -101,8 +101,8 @@ if (isset($details->FeedbackTable)) {
   foreach ($allResponders as $username => $name) {
     $output .= "<tr>\n";
     $output .= "  <td style='white-space: nowrap;'>$name</td>\n";
-    foreach ($details->FeedbackTable as $questionID) {
 
+    foreach ($details->FeedbackTable as $questionID) {
       /** @var Question $question */
       $question = $questions[$questionID];
       if (isset($allResponses[$questionID][$username])) {

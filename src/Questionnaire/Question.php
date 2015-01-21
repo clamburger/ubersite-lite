@@ -1,7 +1,8 @@
 <?php
 namespace Ubersite\Questionnaire;
 
-class Question {
+class Question
+{
   public $questionID;
   public $question;
   public $questionShort;
@@ -13,7 +14,7 @@ class Question {
   const DEFAULT_COLOUR = "white";
 
   // TODO: we shouldn't have any special cases for things like this (not here, anyway)
-  static $lengthLookup = [
+  public static $lengthLookup = [
     "--",
     "Far too short",
     "A little too short",
@@ -22,7 +23,7 @@ class Question {
     "Far too long"
   ];
 
-  static $coloursFive = [
+  public static $coloursFive = [
     "white",
     "#F8696B",
     "#FBAA77",
@@ -31,7 +32,7 @@ class Question {
     "#63BE7B"
   ];
 
-  static $coloursFiveTwo = [
+  public static $coloursFiveTwo = [
     "white",
     "#F8696B",
     "#FFEB84",
@@ -40,7 +41,8 @@ class Question {
     "#F8696B"
   ];
 
-  function __construct($details) {
+  public function __construct($details)
+  {
     $this->questionID = $details->QuestionID;
     $this->question = $details->Question;
     $this->answerType = $details->AnswerType;
@@ -57,24 +59,26 @@ class Question {
     }
   }
   
-  function renderHTML($prefix = "") {
+  public function renderHTML($prefix = "")
+  {
     $out = "<div class='question question-".strtolower($this->answerType)."'>";
     if ($this->answerType == "Radio") {
       $out .= $prefix.$this->question;
       $out .= "<ul>";
       foreach ($this->answerOptions as $key => $option) {
-        $out .= "<li><label><input type='radio' name='{$this->questionID}' value='".($key+1)."'> $option</label></li>\n";
+        $out .= "<li><label><input type='radio' name='{$this->questionID}' value='".($key+1)."'> $option</label></li>";
+        $out .= "\n";
       }
       if ($this->answerOther) {
         $out .= "<input type='text' name='{$this->questionID}-other' class='other'>";
       }
-    } else if ($this->answerType == "Textarea") {
+    } elseif ($this->answerType == "Textarea") {
       $out .= "<label for='question-{$this->questionID}'>$prefix{$this->question}</label><br>";
       $out .= "<textarea rows=3 id='question-{$this->questionID}' name='{$this->questionID}'></textarea>";
-    } else if ($this->answerType == "Text") {
+    } elseif ($this->answerType == "Text") {
       $out .= "<label for='question-{$this->questionID}'>$prefix{$this->question}</label><br>";
       $out .= "<input type='text' id='question-{$this->questionID}' name='{$this->questionID}'>";
-    } else if ($this->answerType == "1-5") {
+    } elseif ($this->answerType == "1-5") {
       $out .= "<label for='question-{$this->questionID}'>$prefix{$this->question}</label>";
       $out .= "<select id='question-{$this->questionID}' name='{$this->questionID}'>";
       $out .= "  <option value='0'>--</option>\n";
@@ -84,7 +88,7 @@ class Question {
       $out .= "  <option value='2' style='background-color: #FBAA77;'>2</option>\n";
       $out .= "  <option value='1' style='background-color: #F8696B;'>1</option>\n";
       $out .= "</select>\n";
-    } else if ($this->answerType == "Length") {
+    } elseif ($this->answerType == "Length") {
       $out .= "<label for='question-{$this->questionID}'>$prefix{$this->question}</label>";
       $out .= "<select id='question-{$this->questionID}' name='{$this->questionID}'>";
       $out .= "  <option value='0'>--</option>\n";
@@ -94,7 +98,7 @@ class Question {
       $out .= "  <option value='2' style='background-color: #FFEB84;'>A little too short</option>\n";
       $out .= "  <option value='1' style='background-color: #F8696B;'>Far too short</option>\n";
       $out .= "</select>\n";
-    } else if ($this->answerType == "Dropdown") {
+    } elseif ($this->answerType == "Dropdown") {
       $out .= "<label for='question-{$this->questionID}'>$prefix{$this->question}</label>";
       $out .= "<select id='question-{$this->questionID}' name='{$this->questionID}'>";
       $out .= "  <option value='0'>--</option>\n";
@@ -103,13 +107,15 @@ class Question {
       }
       $out .= "</select>\n";
     } else {
-      $out = "<div style='color: red; font: 15px tahoma;'>{$this->questionID}: \"{$this->answerType}\" not yet implemented</div>";
+      $out = "<div style='color: red; font: 15px tahoma;'>" .
+        $this->questionID . ": \"{$this->answerType}\" not yet implemented</div>";
     }
     $out .= "</div>";
     return $out;
   }
 
-  function getAnswerString($response) {
+  public function getAnswerString($response)
+  {
     // Either an empty string or no answer selected
     if (!$response) {
       return false;
@@ -145,7 +151,8 @@ class Question {
   }
 
   // TODO: not entirely pleased with having to include $users, perhaps there's a better way
-  function renderFeedback($allResponses, $users) {
+  public function renderFeedback($allResponses, $users)
+  {
     $output = "<h3>{$this->question}</h3>\n";
     $output .= "<ul>";
     if (!isset($allResponses[$this->questionID])) {
@@ -157,7 +164,7 @@ class Question {
         if ($stringResponse === self::OTHER_RESPONSE) {
           $output .= "<li>Other: ".$allResponses[$this->questionID."-other"]
                                                 [$response['Username']]['Answer']." $sig</li>";
-        } else if ($stringResponse) {
+        } elseif ($stringResponse) {
           $output .= "<li>$stringResponse $sig</li>\n";
         }
       }
@@ -166,10 +173,11 @@ class Question {
     return $output;
   }
 
-  function getColour($response) {
+  public function getColour($response)
+  {
     if ($this->answerType == "1-5") {
       return self::$coloursFive[$response];
-    } else if ($this->answerType == "Length") {
+    } elseif ($this->answerType == "Length") {
       return self::$coloursFiveTwo[$response];
     } else {
       return self::DEFAULT_COLOUR;
@@ -177,17 +185,18 @@ class Question {
   }
 
   // TODO: this isn't particularly nice but I'm not sure how it can be improved
-  function getSpecialStyle($response) {
+  public function getSpecialStyle($response)
+  {
     if (!$response) {
       return "";
     }
     if ($this->questionID == "see-poster" || $this->questionID == "send-info") {
       $colours = ["black", "silver"];
       return "color: ".$colours[$response-1];
-    } else if ($this->questionID == "time-on-camp" || $this->questionID == "leaders-supportive") {
+    } elseif ($this->questionID == "time-on-camp" || $this->questionID == "leaders-supportive") {
       $colours = ["green", "#999900", "#CC9900", "#FF6600", "red", "red"];
       return "color: ".$colours[$response-1];
-    } else if ($this->questionID == "god") {
+    } elseif ($this->questionID == "god") {
       if ($response == 1) {
         return "background-color: #FEE1FE";
       }

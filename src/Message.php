@@ -4,12 +4,14 @@ namespace Ubersite;
 /*
  * Stores a simple message to display to the user.
  */
-class Message {
+class Message
+{
 
   public $type;
   public $message;
 
-  function __construct($type, $message) {
+  public function __construct($type, $message)
+  {
     $this->type = $type;
     $this->message = $message;
   }

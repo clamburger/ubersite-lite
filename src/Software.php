@@ -1,24 +1,29 @@
 <?php
 namespace Ubersite;
 
-class Software {
+class Software
+{
   public static $name = "Übersite";
   public static $version = "2.2.0";
   public static $codename = "Ghost";
 
-  public function getFullName() {
+  public function getFullName()
+  {
     return self::$name . " " . self::$codename;
   }
 
-  public function getName() {
+  public function getName()
+  {
     return self::$name;
   }
 
-  public function getVersion() {
+  public function getVersion()
+  {
     return self::$version;
   }
 
-  public function getCodename() {
+  public function getCodename()
+  {
     return self::$codename;
   }
 }

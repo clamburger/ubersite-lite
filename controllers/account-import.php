@@ -22,8 +22,9 @@ if (count($people) === 0) {
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   if ($_FILES['csv']['error']) {
-    $messages->addMessage(new Message('error', 'File upload error: '
-      . $fileUploadErrors[$_FILES['csv']['error']]));
+    $messages->addMessage(
+        new Message('error', 'File upload error: ' . $fileUploadErrors[$_FILES['csv']['error']])
+    );
     Utils::refresh();
   } else {
     $reader = Reader::createFromFileObject(new SplFileObject($_FILES['csv']['tmp_name']));
@@ -39,12 +40,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     foreach ($reader as $index => $row) {
       // Check that the row has the right number of columns
       if (count($row) !== 5) {
-        $message = sprintf("Row %d has the wrong number of columns (expected 5, got %d)",
-          $index + 1, count($row));
+        $message = sprintf(
+            "Row %d has the wrong number of columns (expected 5, got %d)",
+            $index + 1,
+            count($row)
+        );
         $messages->addMessage(new Message('error', $message));
-        $messages->addMessage(new Message(
-          'error', 'Import failed. No database changes have been made.'
-        ));
+        $messages->addMessage(
+            new Message('error', 'Import failed. No database changes have been made.')
+        );
         $dbh->rollBack();
         $error = true;
         break;

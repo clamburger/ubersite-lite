@@ -112,7 +112,7 @@ for ($i = 1; $i <= $totalStages; ++$i) {
   $line = "<td>$i. {$pageOrder[$i-1]->title}</td>";
   if ($i > $stage) {
     $line .= $incomplete;
-  } else if ($i == $stage) {
+  } elseif ($i == $stage) {
     $line .= $inProgress;
   } else {
     $line .= $complete;
@@ -128,12 +128,13 @@ $twig->addGlobal("stage", $stage);
 $twig->addGlobal("progress", $progress);
 if ($stage === 0) {
   $twig->addGlobal("start", true);
-} else if ($stage > $totalStages) {
-  $messages->addMessage(new Message("alert", "Congratulations. The test is now over. ".
-    "All Aperture technologies remain safely operational up to 4000 degrees Kelvin. ".
-    "Rest assured that there is absolutely no chance of a dangerous equipment malfunction ".
-    "prior to your victory candescence. Thank you for participating in this Aperture Science ".
-    "computer-aided enrichment activity. Goodbye."));
+} elseif ($stage > $totalStages) {
+    $message = "Congratulations. The test is now over. ".
+        "All Aperture technologies remain safely operational up to 4000 degrees Kelvin. ".
+        "Rest assured that there is absolutely no chance of a dangerous equipment malfunction ".
+        "prior to your victory candescence. Thank you for participating in this Aperture Science ".
+        "computer-aided enrichment activity. Goodbye.";
+  $messages->addMessage(new Message("alert", $message));
   $twig->addGlobal("end", true);
 } else {
   $twig->addGlobal("title", $pageOrder[$stage-1]->title);

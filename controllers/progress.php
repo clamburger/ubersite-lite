@@ -43,7 +43,7 @@ foreach ($rawStatus as $username => $userStatus) {
   for ($i = 1; $i <= count($pages); $i++) {
     if ($i > $userStatus) {
       $temp["stages"][] = "<td style='text-align: center;'>---</td>";
-    } else if ($i === $userStatus) {
+    } elseif ($i === $userStatus) {
       $temp["stages"][] = "<td style='text-align: center; background-color: orange; color: white;'>In Progress</td>";
     } else {
       $temp["stages"][] = "<td style='text-align: center; background-color: green; color: white;'>Complete</td>";

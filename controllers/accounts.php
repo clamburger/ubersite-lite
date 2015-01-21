@@ -11,7 +11,6 @@ $roleList = array_fill_keys($roles, false);
 
 $editing = false;
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && $user->isLeader()) {
-
   if ($_POST['action'] == "new") {
     // Creating a new user
     $username = $_POST['username'];
@@ -22,11 +21,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && $user->isLeader()) {
     }
     if ($username === '') {
       $messages->addMessage(new Message("error", "A username must be provided."));
-    } else if (isset($people[$username])) {
+    } elseif (isset($people[$username])) {
       $messages->addMessage(new Message("error", "The provided username already exists."));
-    } else if ($name === '') {
+    } elseif ($name === '') {
       $messages->addMessage(new Message("error", "The name cannot be blank."));
-    } else if ($role !== '' && !in_array($role, $roles)) {
+    } elseif ($role !== '' && !in_array($role, $roles)) {
       $messages->addMessage(new Message("error", "Invalid role provided."));
     } else {
       // The default password is the same as the username.
@@ -52,9 +51,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && $user->isLeader()) {
     if (!isset($people[$username])) {
       $messages->addMessage(new Message("error", "That user no longer exists."));
       Utils::refresh();
-    } else if ($name === '') {
+    } elseif ($name === '') {
       $messages->addMessage(new Message("error", "The name cannot be blank."));
-    } else if ($role !== '' && !in_array($role, $roles)) {
+    } elseif ($role !== '' && !in_array($role, $roles)) {
       $messages->addMessage(new Message("error", "Invalid role provided."));
     } else {
       $query = 'UPDATE users SET Name = ?, Role = ?, DutyTeam = ? WHERE Username = ?';
@@ -99,19 +98,23 @@ if ($SEGMENTS[1] == "delete") {
   } else {
     if ($SEGMENTS[3] == "confirm") {
       if (!isset($_SESSION['deleteID'])) {
-        $messages->addMessage(new Message("error",
-          "Cannot find original deletion request. You will need to press \"delete\" again."));
-      } else if (time() - $_SESSION['deleteTime'] > 30) {
-        $messages->addMessage(new Message("error",
-          "You took too long to confirm. You will need to press \"delete\" again."));
-      } else if ($_SESSION['deleteID'] != $username) {
-        $messages->addMessage(new Message("error",
-          "You have confirmed the wrong ID. You will need to press \"delete\" again."));
+        $messages->addMessage(
+            new Message("error", "Cannot find original deletion request. You will need to press \"delete\" again.")
+        );
+      } elseif (time() - $_SESSION['deleteTime'] > 30) {
+        $messages->addMessage(
+            new Message("error", "You took too long to confirm. You will need to press \"delete\" again.")
+        );
+      } elseif ($_SESSION['deleteID'] != $username) {
+        $messages->addMessage(
+            new Message("error", "You have confirmed the wrong ID. You will need to press \"delete\" again.")
+        );
       } else {
         $stmt = $dbh->prepare('DELETE FROM users WHERE Username = ?');
         $stmt->execute([$username]);
-        $messages->addMessage(new Message("success",
-          "You have successfully deleted {$people[$username]->Name}'s account."));
+        $messages->addMessage(
+            new Message("success", "You have successfully deleted {$people[$username]->Name}'s account.")
+        );
         unset($people[$username]);
       }
       unset($_SESSION['deleteID']);
@@ -122,8 +125,9 @@ if ($SEGMENTS[1] == "delete") {
       } else {
           $_SESSION['deleteID'] = $username;
           $_SESSION['deleteTime'] = time();
-          $messages->addMessage(new Message("warning", "Are you absolutely positive that you want to delete {$people[$username]->Name}'s account?" .
-              " | <a href='/accounts/delete/$username/confirm'>Confirm deletion</a>."));
+          $message = "Are you absolutely positive that you want to delete {$people[$username]->Name}'s account?" .
+              " | <a href='/accounts/delete/$username/confirm'>Confirm deletion</a>.";
+          $messages->addMessage(new Message("warning", $message));
       }
     }
   }

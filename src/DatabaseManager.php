@@ -5,12 +5,14 @@ namespace Ubersite;
  * A singleton used to hand out a connection to the SQLite database using PDO.
  * @return \PDO
  */
-class DatabaseManager {
+class DatabaseManager
+{
 
   /** @var \PDO */
   private static $dbh;
 
-  public static function get() {
+  public static function get()
+  {
     // If the PDO object already exists, simply return it
     if (self::$dbh) {
       return self::$dbh;
@@ -25,5 +27,4 @@ class DatabaseManager {
 
     return $dbh;
   }
-
 }

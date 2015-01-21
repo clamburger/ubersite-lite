@@ -23,7 +23,7 @@ if (isset($_POST['username']) && isset($_POST['password'])) {
 
   if (!$row = $stmt->fetch()) {
     $messages->addMessage(new Message('error', "That user doesn't exist."));
-  } else if ((is_null($row['Password']) && $password === $username) || password_verify($password, $row['Password'])) {
+  } elseif ((is_null($row['Password']) && $password === $username) || password_verify($password, $row['Password'])) {
     $_SESSION['username'] = $username;
     header("Location: $redirect");
     exit;

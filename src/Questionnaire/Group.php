@@ -1,14 +1,16 @@
 <?php
 namespace Ubersite\Questionnaire;
 
-class Group {
+class Group
+{
   public $groupID;
   public $title;
   public $questions = [];
   public $collapsible = false;
   public $comments = true;
   
-  function __construct($details, $questions) {
+  public function __construct($details, $questions)
+  {
     $this->groupID = $details->GroupID;
     $this->title = $details->Title;
     foreach ($details->Questions as $questionID) {
@@ -26,7 +28,8 @@ class Group {
     }
   }
   
-  function renderHTML() {
+  public function renderHTML()
+  {
     $out = "";
     $extraClass = $this->collapsible ? "optquest" : "";
     $out .= "<fieldset class='question-group $extraClass'>";
@@ -54,7 +57,8 @@ class Group {
   }
 
   // TODO: not a huge fan of this special case
-  function createCommentsQuestion() {
+  private function createCommentsQuestion()
+  {
     $details = new \stdClass();
     $details->QuestionID = $this->groupID . "-comments";
     $details->Question = "Any other comments?";
@@ -62,7 +66,8 @@ class Group {
     return new Question($details);
   }
 
-  function renderFeedback($allResponses, $users) {
+  public function renderFeedback($allResponses, $users)
+  {
     $output = "<fieldset class='question-group feedback'>";
     $output .= "<legend>{$this->title}</legend>";
 
