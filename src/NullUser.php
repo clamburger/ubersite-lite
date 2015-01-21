@@ -8,11 +8,11 @@ namespace Ubersite;
 class NullUser extends User
 {
 
-  public function __construct()
-  {
-    $this->Username = "";
-    $this->Name = "";
-    $this->Role = "camper";
-    $this->LoggedIn = false;
-  }
+    public function __construct()
+    {
+        $this->Username = "";
+        $this->Name = "";
+        $this->Role = "camper";
+        $this->LoggedIn = false;
+    }
 }

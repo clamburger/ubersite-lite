@@ -11,14 +11,14 @@ use Ubersite\DatabaseManager;
  */
 
 if (PHP_SAPI != "cli") {
-  echo "<div style='font-family: Consolas, \"Liberation Sans\", courier, monospace'>";
-  echo "This script must be run via the command line.";
-  exit;
+    echo "<div style='font-family: Consolas, \"Liberation Sans\", courier, monospace'>";
+    echo "This script must be run via the command line.";
+    exit;
 }
 
 if ($argc < 2 || $argc > 3) {
-  echo "usage: php ".basename(__FILE__). " <username> [<password>]\n";
-  exit;
+    echo "usage: php ".basename(__FILE__). " <username> [<password>]\n";
+    exit;
 }
 
 $dbh = DatabaseManager::get();
@@ -33,8 +33,8 @@ $stmt->execute([$username]);
 $row = $stmt->fetch();
 
 if (!$row[0]) {
-  echo "Error: user $username not found\n";
-  exit(1);
+    echo "Error: user $username not found\n";
+    exit(1);
 }
 
 $hash = password_hash($password, PASSWORD_DEFAULT);
@@ -43,8 +43,8 @@ $stmt = $dbh->prepare('UPDATE users SET Password = ? WHERE Username = ?');
 $stmt->execute([$hash, $username]);
 
 if ($stmt->rowCount()) {
-  echo "Password for $username successfully updated.\n";
-  echo "They will be prompted to change their password the next time they log in.\n";
+    echo "Password for $username successfully updated.\n";
+    echo "They will be prompted to change their password the next time they log in.\n";
 } else {
-  echo "Error: zero affected rows.\n";
+    echo "Error: zero affected rows.\n";
 }
