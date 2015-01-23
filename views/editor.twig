@@ -5,5 +5,25 @@
 {% endblock %}
 
 {% block content %}
-  Allan please add details
+  <table class="progress">
+    <tr>
+      <th>ID</th>
+      <th>Title</th>
+      <th>Pages</th>
+      <th>Groups</th>
+      <th>Questions</th>
+      <th>Controls</th>
+    </tr>
+    {% for questionnaire in questionnaires %}
+    <tr>
+      <th>{{ questionnaire.id }}</th>
+      <td><a href='/editor/{{ questionnaire.id }}'>{{ questionnaire.title }}</a></td>
+      <td>{{ questionnaire.pages | length }}</td>
+      <td>{{ questionnaire.groups | length }}</td>
+      <td>{{ questionnaire.questions | length }}</td>
+      <td><button>Duplicate</button> <button>Delete</button></td>
+    </tr>
+    {% endfor %}
+  </table>
+  <h3><a href='/editor/new'>Create new questionnaire</a></h3>
 {% endblock %}

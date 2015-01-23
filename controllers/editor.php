@@ -1,26 +1,32 @@
 <?php
+use Ubersite\Questionnaire;
+
 // Which questionnaire.
 $id = $SEGMENTS[1];
 
 if (!$id) {
-    header('Location: /choose?src=editor');
-    exit;
-}
+    $twig->addGlobal('showAll', true);
+    $twig->addGlobal('title', 'Questionnaire Editor');
+    $stmt = $dbh->query("SELECT * FROM questionnaires");
 
-if ($id === 'new') {
+    $questionnaires = [];
+    foreach ($stmt as $row) {
+        $questionnaires[] = new Questionnaire($row);
+    }
+    $twig->addGlobal('questionnaires', $questionnaires);
+} elseif ($id === 'new') {
     $query = <<<SQL
     INSERT INTO questionnaires (Name, Pages, Intro) VALUES (
       'Untitled Questionnaire', '{"Questions": {}, "Groups": {}, "Pages": {}, "PageOrder": []}', ''
     );
 SQL;
-
     $dbh->exec($query);
-    header('Location: /editor/' . $dbh->lastInsertId());
+    header('Location: /editor');
     exit;
 }
 
 // Check that the questionnaire exists, and if it does, load up information about it
-$stmt = $dbh->prepare('SELECT * FROM questionnaires WHERE Id = ?');
+/*$stmt = $dbh->prepare('SELECT * FROM questionnaires WHERE Id = ?');
 $stmt->execute([$id]);
 if (!$row = $stmt->fetch()) {
     header('Location: /choose?src=editor');
@@ -29,3 +35,4 @@ if (!$row = $stmt->fetch()) {
 
 $title = $row['Name'];
 $twig->addGlobal('title', $title);
+*/
