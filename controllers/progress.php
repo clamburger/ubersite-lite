@@ -60,4 +60,3 @@ foreach ($totals as $key => $total) {
 
 $twig->addGlobal('status', $status);
 $twig->addGlobal('totals', $totals);
-$twig->addGlobal('head', '<meta http-equiv="refresh" content="5;/progress/'.$id.'?autorefresh" >');
