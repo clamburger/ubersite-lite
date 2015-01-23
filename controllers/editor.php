@@ -27,6 +27,7 @@ if (!$id) {
     );
 SQL;
     $dbh->exec($query);
+    $messages->addMessage(new Message('success', 'New questionnaire successfully created.'));
     header('Location: /editor');
     exit;
 }

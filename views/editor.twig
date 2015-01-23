@@ -21,7 +21,10 @@
       <td>{{ questionnaire.pages | length }}</td>
       <td>{{ questionnaire.groups | length }}</td>
       <td>{{ questionnaire.questions | length }}</td>
-      <td><button>Duplicate</button> <button>Delete</button></td>
+      <td>
+        <button data-action="duplicate" data-id="{{ questionnaire.id }}">Duplicate</button>
+        <button data-action="delete" data-id="{{ questionnaire.id }}">Delete</button>
+      </td>
     </tr>
     {% endfor %}
   </table>

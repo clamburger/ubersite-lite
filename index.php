@@ -126,8 +126,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 // Include the specified page
 if (file_exists("controllers/$PAGE.php")) {
     require_once("controllers/$PAGE.php");
-    $twig->addGlobal('messagebank', $messages);
-    echo $twig->render("$PAGE.twig");
+
+    // Special handling for the ajax page, as it has no normal view
+    if ($PAGE !== 'ajax') {
+        $twig->addGlobal('messagebank', $messages);
+        echo $twig->render("$PAGE.twig");
+    }
 } else {
     header('HTTP/1.0 404 Not Found');
     echo '404 Not Found';
