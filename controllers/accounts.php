@@ -2,6 +2,10 @@
 use Ubersite\Message;
 use Ubersite\Utils;
 
+if (!$user->isLeader()) {
+    Utils::send403($twig);
+}
+
 $twig->addGlobal('submit', "Create User");
 
 $roles = ['camper', 'leader', 'director', 'cook', 'visitor'];

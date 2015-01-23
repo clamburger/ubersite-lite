@@ -7,7 +7,6 @@
 {% endblock %}
 
 {% block content %}
-{% if user.leader %}
 <table>
 <tr>
 	<th>Person</th>
@@ -30,7 +29,4 @@
 	{% endfor %}
 </tr>
 </table>
-{% else %}
-You must be a leader to view this page.
-{% endif %}
 {% endblock %}

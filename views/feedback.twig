@@ -1,17 +1,12 @@
 {% extends "master.twig" %}
 
 {% block content %}
-{% if user.leader %}
-  {% if not standalone %}
-    {% if smallgroup %}
-      <h3><a href="/feedback/{{ id }}">View feedback from all campers</a></h3>
-    {% else %}
-      <h3><a href="/feedback/{{ id }}/smallgroup">View feedback from your small group only</a></h3>
-    {% endif %}
+{% if not standalone %}
+  {% if smallgroup %}
+    <h3><a href="/feedback/{{ id }}">View feedback from all campers</a></h3>
+  {% else %}
+    <h3><a href="/feedback/{{ id }}/smallgroup">View feedback from your small group only</a></h3>
   {% endif %}
-  {{ output | raw }}
-{% else %}
-  <h2>Questionairre Feedback:</h2>
-  You must be a leader to see this page.
 {% endif %}
+{{ output | raw }}
 {% endblock %}

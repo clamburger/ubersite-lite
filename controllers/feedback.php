@@ -2,6 +2,11 @@
 use Ubersite\Questionnaire\Group;
 use Ubersite\Questionnaire\Question;
 use Ubersite\Questionnaire\Page;
+use Ubersite\Utils;
+
+if (!$user->isLeader()) {
+    Utils::send403($twig);
+}
 
 $id = $SEGMENTS[1];
 

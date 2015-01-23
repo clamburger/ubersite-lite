@@ -1,5 +1,11 @@
 <?php
+use Ubersite\Message;
 use Ubersite\Questionnaire;
+use Ubersite\Utils;
+
+if (!$user->isLeader()) {
+    Utils::send403($twig);
+}
 
 // Which questionnaire.
 $id = $SEGMENTS[1];

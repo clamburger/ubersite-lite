@@ -3,53 +3,49 @@
 {% block title %}Import Accounts{% endblock %}
 
 {% block content %}
-  {% if user.leader or noUsers %}
-    This page is used to import accounts from a CSV file.
-    The CSV must contain the following columns, in this exact order:
+  This page is used to import accounts from a CSV file.
+  The CSV must contain the following columns, in this exact order:
 
-    <table class='progress'>
-      <tr>
-        <th>Username</th>
-        <td><strong>Required</strong></td>
-        <td>&nbsp;</td>
-      </tr>
-      <tr>
-        <th>Full Name</th>
-        <td><strong>Required</strong></td>
-        <td>&nbsp;</td>
-      </tr>
-      <tr>
-        <th>Role on Camp</th>
-        <td>Optional</td>
-        <td>Can be leader, camper, cook or director. Defaults to camper</td>
-      </tr>
-      <tr>
-        <th>Password</th>
-        <td>Optional</td>
-        <td>Will default to username if not provided</td>
-      </tr>
-      <tr>
-        <th>Duty Team</th>
-        <td>Optional</td>
-        <td>The name is never shown, so you can use any format you wish</td>
-      </tr>
-    </table>
+  <table class='progress'>
+    <tr>
+      <th>Username</th>
+      <td><strong>Required</strong></td>
+      <td>&nbsp;</td>
+    </tr>
+    <tr>
+      <th>Full Name</th>
+      <td><strong>Required</strong></td>
+      <td>&nbsp;</td>
+    </tr>
+    <tr>
+      <th>Role on Camp</th>
+      <td>Optional</td>
+      <td>Can be leader, camper, cook or director. Defaults to camper</td>
+    </tr>
+    <tr>
+      <th>Password</th>
+      <td>Optional</td>
+      <td>Will default to username if not provided</td>
+    </tr>
+    <tr>
+      <th>Duty Team</th>
+      <td>Optional</td>
+      <td>The name is never shown, so you can use any format you wish</td>
+    </tr>
+  </table>
 
-    Other things to note:
-    <ul>
-      <li>There should not be a header row</li>
-      <li>There should not be spaces between fields</li>
-      <li>Optional columns must be included, but they can be left blank</li>
-      <li>The fields must be not be enclosed by quotation marks (&quot;)</li>
-      <li>Duplicate users will be overwritten.</li>
-    </ul>
+  Other things to note:
+  <ul>
+    <li>There should not be a header row</li>
+    <li>There should not be spaces between fields</li>
+    <li>Optional columns must be included, but they can be left blank</li>
+    <li>The fields must be not be enclosed by quotation marks (&quot;)</li>
+    <li>Duplicate users will be overwritten.</li>
+  </ul>
 
-    <form enctype="multipart/form-data" method="POST">
-      <input type="hidden" name="MAX_FILE_SIZE" value="1000000">
-      <input name="csv" type="file" accept=".csv, text/plain">
-      <input type="submit" value="Upload">
-    </form>
-  {% else %}
-    You must be a leader to view this page.
-  {% endif %}
+  <form enctype="multipart/form-data" method="POST">
+    <input type="hidden" name="MAX_FILE_SIZE" value="1000000">
+    <input name="csv" type="file" accept=".csv, text/plain">
+    <input type="submit" value="Upload">
+  </form>
 {% endblock %}

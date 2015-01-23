@@ -7,12 +7,12 @@ namespace Ubersite;
 class Utils
 {
     /**
-   * Encodes the contents of a file into base64 so that it can be directly embedded into a page.
-   * Example use: <img src="dataURI('filename.png', 'image/png');">
-   * @param $file string The location of the file
-   * @param $mime string The MIME type of the file
-   * @return string A data URI with the encoded contents of the file
-   */
+     * Encodes the contents of a file into base64 so that it can be directly embedded into a page.
+     * Example use: <img src="dataURI('filename.png', 'image/png');">
+     * @param $file string The location of the file
+     * @param $mime string The MIME type of the file
+     * @return string A data URI with the encoded contents of the file
+     */
     public static function dataURI($file, $mime)
     {
         $contents = file_get_contents($file);
@@ -21,11 +21,18 @@ class Utils
     }
 
     /**
-   * A redirect that just reloads the page.
-   */
+     * A redirect that just reloads the page.
+     */
     public static function refresh()
     {
         header("Location: http://{$_SERVER['HTTP_HOST']}{$_SERVER['REQUEST_URI']}");
+        exit;
+    }
+
+    public static function send403($twig)
+    {
+        echo $twig->render('403.twig');
+        header('HTTP/1.1 403 Forbidden');
         exit;
     }
 }
