@@ -4,8 +4,7 @@ A questionnaire is a JSON object containing the following items.
 
 * `Questions` **required**: an array of Question objects indexed by question ID.
 * `Groups` **required**: an array of Group objects indexed by group ID.
-* `Pages` **required**: an array of Page objects indexed by page ID.
-* `PageOrder` **required**: a list of page IDs which determines the order in which pages are shown.
+* `Pages` **required**: an array of Page objects (in the order that they will be displayed).
 * `FeedbackTable`: a list of question IDs that will appear in a table at the top of the feedback page.
 
 ## Questions

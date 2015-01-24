@@ -53,14 +53,7 @@ foreach ($details->Pages as $pageID => $page) {
     $pages[$pageID] = new Page($page, $questions, $groups);
 }
 
-$pageOrder = [];
-foreach ($details->PageOrder as $pageID) {
-    if (isset($pages[$pageID])) {
-        $pageOrder[] = $pages[$pageID];
-    }
-}
-
-$totalStages = count($pageOrder);
+$totalStages = count($details->Pages);
 
 $twig->addGlobal("ID", $id);
 
@@ -98,7 +91,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
               WHERE QuizId = ? AND Username = ?';
         $stmt = $dbh->prepare($query);
         $stmt->execute([$responses, ++$stage, $id, $user->Username]);
-        $messages->addMessage(new Message("success", $pageOrder[$stage-2]->title." successfully submitted."));
+        $messages->addMessage(new Message("success", $pages[$stage-2]->title." successfully submitted."));
         Utils::refresh();
     }
 }
@@ -109,7 +102,7 @@ $inProgress = "<td style='color: orange;'>In Progress</td>";
 $complete = "<td style='color: green;'>Completed</td>";
 $progress = [];
 for ($i = 1; $i <= $totalStages; ++$i) {
-    $line = "<td>$i. {$pageOrder[$i-1]->title}</td>";
+    $line = "<td>$i. {$pages[$i-1]->title}</td>";
     if ($i > $stage) {
         $line .= $incomplete;
     } elseif ($i == $stage) {
@@ -137,6 +130,6 @@ if ($stage === 0) {
     $messages->addMessage(new Message("alert", $message));
     $twig->addGlobal("end", true);
 } else {
-    $twig->addGlobal("title", $pageOrder[$stage-1]->title);
-    $twig->addGlobal("questions", $pageOrder[$stage-1]->renderHTML());
+    $twig->addGlobal("title", $pages[$stage-1]->title);
+    $twig->addGlobal("questions", $pages[$stage-1]->renderHTML());
 }

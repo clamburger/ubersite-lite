@@ -45,13 +45,6 @@ foreach ($details->Pages as $pageID => $page) {
     $pages[$pageID] = new Page($page, $questions, $groups);
 }
 
-$pageOrder = [];
-foreach ($details->PageOrder as $pageID) {
-    if (isset($pages[$pageID])) {
-        $pageOrder[] = $pages[$pageID];
-    }
-}
-
 if ($SEGMENTS[2] == 'smallgroup') {
     $where = "AND DutyTeam = (SELECT DutyTeam FROM users WHERE Username = ?)";
 } else {
@@ -130,7 +123,7 @@ if (isset($details->FeedbackTable)) {
     $output .= "</table>\n";
 }
 
-foreach ($pageOrder as $page) {
+foreach ($pages as $page) {
     $output .= "<h2>{$page->title}</h2>\n";
     foreach ($page->questions as $question) {
         if (isset($details->FeedbackTable) && $question instanceof Question

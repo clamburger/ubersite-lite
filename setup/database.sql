@@ -17,8 +17,7 @@ INSERT INTO `questionnaires` (`Id`, `Name`, `Pages`, `Intro`) VALUES
   (1, 'Camp Questionnaire', '{
     "Questions": {},
     "Groups": {},
-    "Pages": {},
-    "PageOrder": []
+    "Pages": []
 }', 'At the end of each Übertweak we get all campers to fill out a questionnaire about camp.
 Your feedback is extremely useful and all of the leaders spend time after camp reviewing it to ensure that the next Übertweak is better than ever!<br><br>
 We encourage you to be completely honest: if you had a terrible time and hated all the leaders, make sure you tell us that. We will not hold any of this feedback against you.<br><br>

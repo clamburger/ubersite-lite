@@ -22,10 +22,8 @@ if (!$row = $stmt->fetch()) {
 
 $details = json_decode($row['Pages']);
 $pages = [];
-foreach ($details->PageOrder as $pageID) {
-    if (isset($details->Pages->$pageID)) {
-        $pages[] = $details->Pages->$pageID->Title;
-    }
+foreach ($details->Pages as $page) {
+    $pages[] = $page->Title;
 }
 
 $twig->addGlobal("pages", $pages);
