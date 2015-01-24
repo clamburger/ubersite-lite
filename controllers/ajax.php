@@ -25,12 +25,12 @@ SQL;
     $stmt->execute([$_POST['id']]);
 
 } elseif ($action === 'delete-questionnaire') {
-    $stmt = $dbh->prepare('DELETE FROM questionnaires WHERE Id = ?');
-    $stmt->execute([$_POST['id']]);
+    $questionnaire = Questionnaire::loadFromDatabase($_POST['id']);
+    $questionnaire->deleteQuestionnaire();
 
 } elseif ($action === 'update-intro-text') {
-    $stmt = $dbh->prepare('UPDATE questionnaires SET Intro = ? WHERE Id = ?');
-    $stmt->execute([$_POST['text'], $_POST['id']]);
+    $questionnaire = Questionnaire::loadFromDatabase($_POST['id']);
+    $questionnaire->setIntro($_POST['text']);
 
 } elseif ($action === 'duplicate-page') {
     $questionnaire = Questionnaire::loadFromDatabase($_POST['id']);

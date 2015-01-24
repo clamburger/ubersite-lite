@@ -9,7 +9,7 @@ class Questionnaire
 {
     public $id;
     public $title;
-    public $intro;
+    private $intro;
 
     public $pages;
     public $groups;
@@ -43,6 +43,24 @@ class Questionnaire
             $page->PageID = $pageID;
             $this->pages[$pageID] = new Page($page, $this->questions, $this->groups);
         }
+    }
+
+    public function deleteQuestionnaire()
+    {
+        $dbh = DatabaseManager::get();
+        $stmt = $dbh->prepare('DELETE FROM questionnaires WHERE Id = ?');
+        $stmt->execute([$_POST['id']]);
+    }
+
+    public function getIntro()
+    {
+        return $this->intro;
+    }
+
+    public function setIntro($intro)
+    {
+        $this->intro = $intro;
+        $this->updateDatabase();
     }
 
     public function createNewPage()

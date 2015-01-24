@@ -42,10 +42,10 @@
         {% for pageRow in questionnaire.pages %}
           <tr>
             <td><a href='/editor/{{ questionnaire.id }}/{{ loop.index }}'>{{ loop.index }}. {{ pageRow.title }}</td>
-            <td>{{ pageRow.questions | length }}</td>
+            <td>{{ pageRow.questions | length }} question{{ pageRow.questions | length == 1 ? '' : 's' }}</td>
           </tr>
         {% endfor %}
-          <tr><td colspan="2"><a href='/editor/{{ questionnaire.id }}' style='color: maroon;'>Back to the editor</a></td></tr>
+          <tr><td colspan="2"><a href='/editor/{{ questionnaire.id }}' style='color: maroon'>Back to the editor</a></td></tr>
       </table>
       <h2>{{ page.title }}</h2>
     {% else %}

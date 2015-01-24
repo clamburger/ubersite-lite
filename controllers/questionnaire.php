@@ -29,12 +29,10 @@ $questions = $questionnaire->questions;
 $groups = $questionnaire->groups;
 $pages = $questionnaire->pages;
 
+$twig->addGlobal('questionnaire', $questionnaire);
 $twig->addGlobal('title', $questionnaire->title);
-$twig->addGlobal('intro', $questionnaire->intro);
 
 $totalStages = count($pages);
-
-$twig->addGlobal("ID", $id);
 
 // Get the current page for the user.
 $stmt = $dbh->prepare('SELECT * FROM responses WHERE Username = ? AND QuizId = ?');

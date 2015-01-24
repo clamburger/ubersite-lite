@@ -7,20 +7,20 @@
   <tr>{{ row | raw }}</tr>
 {% endfor %}
 {% if user.leader %}
-<tr><td colspan='2'><a href='/questionnaire/{{ ID }}/delete'>Delete current progress</a></td></tr>
-<tr><td colspan='2'><a href='/progress/{{ ID }}' style='color: maroon;'>Check camper progress</a></td></tr>
+<tr><td colspan='2'><a href='/questionnaire/{{ questionnaire.id }}/delete'>Delete current progress</a></td></tr>
+<tr><td colspan='2'><a href='/progress/{{ questionnaire.id }}' style='color: maroon;'>Check camper progress</a></td></tr>
 {% endif %}
 </table>
 
 {% if start %}
-  {{ intro | raw | nl2br }}
+  {{ questionnaire.intro | raw | nl2br }}
   <br>
   <br>
-  <h3><a href='/questionnaire/{{ ID }}/begin'>Begin the Questionnaire</a></h3>
+  <h3><a href='/questionnaire/{{ questionnaire.id }}/begin'>Begin the Questionnaire</a></h3>
 {% endif %}
 
 {% if questions %}
-<form action="/questionnaire/{{ ID }}" method="POST">
+<form action="/questionnaire/{{ questionnaire.id }}" method="POST">
 <input type="hidden" name="stage" value="{{ stage }}" />
 {{ questions | raw }}
 <input type="submit"
