@@ -36,30 +36,44 @@
     <h2>{{ questionnaire.title }}</h2>
     <input type="hidden" id="questionnaire-id" value="{{ questionnaire.id }}" />
 
-    <textarea id="intro-text-editor">{{ questionnaire.intro }}</textarea><br>
-    <button id="save-intro-text">Save intro text</button>
+    {% if page %}
+      <table style='float: right;' class='progress'>
+        <tr><th colspan="2">Questionnaire Pages:</th></tr>
+        {% for pageRow in questionnaire.pages %}
+          <tr>
+            <td><a href='/editor/{{ questionnaire.id }}/{{ loop.index }}'>{{ loop.index }}. {{ pageRow.title }}</td>
+            <td>{{ pageRow.questions | length }}</td>
+          </tr>
+        {% endfor %}
+          <tr><td colspan="2"><a href='/editor/{{ questionnaire.id }}' style='color: maroon;'>Back to the editor</a></td></tr>
+      </table>
+      <h2>{{ page.title }}</h2>
+    {% else %}
+      <textarea id="intro-text-editor">{{ questionnaire.intro }}</textarea><br>
+      <button id="save-intro-text">Save intro text</button>
 
-    <table class="progress">
-      <tr>
-        <th>&nbsp;</th>
-        <th>Page Title</th>
-        <th>Questions</th>
-        <th>Controls</th>
-      </tr>
-      {% for page in questionnaire.pages %}
+      <table class="progress">
         <tr>
-          <th>{{ loop.index }}</th>
-          <td><a href='/editor/{{ questionnaire.id }}/{{ loop.index }}'>{{ page.title }}</a></td>
-          <td>{{ page.questions | length }}</td>
-          <td>
-            <button data-action="move-page" data-id="{{ loop.index }}" data-movement="-1">&uarr;</button>
-            <button data-action="move-page" data-id="{{ loop.index }}" data-movement="1">&darr;</button>
-            <button data-action="page-duplicate" data-id="{{ loop.index }}">Duplicate</button>
-            <button data-action="page-delete" data-id="{{ loop.index }}">Delete</button>
-          </td>
+          <th>&nbsp;</th>
+          <th>Page Title</th>
+          <th>Questions</th>
+          <th>Controls</th>
         </tr>
-      {% endfor %}
-    </table>
-    <button data-action="page-create">Create new page</button>
+        {% for page in questionnaire.pages %}
+          <tr>
+            <th>{{ loop.index }}</th>
+            <td><a href='/editor/{{ questionnaire.id }}/{{ loop.index }}'>{{ page.title }}</a></td>
+            <td>{{ page.questions | length }}</td>
+            <td>
+              <button data-action="move-page" data-id="{{ loop.index }}" data-movement="-1">&uarr;</button>
+              <button data-action="move-page" data-id="{{ loop.index }}" data-movement="1">&darr;</button>
+              <button data-action="page-duplicate" data-id="{{ loop.index }}">Duplicate</button>
+              <button data-action="page-delete" data-id="{{ loop.index }}">Delete</button>
+            </td>
+          </tr>
+        {% endfor %}
+      </table>
+      <button data-action="page-create">Create new page</button>
+    {% endif %}
   {% endif %}
 {% endblock %}

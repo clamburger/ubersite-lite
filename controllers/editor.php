@@ -21,7 +21,6 @@ if (!$id) {
     $twig->addGlobal('questionnaires', $questionnaires);
 
 } else {
-    $page = $SEGMENTS[2];
     $stmt = $dbh->prepare('SELECT * FROM questionnaires WHERE Id = ?');
     $stmt->execute([$id]);
     if (!$row = $stmt->fetch()) {
@@ -31,4 +30,14 @@ if (!$id) {
     }
     $questionnaire = new Questionnaire($row);
     $twig->addGlobal('questionnaire', $questionnaire);
+
+    $page = $SEGMENTS[2];
+    if ($page !== null) {
+        if (!isset($questionnaire->pages[$page-1])) {
+            $messages->addMessage(new Message('error', 'Invalid page number.'));
+            header('Location: /editor/' . $id);
+            exit;
+        }
+        $twig->addGlobal('page', $questionnaire->pages[$page-1]);
+    }
 }
