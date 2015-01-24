@@ -54,7 +54,7 @@ h4 {
   color: #000;
 }
 
-ul, ol, pre {
+ul, ol {
   color: #444444;
   padding: 10px 10px 10px 30px;
   line-height: 1.8em;
@@ -62,11 +62,6 @@ ul, ol, pre {
 
 ul {
   list-style-type: square;
-}
-
-pre {
-  background-color: #dfeaea;
-  border: 1px solid #cfcfcf;
 }
 
 #content {
