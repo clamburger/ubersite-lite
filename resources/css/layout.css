@@ -25,21 +25,19 @@ a:hover, a:active {
 /* Html Elements */
 h1, h2, h3, h4 {
   margin: 10px 0 10px 0;
-  padding: 0 0 10px 0;
-  border: 0 solid black;
+  padding: 0 0 5px 0;
 }
 
 h1 {
-  border-width: 0;
-  font-size: 28px;
-  font-weight: normal;
-  color: #000;
+  font-size: 30px;
+  font-weight: bold;
+  border-bottom: 2px solid;
 }
 
 h2 {
-  font-size: 30px;
+  font-size: 26px;
   font-weight: bold;
-  border-width: 0 0 2px 0;
+  color: #000;
 }
 
 h3 {
@@ -47,7 +45,6 @@ h3 {
   font-size: 16px;
   font-weight: normal;
   color: #000;
-  border-width: 0 0 0 0;
 }
 
 h4 {
