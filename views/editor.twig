@@ -4,29 +4,36 @@
   <script src='/resources/js/editor.js'></script>
 {% endblock %}
 
+{% block title %}Questionnaire Editor{% endblock %}
+
 {% block content %}
-  <table class="progress">
-    <tr>
-      <th>ID</th>
-      <th>Title</th>
-      <th>Pages</th>
-      <th>Groups</th>
-      <th>Questions</th>
-      <th>Controls</th>
-    </tr>
-    {% for questionnaire in questionnaires %}
-    <tr>
-      <th>{{ questionnaire.id }}</th>
-      <td><a href='/editor/{{ questionnaire.id }}'>{{ questionnaire.title }}</a></td>
-      <td>{{ questionnaire.pages | length }}</td>
-      <td>{{ questionnaire.groups | length }}</td>
-      <td>{{ questionnaire.questions | length }}</td>
-      <td>
-        <button data-action="duplicate" data-id="{{ questionnaire.id }}">Duplicate</button>
-        <button data-action="delete" data-id="{{ questionnaire.id }}">Delete</button>
-      </td>
-    </tr>
-    {% endfor %}
-  </table>
-  <h3><a href='/editor/new'>Create new questionnaire</a></h3>
+  {% if showAll %}
+    <table class="progress">
+      <tr>
+        <th>ID</th>
+        <th>Title</th>
+        <th>Pages</th>
+        <th>Groups</th>
+        <th>Questions</th>
+        <th>Controls</th>
+      </tr>
+      {% for questionnaire in questionnaires %}
+      <tr>
+        <th>{{ questionnaire.id }}</th>
+        <td><a href='/editor/{{ questionnaire.id }}'>{{ questionnaire.title }}</a></td>
+        <td>{{ questionnaire.pages | length }}</td>
+        <td>{{ questionnaire.groups | length }}</td>
+        <td>{{ questionnaire.questions | length }}</td>
+        <td>
+          <button data-action="duplicate" data-id="{{ questionnaire.id }}">Duplicate</button>
+          <button data-action="delete" data-id="{{ questionnaire.id }}">Delete</button>
+        </td>
+      </tr>
+      {% endfor %}
+    </table>
+    <h3><a href='/editor/new'>Create new questionnaire</a></h3>
+  {% else %}
+    <h3><strong>{{ questionnaire.title }}</strong> (ID: {{ questionnaire.id }})</h3>
+
+  {% endif %}
 {% endblock %}

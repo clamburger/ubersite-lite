@@ -12,7 +12,6 @@ $id = $SEGMENTS[1];
 
 if (!$id) {
     $twig->addGlobal('showAll', true);
-    $twig->addGlobal('title', 'Questionnaire Editor');
     $stmt = $dbh->query("SELECT * FROM questionnaires");
 
     $questionnaires = [];
@@ -20,26 +19,30 @@ if (!$id) {
         $questionnaires[] = new Questionnaire($row);
     }
     $twig->addGlobal('questionnaires', $questionnaires);
+
 } elseif ($id === 'new') {
     $query = <<<SQL
     INSERT INTO questionnaires (Name, Pages, Intro) VALUES (
-      'Untitled Questionnaire', '{"Questions": {}, "Groups": {}, "Pages": {}, "PageOrder": []}', ''
+      'Untitled Questionnaire', '{"Questions": {}, "Groups": {}, "Pages": []}', ''
     );
 SQL;
     $dbh->exec($query);
     $messages->addMessage(new Message('success', 'New questionnaire successfully created.'));
     header('Location: /editor');
     exit;
+
+} else {
+    $stmt = $dbh->prepare('SELECT * FROM questionnaires WHERE Id = ?');
+    $stmt->execute([$id]);
+    if (!$row = $stmt->fetch()) {
+        $messages->addMessage(new Message('error', 'Invalid questionnaire ID.'));
+        header('Location: /editor');
+        exit;
+    }
+    $questionnaire = new Questionnaire($row);
+    $twig->addGlobal('questionnaire', $questionnaire);
 }
 
 // Check that the questionnaire exists, and if it does, load up information about it
-/*$stmt = $dbh->prepare('SELECT * FROM questionnaires WHERE Id = ?');
-$stmt->execute([$id]);
-if (!$row = $stmt->fetch()) {
-    header('Location: /choose?src=editor');
-    exit;
-}
-
-$title = $row['Name'];
-$twig->addGlobal('title', $title);
+/*
 */
