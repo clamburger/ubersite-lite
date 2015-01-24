@@ -1,6 +1,13 @@
 $( document ).ready(function() {
     var id;
 
+    $('button[data-action=create-questionnaire]').click(function(event) {
+        $.post('/ajax', {action: 'create-questionnaire'}, function(data) {
+            location.reload();
+        });
+        $('button').prop('disabled', true);
+    });
+
     $('button[data-action=duplicate]').click(function(event) {
         id = $(event.target).attr('data-id');
         $.post('/ajax', {id: id, action: 'duplicate-questionnaire'}, function() {
@@ -37,7 +44,7 @@ $( document ).ready(function() {
         $.post('/ajax', {id: id, action: 'duplicate-page', page: page}, function(data) {
             location.reload();
         });
-        $('table button').prop('disabled', true);
+        $('button').prop('disabled', true);
     });
 
     $('button[data-action=page-delete]').click(function(event) {
@@ -48,7 +55,7 @@ $( document ).ready(function() {
         $.post('/ajax', {id: id, action: 'delete-page', page: page}, function() {
             location.reload();
         });
-        $('table button').prop('disabled', true);
+        $('button').prop('disabled', true);
     });
 
     $('button[data-action=move-page]').click(function(event) {
@@ -57,7 +64,14 @@ $( document ).ready(function() {
         $.post('/ajax', {id: id, action: 'move-page', page: page, movement: movement}, function() {
             location.reload();
         });
-        $('table button').prop('disabled', true);
+        $('button').prop('disabled', true);
+    });
+
+    $('button[data-action=page-create]').click(function(event) {
+        $.post('/ajax', {id: id, action: 'create-page'}, function(data) {
+            location.reload();
+        });
+        $('button').prop('disabled', true);
     });
 
 });

@@ -20,17 +20,6 @@ if (!$id) {
     }
     $twig->addGlobal('questionnaires', $questionnaires);
 
-} elseif ($id === 'new') {
-    $query = <<<SQL
-    INSERT INTO questionnaires (Name, Pages, Intro) VALUES (
-      'Untitled Questionnaire', '{"Questions": {}, "Groups": {}, "Pages": []}', ''
-    );
-SQL;
-    $dbh->exec($query);
-    $messages->addMessage(new Message('success', 'New questionnaire successfully created.'));
-    header('Location: /editor');
-    exit;
-
 } else {
     $page = $SEGMENTS[2];
     $stmt = $dbh->prepare('SELECT * FROM questionnaires WHERE Id = ?');
@@ -42,14 +31,4 @@ SQL;
     }
     $questionnaire = new Questionnaire($row);
     $twig->addGlobal('questionnaire', $questionnaire);
-
-    if ($page === 'new') {
-        $questionnaire->createNewPage();
-        header('Location: /editor/' . $id);
-        exit;
-    }
 }
-
-// Check that the questionnaire exists, and if it does, load up information about it
-/*
-*/
