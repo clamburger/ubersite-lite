@@ -1,9 +1,6 @@
 <?php
 use Ubersite\Message;
 use Ubersite\Questionnaire;
-use Ubersite\Questionnaire\Group;
-use Ubersite\Questionnaire\Page;
-use Ubersite\Questionnaire\Question;
 use Ubersite\Utils;
 
 // These will almost certainly be overidden.
@@ -97,7 +94,6 @@ for ($i = 1; $i <= $totalStages; ++$i) {
     $progress[] = $line;
 }
 
-$twig->addGlobal("title", $title);
 $twig->addGlobal("start", false);
 $twig->addGlobal("end", false);
 $twig->addGlobal("questions", false);
