@@ -13,7 +13,7 @@
 </table>
 
 {% if start %}
-  {{ intro | raw }}
+  {{ intro | raw | nl2br }}
   <br>
   <br>
   <h3><a href='/questionnaire/{{ ID }}/begin'>Begin the Questionnaire</a></h3>

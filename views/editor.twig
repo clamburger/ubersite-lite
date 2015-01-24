@@ -33,7 +33,12 @@
     </table>
     <h3><a href='/editor/new'>Create new questionnaire</a></h3>
   {% else %}
-    <h3><strong>{{ questionnaire.title }}</strong> (ID: {{ questionnaire.id }})</h3>
-
+    <h2>{{ questionnaire.title }}</h2>
+    <input type="hidden" id="questionnaire-id" value="{{ questionnaire.id }}" />
+    <fieldset>
+      <legend>Intro Text</legend>
+      <textarea id="intro-text-editor">{{ questionnaire.intro }}</textarea><br>
+      <button id="save-intro-text">Save</button>
+    </fieldset>
   {% endif %}
 {% endblock %}

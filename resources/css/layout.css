@@ -85,6 +85,7 @@ fieldset legend {
 
 textarea {
   display: block;
+  font: normal 12px "Tahoma", Verdana, Arial, Sans-Serif;
 }
 
 /* Message List */
@@ -402,4 +403,12 @@ table.formTable {
 .feedback table, table.feedback {
   border-collapse: separate;
   border-spacing: 1px;
+}
+
+
+/* Questionnaire Editor */
+#intro-text-editor {
+  width: 100%;
+  padding: 5px;
+  height: 140px;
 }

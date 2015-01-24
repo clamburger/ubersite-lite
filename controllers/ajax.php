@@ -29,4 +29,9 @@ SQL;
     } else {
         $messages->addMessage(new Message('success', 'Questionnaire successfully deleted.'));
     }
+
+} elseif ($action === 'update-intro-text') {
+    $stmt = $dbh->prepare('UPDATE questionnaires SET Intro = ? WHERE Id = ?');
+    $stmt->execute([$_POST['text'], $_POST['id']]);
+
 }
