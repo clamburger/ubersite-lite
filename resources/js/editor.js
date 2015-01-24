@@ -51,4 +51,13 @@ $( document ).ready(function() {
         $('table button').prop('disabled', true);
     });
 
+    $('button[data-action=move-page]').click(function(event) {
+        var page = $(event.target).attr('data-id');
+        var movement = $(event.target).attr('data-movement');
+        $.post('/ajax', {id: id, action: 'move-page', page: page, movement: movement}, function() {
+            location.reload();
+        });
+        $('table button').prop('disabled', true);
+    });
+
 });

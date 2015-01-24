@@ -42,4 +42,8 @@ SQL;
 } elseif ($action === 'delete-page') {
     $questionnaire = Questionnaire::loadFromDatabase($_POST['id']);
     $questionnaire->deletePage($_POST['page']);
+
+} elseif ($action === 'move-page') {
+    $questionnaire = Questionnaire::loadFromDatabase($_POST['id']);
+    $questionnaire->movePage($_POST['page'], (int)$_POST['movement']);
 }

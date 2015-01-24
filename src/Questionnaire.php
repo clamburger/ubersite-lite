@@ -45,6 +45,20 @@ class Questionnaire
         }
     }
 
+    public function movePage($pageNumber, $movement)
+    {
+        $index = $pageNumber - 1;
+        $newIndex = $index + $movement;
+
+        if ($newIndex < 0 || $newIndex > count($this->pages) - 1) {
+            return;
+        }
+
+        $page = array_splice($this->pages, $index, 1);
+        array_splice($this->pages, $newIndex, 0, $page);
+        $this->updateDatabase();
+    }
+
     public function deletePage($pageNumber)
     {
         unset($this->pages[$pageNumber-1]);

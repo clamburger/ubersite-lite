@@ -53,8 +53,8 @@
           <td><a href='/editor/{{ questionnaire.id }}/{{ loop.index }}'>{{ page.title }}</a></td>
           <td>{{ page.questions | length }}</td>
           <td>
-            <button data-action="move-up" data-id="{{ loop.index }}">&uarr;</button>
-            <button data-action="move-down" data-id="{{ loop.index }}">&darr;</button>
+            <button data-action="move-page" data-id="{{ loop.index }}" data-movement="-1">&uarr;</button>
+            <button data-action="move-page" data-id="{{ loop.index }}" data-movement="1">&darr;</button>
             <button data-action="page-duplicate" data-id="{{ loop.index }}">Duplicate</button>
             <button data-action="page-delete" data-id="{{ loop.index }}">Delete</button>
           </td>
