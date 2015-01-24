@@ -111,7 +111,7 @@ foreach ($pages as $page) {
     $output .= "<h2>{$page->title}</h2>\n";
     foreach ($page->questions as $question) {
         if (isset($details->FeedbackTable) && $question instanceof Question
-         && in_array($question->questionID, $details->FeedbackTable, true)) {
+         && in_array($question->id, $details->FeedbackTable, true)) {
             continue;
         }
         $output .= $question->renderFeedback($allResponses, $people);

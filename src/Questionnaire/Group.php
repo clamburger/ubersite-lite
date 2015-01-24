@@ -1,9 +1,9 @@
 <?php
 namespace Ubersite\Questionnaire;
 
-class Group
+class Group implements \JsonSerializable
 {
-    public $groupID;
+    public $id;
     public $title;
     public $questions = [];
     public $collapsible = false;
@@ -11,7 +11,7 @@ class Group
   
     public function __construct($details, $questions)
     {
-        $this->groupID = $details->GroupID;
+        $this->id = $details->id;
         $this->title = $details->Title;
         foreach ($details->Questions as $questionID) {
             if (isset($questions[$questionID])) {
@@ -46,8 +46,8 @@ class Group
         }
 
         if ($this->comments) {
-            $out .= "<label for='question-{$this->groupID}-comments' class='spacing'>Any other comments?</label>";
-            $out .= "<textarea rows=3 name='{$this->groupID}-comments' id='question-{$this->groupID}-comments'>";
+            $out .= "<label for='question-{$this->id}-comments' class='spacing'>Any other comments?</label>";
+            $out .= "<textarea rows=3 name='{$this->id}-comments' id='question-{$this->id}-comments'>";
             $out .= "</textarea>";
         }
         if ($this->collapsible) {
@@ -61,7 +61,7 @@ class Group
     private function createCommentsQuestion()
     {
         $details = new \stdClass();
-        $details->QuestionID = $this->groupID . "-comments";
+        $details->id = $this->id . "-comments";
         $details->Question = "Any other comments?";
         $details->AnswerType = "Textarea";
         return new Question($details);
@@ -79,10 +79,10 @@ class Group
             if (in_array($question->answerType, $acceptedTypes)) {
                 $dropdowns++;
 
-                if (!isset($allResponses[$question->questionID])) {
+                if (!isset($allResponses[$question->id])) {
                     continue;
                 }
-                foreach ($allResponses[$question->questionID] as $response) {
+                foreach ($allResponses[$question->id] as $response) {
                     $responders[$response['Username']] = $users[$response['Username']]->Name;
                 }
             } else {
@@ -107,8 +107,8 @@ class Group
                     /** @var Question $question */
                     $question = $this->questions[$i];
 
-                    if (isset($allResponses[$question->questionID][$username])) {
-                        $response = $allResponses[$question->questionID][$username]['Answer'];
+                    if (isset($allResponses[$question->id][$username])) {
+                        $response = $allResponses[$question->id][$username]['Answer'];
                         $bgColour = $question->getColour($response);
                         $response = $question->getAnswerString($response);
                         $output .= "  <td style='background-color: $bgColour;'>$response</td>\n";
@@ -133,5 +133,24 @@ class Group
         }
         $output .= "</fieldset>";
         return $output;
+    }
+
+    public function jsonSerialize()
+    {
+        $return = ['Title' => $this->title];
+
+        $questions = [];
+        foreach ($this->questions as $question) {
+            $questions[] = $question->id;
+        }
+        $return['Questions'] = $questions;
+
+        if ($this->collapsible) {
+            $return['Collapsible'] = true;
+        }
+        if (!$this->comments) {
+            $return['Comments'] = false;
+        }
+        return $return;
     }
 }

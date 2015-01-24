@@ -1,9 +1,9 @@
 <?php
 namespace Ubersite\Questionnaire;
 
-class Question
+class Question implements \JsonSerializable
 {
-    public $questionID;
+    public $id;
     public $question;
     public $questionShort;
     public $answerType;
@@ -43,7 +43,7 @@ class Question
 
     public function __construct($details)
     {
-        $this->questionID = $details->QuestionID;
+        $this->id = $details->id;
         $this->question = $details->Question;
         $this->answerType = $details->AnswerType;
         if (isset($details->AnswerOptions)) {
@@ -66,21 +66,21 @@ class Question
             $out .= $prefix.$this->question;
             $out .= "<ul>";
             foreach ($this->answerOptions as $key => $option) {
-                $out .= "<li><label><input type='radio' name='{$this->questionID}' value='".($key+1)."'> $option";
+                $out .= "<li><label><input type='radio' name='{$this->id}' value='".($key+1)."'> $option";
                 $out .= "</label></li>\n";
             }
             if ($this->answerOther) {
-                $out .= "<input type='text' name='{$this->questionID}-other' class='other'>";
+                $out .= "<input type='text' name='{$this->id}-other' class='other'>";
             }
         } elseif ($this->answerType == "Textarea") {
-            $out .= "<label for='question-{$this->questionID}'>$prefix{$this->question}</label><br>";
-            $out .= "<textarea rows=3 id='question-{$this->questionID}' name='{$this->questionID}'></textarea>";
+            $out .= "<label for='question-{$this->id}'>$prefix{$this->question}</label><br>";
+            $out .= "<textarea rows=3 id='question-{$this->id}' name='{$this->id}'></textarea>";
         } elseif ($this->answerType == "Text") {
-            $out .= "<label for='question-{$this->questionID}'>$prefix{$this->question}</label><br>";
-            $out .= "<input type='text' id='question-{$this->questionID}' name='{$this->questionID}'>";
+            $out .= "<label for='question-{$this->id}'>$prefix{$this->question}</label><br>";
+            $out .= "<input type='text' id='question-{$this->id}' name='{$this->id}'>";
         } elseif ($this->answerType == "1-5") {
-            $out .= "<label for='question-{$this->questionID}'>$prefix{$this->question}</label>";
-            $out .= "<select id='question-{$this->questionID}' name='{$this->questionID}'>";
+            $out .= "<label for='question-{$this->id}'>$prefix{$this->question}</label>";
+            $out .= "<select id='question-{$this->id}' name='{$this->id}'>";
             $out .= "  <option value='0'>--</option>\n";
             $out .= "  <option value='5' style='background-color: #63BE7B;'>5</option>\n";
             $out .= "  <option value='4' style='background-color: #B1D580;'>4</option>\n";
@@ -89,8 +89,8 @@ class Question
             $out .= "  <option value='1' style='background-color: #F8696B;'>1</option>\n";
             $out .= "</select>\n";
         } elseif ($this->answerType == "Length") {
-            $out .= "<label for='question-{$this->questionID}'>$prefix{$this->question}</label>";
-            $out .= "<select id='question-{$this->questionID}' name='{$this->questionID}'>";
+            $out .= "<label for='question-{$this->id}'>$prefix{$this->question}</label>";
+            $out .= "<select id='question-{$this->id}' name='{$this->id}'>";
             $out .= "  <option value='0'>--</option>\n";
             $out .= "  <option value='5' style='background-color: #F8696B;'>Far too long</option>\n";
             $out .= "  <option value='4' style='background-color: #FFEB84;'>A little too long</option>\n";
@@ -99,8 +99,8 @@ class Question
             $out .= "  <option value='1' style='background-color: #F8696B;'>Far too short</option>\n";
             $out .= "</select>\n";
         } elseif ($this->answerType == "Dropdown") {
-            $out .= "<label for='question-{$this->questionID}'>$prefix{$this->question}</label>";
-            $out .= "<select id='question-{$this->questionID}' name='{$this->questionID}'>";
+            $out .= "<label for='question-{$this->id}'>$prefix{$this->question}</label>";
+            $out .= "<select id='question-{$this->id}' name='{$this->id}'>";
             $out .= "  <option value='0'>--</option>\n";
             foreach ($this->answerOptions as $key => $option) {
                 $out .= "  <option value='".($key+1)."'>$option</option>\n";
@@ -108,7 +108,7 @@ class Question
             $out .= "</select>\n";
         } else {
             $out = "<div style='color: red; font: 15px tahoma;'>" .
-            $this->questionID . ": \"{$this->answerType}\" not yet implemented</div>";
+            $this->id . ": \"{$this->answerType}\" not yet implemented</div>";
         }
         $out .= "</div>";
         return $out;
@@ -155,14 +155,14 @@ class Question
     {
         $output = "<h3>{$this->question}</h3>\n";
         $output .= "<ul>";
-        if (!isset($allResponses[$this->questionID])) {
+        if (!isset($allResponses[$this->id])) {
             $output .= "<li><em style='color: silver;'>No responses for this question</em></li>";
         } else {
-            foreach ($allResponses[$this->questionID] as $response) {
+            foreach ($allResponses[$this->id] as $response) {
                 $sig = "- <em>" . $users[$response['Username']]->Name . "</em>";
                 $stringResponse = $this->getAnswerString($response['Answer']);
                 if ($stringResponse === self::OTHER_RESPONSE) {
-                    $output .= "<li>Other: ".$allResponses[$this->questionID."-other"]
+                    $output .= "<li>Other: ".$allResponses[$this->id."-other"]
                                                 [$response['Username']]['Answer']." $sig</li>";
                 } elseif ($stringResponse) {
                     $output .= "<li>$stringResponse $sig</li>\n";
@@ -182,5 +182,21 @@ class Question
         } else {
             return self::DEFAULT_COLOUR;
         }
+    }
+
+    public function jsonSerialize()
+    {
+        $return = ['Question' => $this->question];
+        if ($this->question != $this->questionShort) {
+            $return['QuestionShort'] = $this->questionShort;
+        }
+        $return['AnswerType'] = $this->answerType;
+        if ($this->answerOptions !== null) {
+            $return['AnswerOptions'] = $this->answerOptions;
+        }
+        if ($this->answerOther !== null) {
+            $return['AnswerOther'] = $this->answerOther;
+        }
+        return $return;
     }
 }

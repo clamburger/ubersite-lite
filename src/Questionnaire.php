@@ -30,12 +30,12 @@ class Questionnaire
         }
 
         foreach ($data->Questions as $questionID => $question) {
-            $question->QuestionID = $questionID;
+            $question->id = $questionID;
             $this->questions[$questionID] = new Question($question);
         }
 
         foreach ($data->Groups as $groupID => $group) {
-            $group->GroupID = $groupID;
+            $group->id = $groupID;
             $this->groups[$groupID] = new Group($group, $this->questions);
         }
 
@@ -43,5 +43,34 @@ class Questionnaire
             $page->PageID = $pageID;
             $this->pages[$pageID] = new Page($page, $this->questions, $this->groups);
         }
+    }
+
+    /**
+     * Updates the database with changes made to the questionnaire.
+     */
+    private function updateDatabase()
+    {
+        $data = [
+            'Questions' => $this->questions,
+            'Groups' => $this->groups,
+            'Pages' => $this->pages
+        ];
+
+        $dbh = DatabaseManager::get();
+        $stmt = $dbh->prepare('UPDATE questionnaires SET Name = ?, Pages = ?, Intro = ? WHERE Id = ?');
+        $stmt->execute([$this->title, json_encode($data, JSON_PRETTY_PRINT), $this->intro, $this->id]);
+    }
+
+    public static function loadFromDatabase($id)
+    {
+        $dbh = DatabaseManager::get();
+        $stmt = $dbh->prepare('SELECT * FROM questionnaires WHERE Id = ?');
+        $stmt->execute([$id]);
+
+        if (!$row = $stmt->fetch()) {
+            return null;
+        }
+
+        return new Questionnaire($row);
     }
 }

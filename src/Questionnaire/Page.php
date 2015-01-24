@@ -1,16 +1,15 @@
 <?php
 namespace Ubersite\Questionnaire;
 
-class Page
+class Page implements \JsonSerializable
 {
-    public $pageID;
+    /** @var string */
     public $title;
-    public $intro = false;
+    public $intro = null;
     public $questions = [];
   
     public function __construct($details, $questions, $groups)
     {
-        $this->pageID = $details->PageID;
         $this->title = $details->Title;
         foreach ($details->Questions as $ID) {
             if (isset($groups[$ID])) {
@@ -42,5 +41,21 @@ class Page
     public function __toString()
     {
         return $this->title;
+    }
+
+    public function jsonSerialize()
+    {
+        $return = ['Title' => $this->title];
+
+        $questions = [];
+        foreach ($this->questions as $question) {
+            $questions[] = $question->id;
+        }
+        $return['Questions'] = $questions;
+        if ($this->intro !== null) {
+            $return['Intro'] = $this->intro;
+        }
+
+        return $return;
     }
 }
