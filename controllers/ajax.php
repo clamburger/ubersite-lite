@@ -1,5 +1,4 @@
 <?php
-use Ubersite\Message;
 use Ubersite\Questionnaire;
 use Ubersite\Utils;
 

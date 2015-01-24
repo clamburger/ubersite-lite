@@ -1,8 +1,8 @@
 $( document ).ready(function() {
     var id;
 
-    $('button[data-action=create-questionnaire]').click(function(event) {
-        $.post('/ajax', {action: 'create-questionnaire'}, function(data) {
+    $('button[data-action=create-questionnaire]').click(function() {
+        $.post('/ajax', {action: 'create-questionnaire'}, function() {
             location.reload();
         });
         $('button').prop('disabled', true);
@@ -41,7 +41,7 @@ $( document ).ready(function() {
 
     $('button[data-action=page-duplicate]').click(function(event) {
         var page = $(event.target).attr('data-id');
-        $.post('/ajax', {id: id, action: 'duplicate-page', page: page}, function(data) {
+        $.post('/ajax', {id: id, action: 'duplicate-page', page: page}, function() {
             location.reload();
         });
         $('button').prop('disabled', true);
@@ -67,8 +67,8 @@ $( document ).ready(function() {
         $('button').prop('disabled', true);
     });
 
-    $('button[data-action=page-create]').click(function(event) {
-        $.post('/ajax', {id: id, action: 'create-page'}, function(data) {
+    $('button[data-action=page-create]').click(function() {
+        $.post('/ajax', {id: id, action: 'create-page'}, function() {
             location.reload();
         });
         $('button').prop('disabled', true);
