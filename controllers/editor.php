@@ -32,6 +32,7 @@ SQL;
     exit;
 
 } else {
+    $page = $SEGMENTS[2];
     $stmt = $dbh->prepare('SELECT * FROM questionnaires WHERE Id = ?');
     $stmt->execute([$id]);
     if (!$row = $stmt->fetch()) {
@@ -41,6 +42,12 @@ SQL;
     }
     $questionnaire = new Questionnaire($row);
     $twig->addGlobal('questionnaire', $questionnaire);
+
+    if ($page === 'new') {
+        $questionnaire->createNewPage();
+        header('Location: /editor/' . $id);
+        exit;
+    }
 }
 
 // Check that the questionnaire exists, and if it does, load up information about it

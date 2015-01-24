@@ -25,6 +25,14 @@ class Page implements \JsonSerializable
         }
     }
 
+    public static function createNew()
+    {
+        $details = new \stdClass();
+        $details->Title = 'Untitled Page';
+        $details->Questions = [];
+        return new Page($details, [], []);
+    }
+
     public function renderHTML()
     {
         $out = "";

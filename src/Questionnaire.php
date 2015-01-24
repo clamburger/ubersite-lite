@@ -45,6 +45,12 @@ class Questionnaire
         }
     }
 
+    public function createNewPage()
+    {
+        $this->pages[] = Page::createNew();
+        $this->updateDatabase();
+    }
+
     public function movePage($pageNumber, $movement)
     {
         $index = $pageNumber - 1;
@@ -61,7 +67,8 @@ class Questionnaire
 
     public function deletePage($pageNumber)
     {
-        unset($this->pages[$pageNumber-1]);
+        $index = $pageNumber - 1;
+        array_splice($this->pages, $index, 1);
         $this->updateDatabase();
     }
 
