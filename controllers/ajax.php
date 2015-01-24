@@ -20,7 +20,7 @@ SQL;
     } else {
         $messages->addMessage(new Message('success', 'Questionnaire successfully duplicated.'));
     }
-    
+
 } elseif ($action === 'delete-questionnaire') {
     $stmt = $dbh->prepare('DELETE FROM questionnaires WHERE Id = ?');
     $stmt->execute([$_POST['id']]);

@@ -80,6 +80,8 @@ if ($SEGMENTS[2] == 'delete' && $user->isLeader()) {
     $stmt->execute([$user->Username, $id]);
     $stage = 0;
     $messages->addMessage(new Message("success", "Hopes deleted."));
+    header('Location: /questionnaire/' . $id);
+    exit;
 }
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
