@@ -1,5 +1,6 @@
 <?php
 use Ubersite\Message;
+use Ubersite\Questionnaire;
 use Ubersite\Utils;
 
 if (!$user->isLeader()) {
@@ -34,4 +35,11 @@ SQL;
     $stmt = $dbh->prepare('UPDATE questionnaires SET Intro = ? WHERE Id = ?');
     $stmt->execute([$_POST['text'], $_POST['id']]);
 
+} elseif ($action === 'duplicate-page') {
+    $questionnaire = Questionnaire::loadFromDatabase($_POST['id']);
+    $questionnaire->duplicatePage($_POST['page']);
+
+} elseif ($action === 'delete-page') {
+    $questionnaire = Questionnaire::loadFromDatabase($_POST['id']);
+    $questionnaire->deletePage($_POST['page']);
 }

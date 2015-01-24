@@ -30,6 +30,25 @@ $( document ).ready(function() {
         $.post('/ajax', {id: id, action: 'update-intro-text', text: text}, function() {
             $(event.target).prop('disabled', false).text('Save');
         });
-    })
+    });
+
+    $('button[data-action=page-duplicate]').click(function(event) {
+        var page = $(event.target).attr('data-id');
+        $.post('/ajax', {id: id, action: 'duplicate-page', page: page}, function(data) {
+            location.reload();
+        });
+        $('table button').prop('disabled', true);
+    });
+
+    $('button[data-action=page-delete]').click(function(event) {
+        if (!confirm('Are you sure you want to delete this page?')) {
+            return false;
+        }
+        var page = $(event.target).attr('data-id');
+        $.post('/ajax', {id: id, action: 'delete-page', page: page}, function() {
+            location.reload();
+        });
+        $('table button').prop('disabled', true);
+    });
 
 });

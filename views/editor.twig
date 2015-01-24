@@ -40,5 +40,26 @@
       <textarea id="intro-text-editor">{{ questionnaire.intro }}</textarea><br>
       <button id="save-intro-text">Save</button>
     </fieldset>
+    <table class="progress">
+      <tr>
+        <th>&nbsp;</th>
+        <th>Page Title</th>
+        <th>Questions</th>
+        <th>Controls</th>
+      </tr>
+      {% for page in questionnaire.pages %}
+        <tr>
+          <th>{{ loop.index }}</th>
+          <td><a href='/editor/{{ questionnaire.id }}/{{ loop.index }}'>{{ page.title }}</a></td>
+          <td>{{ page.questions | length }}</td>
+          <td>
+            <button data-action="move-up" data-id="{{ loop.index }}">&uarr;</button>
+            <button data-action="move-down" data-id="{{ loop.index }}">&darr;</button>
+            <button data-action="page-duplicate" data-id="{{ loop.index }}">Duplicate</button>
+            <button data-action="page-delete" data-id="{{ loop.index }}">Delete</button>
+          </td>
+        </tr>
+      {% endfor %}
+    </table>
   {% endif %}
 {% endblock %}

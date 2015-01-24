@@ -45,6 +45,20 @@ class Questionnaire
         }
     }
 
+    public function deletePage($pageNumber)
+    {
+        unset($this->pages[$pageNumber-1]);
+        $this->updateDatabase();
+    }
+
+    public function duplicatePage($pageNumber)
+    {
+        $newPage = clone $this->pages[$pageNumber-1];
+        $newPage->title = $newPage->title . ' (copy)';
+        $this->pages[] = $newPage;
+        $this->updateDatabase();
+    }
+
     /**
      * Updates the database with changes made to the questionnaire.
      */
