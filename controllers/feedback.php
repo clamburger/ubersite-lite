@@ -1,7 +1,6 @@
 <?php
-use Ubersite\Questionnaire\Group;
+use Ubersite\Questionnaire;
 use Ubersite\Questionnaire\Question;
-use Ubersite\Questionnaire\Page;
 use Ubersite\Utils;
 
 if (!$user->isLeader()) {
@@ -23,27 +22,12 @@ if (!$row = $stmt->fetch()) {
     header("Location: /choose?src=feedback");
     exit;
 }
+$questionnaire = new Questionnaire($row);
+$questions = $questionnaire->questions;
+$groups = $questionnaire->groups;
+$pages = $questionnaire->pages;
 
-$title = $row["Name"];
-$twig->addGlobal('title', $title);
-$details = json_decode($row["Pages"]);
-
-$questions = [];
-$groups = [];
-$pages = [];
-
-foreach ($details->Questions as $questionID => $question) {
-    $question->QuestionID = $questionID;
-    $questions[$questionID] = new Question($question);
-}
-foreach ($details->Groups as $groupID => $group) {
-    $group->GroupID = $groupID;
-    $groups[$groupID] = new Group($group, $questions);
-}
-foreach ($details->Pages as $pageID => $page) {
-    $page->PageID = $pageID;
-    $pages[$pageID] = new Page($page, $questions, $groups);
-}
+$twig->addGlobal('title', $questionnaire->title);
 
 if ($SEGMENTS[2] == 'smallgroup') {
     $where = "AND DutyTeam = (SELECT DutyTeam FROM users WHERE Username = ?)";

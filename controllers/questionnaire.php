@@ -1,5 +1,6 @@
 <?php
 use Ubersite\Message;
+use Ubersite\Questionnaire;
 use Ubersite\Questionnaire\Group;
 use Ubersite\Questionnaire\Page;
 use Ubersite\Questionnaire\Question;
@@ -26,34 +27,15 @@ if (!$row = $stmt->fetch()) {
     header('Location: /choose?src=questionnaire');
     exit;
 }
+$questionnaire = new Questionnaire($row);
+$questions = $questionnaire->questions;
+$groups = $questionnaire->groups;
+$pages = $questionnaire->pages;
 
-$title = $row['Name'];
-$twig->addGlobal('intro', $row['Intro']);
+$twig->addGlobal('title', $questionnaire->title);
+$twig->addGlobal('intro', $questionnaire->intro);
 
-$details = json_decode($row['Pages']);
-
-if (json_last_error() != JSON_ERROR_NONE) {
-    throw new Exception('Failed to parse questionnaire JSON. The following error was given: ' . json_last_error_msg());
-}
-
-$questions = [];
-$groups = [];
-$pages = [];
-
-foreach ($details->Questions as $questionID => $question) {
-    $question->QuestionID = $questionID;
-    $questions[$questionID] = new Question($question);
-}
-foreach ($details->Groups as $groupID => $group) {
-    $group->GroupID = $groupID;
-    $groups[$groupID] = new Group($group, $questions);
-}
-foreach ($details->Pages as $pageID => $page) {
-    $page->PageID = $pageID;
-    $pages[$pageID] = new Page($page, $questions, $groups);
-}
-
-$totalStages = count($details->Pages);
+$totalStages = count($pages);
 
 $twig->addGlobal("ID", $id);
 
