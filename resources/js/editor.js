@@ -28,7 +28,7 @@ $( document ).ready(function() {
         var text = $('#intro-text-editor').val();
         $(event.target).prop('disabled', true).text('Saving...');
         $.post('/ajax', {id: id, action: 'update-intro-text', text: text}, function() {
-            $(event.target).prop('disabled', false).text('Save');
+            $(event.target).prop('disabled', false).text('Save intro text');
         });
     });
 

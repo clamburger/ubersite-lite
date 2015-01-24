@@ -35,11 +35,10 @@
   {% else %}
     <h2>{{ questionnaire.title }}</h2>
     <input type="hidden" id="questionnaire-id" value="{{ questionnaire.id }}" />
-    <fieldset>
-      <legend>Intro Text</legend>
-      <textarea id="intro-text-editor">{{ questionnaire.intro }}</textarea><br>
-      <button id="save-intro-text">Save</button>
-    </fieldset>
+
+    <textarea id="intro-text-editor">{{ questionnaire.intro }}</textarea><br>
+    <button id="save-intro-text">Save intro text</button>
+
     <table class="progress">
       <tr>
         <th>&nbsp;</th>
