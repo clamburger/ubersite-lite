@@ -95,10 +95,15 @@ class Questionnaire
         $this->updateDatabase();
     }
 
+    public function getPage($pageNumber)
+    {
+        return $this->pages[$pageNumber - 1];
+    }
+
     /**
      * Updates the database with changes made to the questionnaire.
      */
-    private function updateDatabase()
+    public function updateDatabase()
     {
         $dbh = DatabaseManager::get();
         $stmt = $dbh->prepare('UPDATE questionnaires SET Name = ?, Pages = ?, Intro = ? WHERE Id = ?');

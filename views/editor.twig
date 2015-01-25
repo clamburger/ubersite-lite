@@ -32,6 +32,7 @@
     <input type="hidden" id="questionnaire-id" value="{{ questionnaire.id }}" />
 
     {% if page %}
+      <input type="hidden" id="page-number" value="{{ pageNumber }}" />
       <table style='float: right;' class='progress'>
         <tr><th colspan="2">Questionnaire Pages:</th></tr>
         {% for pageRow in questionnaire.pages %}
@@ -43,7 +44,22 @@
           <tr><td colspan="2"><a href='/editor/{{ questionnaire.id }}' style='color: maroon'>Back to the editor</a></td></tr>
       </table>
       <h2>{{ questionnaire.title }}</h2>
-      <h2>{{ page.title }}</h2>
+      <table class="progress">
+        <tr>
+          <th><label for="title-editor">Page Title</label></th>
+          <td><input type="text" id="title-editor" value="{{ page.title }}" class="h2" /></td>
+          <td>
+            <button id="save-page-title">Save title</button>
+          </td>
+        </tr>
+        <tr>
+          <th><label for="intro-text-editor">Page Intro</label></th>
+          <td><textarea id="intro-text-editor">{{ page.intro }}</textarea></td>
+          <td>
+            <button id="save-page-intro">Save intro text</button>
+          </td>
+        </tr>
+      </table>
     {% else %}
       <table class="progress">
         <tr>

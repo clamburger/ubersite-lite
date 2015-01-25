@@ -39,5 +39,6 @@ if (!$id) {
             exit;
         }
         $twig->addGlobal('page', $questionnaire->pages[$page-1]);
+        $twig->addGlobal('pageNumber', $page);
     }
 }

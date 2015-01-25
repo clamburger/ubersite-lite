@@ -51,4 +51,14 @@ SQL;
 } elseif ($action === 'create-page') {
     $questionnaire = Questionnaire::loadFromDatabase($_POST['id']);
     $questionnaire->createNewPage();
+
+} elseif ($action === 'update-page-title') {
+    $questionnaire = Questionnaire::loadFromDatabase($_POST['id']);
+    $questionnaire->getPage($_POST['page'])->title = $_POST['text'];
+    $questionnaire->updateDatabase();
+
+} elseif ($action === 'update-page-intro') {
+    $questionnaire = Questionnaire::loadFromDatabase($_POST['id']);
+    $questionnaire->getPage($_POST['page'])->intro = $_POST['text'];
+    $questionnaire->updateDatabase();
 }

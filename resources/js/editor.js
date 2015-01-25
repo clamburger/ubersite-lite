@@ -1,5 +1,5 @@
 $( document ).ready(function() {
-    var id;
+    var id, page;
 
     $('button[data-action=create-questionnaire]').click(function() {
         $.post('/ajax', {action: 'create-questionnaire'}, function() {
@@ -29,6 +29,9 @@ $( document ).ready(function() {
     var hiddenId;
     if (hiddenId = $('#questionnaire-id')) {
         id = hiddenId.val();
+    }
+    if (hiddenId = $('#page-number')) {
+        page = hiddenId.val();
     }
 
     $('#save-title').click(function(event) {
@@ -80,6 +83,22 @@ $( document ).ready(function() {
             location.reload();
         });
         $('button').prop('disabled', true);
+    });
+
+    $('#save-page-title').click(function(event) {
+        var text = $('#title-editor').val();
+        $(event.target).prop('disabled', true).text('Saving...');
+        $.post('/ajax', {id: id, action: 'update-page-title', page: page, text: text}, function() {
+            $(event.target).prop('disabled', false).text('Save title');
+        });
+    })
+
+    $('#save-page-intro').click(function(event) {
+        var text = $('#intro-text-editor').val();
+        $(event.target).prop('disabled', true).text('Saving...');
+        $.post('/ajax', {id: id, action: 'update-page-intro', page: page, text: text}, function() {
+            $(event.target).prop('disabled', false).text('Save intro text');
+        });
     });
 
 });
