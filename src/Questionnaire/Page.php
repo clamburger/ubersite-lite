@@ -27,6 +27,18 @@ class Page implements \JsonSerializable
         $this->sections[] = new Section($section);
     }
 
+    public function duplicateSection($section)
+    {
+        $section = clone $this->sections[$section];
+        $section->title .= ' (copy)';
+        $this->sections[] = $section;
+    }
+
+    public function deleteSection($section)
+    {
+        array_splice($this->sections, $section, 1);
+    }
+
     public static function createNew()
     {
         $details = new \stdClass();

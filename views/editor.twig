@@ -86,8 +86,8 @@
       {% for section in page.sections %}
         <div class="editor-section">
           <div class="editor-section-controls">
-            <button data-action="duplicate-section">Duplicate</button>
-            <button data-action="delete-section">Delete</button>
+            <button data-action="duplicate-section" data-id="{{ loop.index0 }}">Duplicate</button>
+            <button data-action="delete-section" data-id="{{ loop.index0 }}">Delete</button>
           </div>
           <input class="h3 invisible" value="{{ section.title }}" />
           <ul>

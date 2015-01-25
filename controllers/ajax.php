@@ -61,4 +61,13 @@ SQL;
 } elseif ($action === 'add-section') {
     $questionnaire->getPage($_POST['page'])->addSection();
     $questionnaire->updateDatabase();
+
+} elseif ($action === 'duplicate-section') {
+    $questionnaire->getPage($_POST['page'])->duplicateSection($_POST['section']);
+    $questionnaire->updateDatabase();
+
+} elseif ($action === 'delete-section') {
+    $questionnaire->getPage($_POST['page'])->deleteSection($_POST['section']);
+    $questionnaire->updateDatabase();
+
 }

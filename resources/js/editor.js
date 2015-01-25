@@ -40,7 +40,7 @@ $( document ).ready(function() {
         $.post('/ajax', {id: id, action: 'update-title', text: text}, function() {
             $(event.target).prop('disabled', false).text('Save title');
         });
-    })
+    });
 
     $('#save-intro-text').click(function(event) {
         var text = $('#intro-text-editor').val();
@@ -51,7 +51,7 @@ $( document ).ready(function() {
     });
 
     $('button[data-action=page-duplicate]').click(function(event) {
-        var page = $(event.target).attr('data-id');
+        page = $(event.target).attr('data-id');
         $.post('/ajax', {id: id, action: 'duplicate-page', page: page}, function() {
             location.reload();
         });
@@ -62,7 +62,7 @@ $( document ).ready(function() {
         if (!confirm('Are you sure you want to delete this page?')) {
             return false;
         }
-        var page = $(event.target).attr('data-id');
+        page = $(event.target).attr('data-id');
         $.post('/ajax', {id: id, action: 'delete-page', page: page}, function() {
             location.reload();
         });
@@ -106,6 +106,25 @@ $( document ).ready(function() {
             location.reload();
         });
         $('button').prop('disabled', true);
-    })
+    });
+
+    $('button[data-action=duplicate-section]').click(function(event) {
+        var section = $(event.target).attr('data-id');
+        $.post('/ajax', {id: id, action: 'duplicate-section', page: page, section: section}, function() {
+            location.reload();
+        });
+        $('button').prop('disabled', true);
+    });
+
+    $('button[data-action=delete-section]').click(function(event) {
+        if (!confirm('Are you sure you want to delete this section?')) {
+            return false;
+        }
+        var section = $(event.target).attr('data-id');
+        $.post('/ajax', {id: id, action: 'delete-section', page: page, section: section}, function() {
+            location.reload();
+        });
+        $('button').prop('disabled', true);
+    });
 
 });
