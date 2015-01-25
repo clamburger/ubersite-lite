@@ -42,6 +42,27 @@ $( document ).ready(function() {
         page = hiddenId.val();
     }
 
+    var ajaxStatus = $('#ajax-status');
+    var activeCalls = 0;
+    var timeout;
+
+    function showAjax() {
+        clearInterval(timeout);
+        ajaxStatus.show();
+        ajaxStatus.children().text('Saving...');
+        activeCalls++;
+    }
+
+    function clearAjax() {
+        activeCalls--;
+        if (activeCalls == 0) {
+            ajaxStatus.children().text('Saved!');
+            timeout = setTimeout(function() {
+                ajaxStatus.hide();
+            }, 3000);
+        }
+    }
+
     $('#save-title').click(function(event) {
         var text = $('#title-editor').val();
         $(event.target).prop('disabled', true).text('Saving...');
@@ -95,12 +116,14 @@ $( document ).ready(function() {
 
     $('#update-page-title').change(function(event) {
         var text = $(event.target).val();
-        $.post('/ajax', {id: id, action: 'update-page-title', page: page, text: text});
+        showAjax();
+        $.post('/ajax', {id: id, action: 'update-page-title', page: page, text: text}, clearAjax);
     })
 
     $('#update-page-intro').change(function(event) {
         var text = $(event.target).val();
-        $.post('/ajax', {id: id, action: 'update-page-intro', page: page, text: text});
+        showAjax();
+        $.post('/ajax', {id: id, action: 'update-page-intro', page: page, text: text}, clearAjax);
     });
 
     $('#add-section').click(function(event) {
@@ -132,13 +155,15 @@ $( document ).ready(function() {
     $('input[data-action=update-section-title]').change(function(event) {
         var text = $(event.target).val();
         var section = $(event.target).attr('data-id');
-        $.post('/ajax', {id: id, action: 'update-section-title', page: page, section: section, text: text});
+        showAjax();
+        $.post('/ajax', {id: id, action: 'update-section-title', page: page, section: section, text: text}, clearAjax);
     });
 
     $('input[data-action=section-collapsible]').change(function(event) {
         var value = $(event.target).prop("checked") ? 1 : 0;
         var section = $(event.target).attr('data-id');
-        $.post('/ajax', {id: id, action: 'section-collapsible', page: page, section: section, value: value});
+        showAjax();
+        $.post('/ajax', {id: id, action: 'section-collapsible', page: page, section: section, value: value}, clearAjax);
     });
 
 });

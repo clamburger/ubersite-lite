@@ -456,3 +456,7 @@ input.invisible:focus {
   right: 15px;
   top: 20px;
 }
+
+#ajax-status th {
+  background-color: #62F4B0;
+}
