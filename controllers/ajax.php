@@ -1,4 +1,5 @@
 <?php
+use Ubersite\Message;
 use Ubersite\Questionnaire;
 use Ubersite\Utils;
 
@@ -15,8 +16,16 @@ if ($action === 'create-questionnaire') {
     );
 SQL;
     $dbh->exec($query);
+    exit;
+}
 
-} elseif ($action === 'duplicate-questionnaire') {
+$questionnaire = Questionnaire::loadFromDatabase($_POST['id']);
+if ($questionnaire === null) {
+    $messages->addMessage(new Message('error', "Couldn't load questionnaire with ID {$_POST['id']}."));
+    exit;
+}
+
+if ($action === 'duplicate-questionnaire') {
     $query = <<<SQL
       INSERT INTO questionnaires (Name, Pages, Intro)
       SELECT Name || ' (copy)', Pages, Intro FROM questionnaires WHERE Id = ?
@@ -25,40 +34,32 @@ SQL;
     $stmt->execute([$_POST['id']]);
 
 } elseif ($action === 'delete-questionnaire') {
-    $questionnaire = Questionnaire::loadFromDatabase($_POST['id']);
     $questionnaire->deleteQuestionnaire();
 
 } elseif ($action === 'update-title') {
-    $questionnaire = Questionnaire::loadFromDatabase($_POST['id']);
     $questionnaire->setTitle($_POST['text']);
 
 } elseif ($action === 'update-intro-text') {
-    $questionnaire = Questionnaire::loadFromDatabase($_POST['id']);
     $questionnaire->setIntro($_POST['text']);
 
 } elseif ($action === 'duplicate-page') {
-    $questionnaire = Questionnaire::loadFromDatabase($_POST['id']);
     $questionnaire->duplicatePage($_POST['page']);
 
 } elseif ($action === 'delete-page') {
-    $questionnaire = Questionnaire::loadFromDatabase($_POST['id']);
     $questionnaire->deletePage($_POST['page']);
 
 } elseif ($action === 'move-page') {
-    $questionnaire = Questionnaire::loadFromDatabase($_POST['id']);
     $questionnaire->movePage($_POST['page'], (int)$_POST['movement']);
 
 } elseif ($action === 'create-page') {
-    $questionnaire = Questionnaire::loadFromDatabase($_POST['id']);
     $questionnaire->createNewPage();
 
 } elseif ($action === 'update-page-title') {
-    $questionnaire = Questionnaire::loadFromDatabase($_POST['id']);
     $questionnaire->getPage($_POST['page'])->title = $_POST['text'];
     $questionnaire->updateDatabase();
 
 } elseif ($action === 'update-page-intro') {
-    $questionnaire = Questionnaire::loadFromDatabase($_POST['id']);
     $questionnaire->getPage($_POST['page'])->intro = $_POST['text'];
     $questionnaire->updateDatabase();
+
 }
