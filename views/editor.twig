@@ -91,7 +91,7 @@
                 Collapsible
               </label>
             </div>
-            <input class="h3 invisible" value="{{ section.title }}" data-action="update-section-title" data-id="{{ loop.index0 }}" />
+            <input class="h3 invisible" placeholder="Section Title" value="{{ section.title }}" data-action="update-section-title" data-id="{{ loop.index0 }}" />
             <ul>
             {% for question in section.questions %}
               <li>{{ question.question }}</li>
