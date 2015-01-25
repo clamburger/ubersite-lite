@@ -9,16 +9,12 @@ class Group implements \JsonSerializable
     public $collapsible = false;
     public $comments = true;
   
-    public function __construct($details, $questions)
+    public function __construct($id, $details)
     {
-        $this->id = $details->id;
+        $this->id = $id;
         $this->title = $details->Title;
-        foreach ($details->Questions as $questionID) {
-            if (isset($questions[$questionID])) {
-                $this->questions[] = $questions[$questionID];
-            } else {
-                throw new \Exception("Couldn't find question with ID $questionID");
-            }
+        foreach ($details->Questions as $id => $question) {
+            $this->questions[] = new Question($id, $question);
         }
         if (isset($details->Collapsible)) {
             $this->collapsible = $details->Collapsible;
@@ -61,10 +57,10 @@ class Group implements \JsonSerializable
     private function createCommentsQuestion()
     {
         $details = new \stdClass();
-        $details->id = $this->id . "-comments";
+        $id = $this->id . "-comments";
         $details->Question = "Any other comments?";
         $details->AnswerType = "Textarea";
-        return new Question($details);
+        return new Question($id, $details);
     }
 
     public function renderFeedback($allResponses, $users)
@@ -141,7 +137,7 @@ class Group implements \JsonSerializable
 
         $questions = [];
         foreach ($this->questions as $question) {
-            $questions[] = $question->id;
+            $questions[$question->id] = $question;
         }
         $return['Questions'] = $questions;
 

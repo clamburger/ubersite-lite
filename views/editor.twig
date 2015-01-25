@@ -13,8 +13,6 @@
         <th>ID</th>
         <th>Title</th>
         <th>Pages</th>
-        <th>Groups</th>
-        <th>Questions</th>
         <th>Controls</th>
       </tr>
       {% for questionnaire in questionnaires %}
@@ -22,8 +20,6 @@
         <th>{{ questionnaire.id }}</th>
         <td><a href='/editor/{{ questionnaire.id }}'>{{ questionnaire.title }}</a></td>
         <td>{{ questionnaire.pages | length }}</td>
-        <td>{{ questionnaire.groups | length }}</td>
-        <td>{{ questionnaire.questions | length }}</td>
         <td>
           <button data-action="duplicate" data-id="{{ questionnaire.id }}">Duplicate</button>
           <button data-action="delete" data-id="{{ questionnaire.id }}">Delete</button>

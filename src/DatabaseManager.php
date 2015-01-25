@@ -21,7 +21,7 @@ class DatabaseManager
         $dbh = new \PDO('sqlite:config/database.db');
         $dbh->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
         $dbh->setAttribute(\PDO::ATTR_EMULATE_PREPARES, true);
-        $dbh->setAttribute(\PDO::ATTR_DEFAULT_FETCH_MODE, \PDO::FETCH_BOTH);
+        $dbh->setAttribute(\PDO::ATTR_DEFAULT_FETCH_MODE, \PDO::FETCH_ASSOC);
         $dbh->setAttribute(\PDO::ATTR_TIMEOUT, 10);
         self::$dbh = $dbh;
 

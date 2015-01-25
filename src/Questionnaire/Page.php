@@ -5,19 +5,17 @@ class Page implements \JsonSerializable
 {
     /** @var string */
     public $title;
-    public $intro = null;
+    public $intro;
     public $questions = [];
   
-    public function __construct($details, $questions, $groups)
+    public function __construct($details)
     {
         $this->title = $details->Title;
-        foreach ($details->Questions as $ID) {
-            if (isset($groups[$ID])) {
-                $this->questions[] = $groups[$ID];
-            } elseif (isset($questions[$ID])) {
-                $this->questions[] = $questions[$ID];
+        foreach ($details->Questions as $id => $question) {
+            if (isset($question->Title)) {
+                $this->questions[] = new Group($id, $question);
             } else {
-                throw new \Exception("Couldn't find group or question with ID $ID");
+                $this->questions[] = new Question($id, $question);
             }
         }
         if (isset($details->Intro)) {
@@ -57,7 +55,7 @@ class Page implements \JsonSerializable
 
         $questions = [];
         foreach ($this->questions as $question) {
-            $questions[] = $question->id;
+            $questions[$question->id] = $question;
         }
         $return['Questions'] = $questions;
         if ($this->intro !== null) {

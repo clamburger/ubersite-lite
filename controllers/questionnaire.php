@@ -25,8 +25,6 @@ if (!$row = $stmt->fetch()) {
     exit;
 }
 $questionnaire = new Questionnaire($row);
-$questions = $questionnaire->questions;
-$groups = $questionnaire->groups;
 $pages = $questionnaire->pages;
 
 $twig->addGlobal('questionnaire', $questionnaire);

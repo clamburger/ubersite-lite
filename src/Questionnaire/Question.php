@@ -41,9 +41,9 @@ class Question implements \JsonSerializable
         "#F8696B"
     ];
 
-    public function __construct($details)
+    public function __construct($id, $details)
     {
-        $this->id = $details->id;
+        $this->id = $id;
         $this->question = $details->Question;
         $this->answerType = $details->AnswerType;
         if (isset($details->AnswerOptions)) {

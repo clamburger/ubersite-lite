@@ -1,9 +1,7 @@
 <?php
 namespace Ubersite;
 
-use Ubersite\Questionnaire\Group;
 use Ubersite\Questionnaire\Page;
-use Ubersite\Questionnaire\Question;
 
 class Questionnaire
 {
@@ -11,9 +9,8 @@ class Questionnaire
     public $title;
     private $intro;
 
+    /** @var Page[] */
     public $pages;
-    public $groups;
-    public $questions;
 
     public function __construct($row)
     {
@@ -21,7 +18,7 @@ class Questionnaire
         $this->title = $row['Name'];
         $this->intro = $row['Intro'];
 
-        $data = json_decode($row['Pages']);
+        $pages = json_decode($row['Pages']);
 
         if (json_last_error() != JSON_ERROR_NONE) {
             throw new \Exception(
@@ -29,19 +26,8 @@ class Questionnaire
             );
         }
 
-        foreach ($data->Questions as $questionID => $question) {
-            $question->id = $questionID;
-            $this->questions[$questionID] = new Question($question);
-        }
-
-        foreach ($data->Groups as $groupID => $group) {
-            $group->id = $groupID;
-            $this->groups[$groupID] = new Group($group, $this->questions);
-        }
-
-        foreach ($data->Pages as $pageID => $page) {
-            $page->PageID = $pageID;
-            $this->pages[$pageID] = new Page($page, $this->questions, $this->groups);
+        foreach ($pages as $page) {
+            $this->pages[] = new Page($page);
         }
     }
 
@@ -103,15 +89,9 @@ class Questionnaire
      */
     private function updateDatabase()
     {
-        $data = [
-            'Questions' => $this->questions,
-            'Groups' => $this->groups,
-            'Pages' => $this->pages
-        ];
-
         $dbh = DatabaseManager::get();
         $stmt = $dbh->prepare('UPDATE questionnaires SET Name = ?, Pages = ?, Intro = ? WHERE Id = ?');
-        $stmt->execute([$this->title, json_encode($data, JSON_PRETTY_PRINT), $this->intro, $this->id]);
+        $stmt->execute([$this->title, json_encode($this->pages, JSON_PRETTY_PRINT), $this->intro, $this->id]);
     }
 
     public static function loadFromDatabase($id)

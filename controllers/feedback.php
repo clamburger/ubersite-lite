@@ -23,8 +23,6 @@ if (!$row = $stmt->fetch()) {
     exit;
 }
 $questionnaire = new Questionnaire($row);
-$questions = $questionnaire->questions;
-$groups = $questionnaire->groups;
 $pages = $questionnaire->pages;
 
 $twig->addGlobal('title', $questionnaire->title);
@@ -70,50 +68,9 @@ asort($allResponders);
 
 $output = "";
 
-// Generate the special table at the start
-if (isset($details->FeedbackTable)) {
-    $output .= "<table class='feedback'>\n";
-    $output .= "<tr>\n";
-    $output .= "  <th>Person</th>\n";
-    foreach ($details->FeedbackTable as $questionID) {
-        $question = $questions[$questionID];
-        $output .= "  <th>{$question->questionShort}</th>\n";
-    }
-    $output .= "</tr>\n";
-    foreach ($allResponders as $username => $name) {
-        $output .= "<tr>\n";
-        $output .= "  <td style='white-space: nowrap;'>$name</td>\n";
-
-        foreach ($details->FeedbackTable as $questionID) {
-            /** @var Question $question */
-            $question = $questions[$questionID];
-            if (isset($allResponses[$questionID][$username])) {
-                $response = $allResponses[$questionID][$username]['Answer'];
-                $stringResponse = $question->getAnswerString($response);
-                $other = "";
-                if (isset($allResponses[$questionID."-other"][$username]['Answer'])) {
-                    $other = "<br><small>".$allResponses[$questionID."-other"][$username]['Answer']."</small>";
-                }
-                if ($stringResponse === Question::OTHER_RESPONSE) {
-                    $stringResponse = "Other";
-                }
-                $output .= "<td>$stringResponse $other</td>\n";
-            } else {
-                $output .= "  <td>--</td>";
-            }
-        }
-        $output .= "</tr>\n";
-    }
-    $output .= "</table>\n";
-}
-
 foreach ($pages as $page) {
     $output .= "<h2>{$page->title}</h2>\n";
     foreach ($page->questions as $question) {
-        if (isset($details->FeedbackTable) && $question instanceof Question
-         && in_array($question->id, $details->FeedbackTable, true)) {
-            continue;
-        }
         $output .= $question->renderFeedback($allResponses, $people);
     }
 }
