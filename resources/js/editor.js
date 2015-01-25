@@ -168,6 +168,13 @@ $( document ).ready(function() {
         $.post('/ajax', {id: id, action: 'section-collapsible', page: page, section: section, value: value}, clearAjax);
     });
 
+    $('input[data-action=section-border]').change(function(event) {
+        showAjax();
+        var value = $(event.target).prop("checked") ? 1 : 0;
+        var section = $(event.target).attr('data-id');
+        $.post('/ajax', {id: id, action: 'section-border', page: page, section: section, value: value}, clearAjax);
+    });
+
     $('button[data-action=move-section]').click(function(event) {
         showAjax();
         var section = $(event.target).attr('data-id');

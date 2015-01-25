@@ -455,6 +455,7 @@ input.invisible:focus {
   position: absolute;
   right: 15px;
   top: 20px;
+  text-align: right;
 }
 
 #ajax-status th {

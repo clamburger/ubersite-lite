@@ -78,6 +78,10 @@ SQL;
     $questionnaire->getPage($_POST['page'])->getSection($_POST['section'])->collapsible = (bool)$_POST['value'];
     $questionnaire->updateDatabase();
 
+} elseif ($action === 'section-border') {
+    $questionnaire->getPage($_POST['page'])->getSection($_POST['section'])->border = (bool)$_POST['value'];
+    $questionnaire->updateDatabase();
+
 } elseif ($action === 'move-section') {
     $questionnaire->getPage($_POST['page'])->moveSection($_POST['section'], (int)$_POST['movement']);
     $questionnaire->updateDatabase();
