@@ -6,17 +6,13 @@ class Page implements \JsonSerializable
     /** @var string */
     public $title;
     public $intro;
-    public $questions = [];
+    public $sections = [];
   
     public function __construct($details)
     {
         $this->title = $details->Title;
-        foreach ($details->Questions as $id => $question) {
-            if (isset($question->Title)) {
-                $this->questions[] = new Group($id, $question);
-            } else {
-                $this->questions[] = new Question($id, $question);
-            }
+        foreach ($details->Sections as $section) {
+            $this->sections[] = new Section($section);
         }
         if (isset($details->Intro)) {
             $this->intro = $details->Intro;
@@ -37,8 +33,8 @@ class Page implements \JsonSerializable
         if ($this->intro) {
             $out .= "<p>$this->intro</p>";
         }
-        /** @var Group|Question $item */
-        foreach ($this->questions as $item) {
+        /** @var Question $item */
+        foreach ($this->sections as $item) {
             $out .= $item->renderHTML();
         }
         return $out;
@@ -54,7 +50,7 @@ class Page implements \JsonSerializable
         $return = ['Title' => $this->title];
 
         $questions = [];
-        foreach ($this->questions as $question) {
+        foreach ($this->sections as $question) {
             $questions[$question->id] = $question;
         }
         $return['Questions'] = $questions;

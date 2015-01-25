@@ -69,7 +69,7 @@ $output = "";
 
 foreach ($pages as $page) {
     $output .= "<h2>{$page->title}</h2>\n";
-    foreach ($page->questions as $question) {
+    foreach ($page->sections as $question) {
         $output .= $question->renderFeedback($allResponses, $people);
     }
 }

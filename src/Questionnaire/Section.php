@@ -1,23 +1,27 @@
 <?php
 namespace Ubersite\Questionnaire;
 
-class Group implements \JsonSerializable
+class Section implements \JsonSerializable
 {
-    public $id;
+    private $id;
     public $title;
     public $questions = [];
     public $collapsible = false;
     public $comments = true;
+    public $border = false;
   
-    public function __construct($id, $details)
+    public function __construct($details)
     {
-        $this->id = $id;
         $this->title = $details->Title;
+        $this->id = strtolower(str_replace(' ', '', $this->title));
         foreach ($details->Questions as $id => $question) {
             $this->questions[] = new Question($id, $question);
         }
         if (isset($details->Collapsible)) {
             $this->collapsible = $details->Collapsible;
+        }
+        if (isset($details->Border)) {
+            $this->border = $details->Border;
         }
         if (isset($details->Comments)) {
             $this->comments = $details->Comments;

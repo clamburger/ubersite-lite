@@ -46,7 +46,7 @@
             {% else %}
             <td>{{ loop.index }}. <a href='/editor/{{ questionnaire.id }}/{{ loop.index }}'>{{ pageRow.title }}</td>
             {% endif %}
-            <td>{{ pageRow.questions | length }} question{{ pageRow.questions | length == 1 ? '' : 's' }}</td>
+            <td>{{ pageRow.sections | length }} section{{ pageRow.sections | length == 1 ? '' : 's' }}</td>
           </tr>
         {% endfor %}
           <tr>
@@ -93,14 +93,14 @@
           <tr>
             <th>&nbsp;</th>
             <th>Page Title</th>
-            <th>Questions</th>
+            <th>Sections</th>
             <th>Controls</th>
           </tr>
           {% for page in questionnaire.pages %}
             <tr>
               <th>{{ loop.index }}</th>
               <td><a href='/editor/{{ questionnaire.id }}/{{ loop.index }}'>{{ page.title }}</a></td>
-              <td>{{ page.questions | length }}</td>
+              <td>{{ page.sections | length }}</td>
               <td>
                 <button data-action="move-page" data-id="{{ loop.index }}" data-movement="-1">&uarr;</button>
                 <button data-action="move-page" data-id="{{ loop.index }}" data-movement="1">&darr;</button>

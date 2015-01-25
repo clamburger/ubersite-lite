@@ -1,21 +1,21 @@
 # Questionnaire Format
 
-A questionnaire is a JSON object containing a list of pages, which then contain groups and questions.
+A questionnaire is a JSON object containing a list of pages.
 
 
 ## Pages
 
 * `Title` **required**: the title of the page.
-* `Questions` **required**: a dictionary of Groups and Questions, indexed by their ID.
+* `Sections` **required**: a list of section objects that will be shown on the page.
 * `Intro`: if provided, the text specified here will appear at the top of the page. Full HTML can be used.
 
 
-## Groups
+## Sections
 
-* `Title` **required**: the title of the group.
-* `Questions` **required**: a dictionary of Questions, indexed by their ID.
-* `Collapsible`: if true, group will appear with the questions hidden and a button to show them. *Default: false*
-* `Comments`: if true, a multi-line text input will be added at the end of the group with a corresponding label. *Default: true*
+* `Title` **required**: the title of the section.
+* `Questions` **required**: a dictionary of question objects, indexed by their ID.
+* `Collapsible`: if true, the section will appear with the questions hidden and a button to show them. *Default: false*
+* `Comments`: if true, a multi-line text input will be added at the end of the section with a corresponding label. *Default: true*
 
 
 ## Questions
@@ -35,7 +35,7 @@ A questionnaire is a JSON object containing a list of pages, which then contain 
 
 # Things to note
 
-* Pages, Groups and Questions will all be shown in the order that they are defined.
-* Question and Group IDs **must not** end in `-comments` or `-other` as these are used internally.
-* Groups are designed primarily for dropdowns. Other AnswerTypes **may** be used, but they might not be fully styled.
-* Groups **should** keep all dropdown questions before all non-dropdown questions. No data loss will occur if you don't, but the feedback won't look as neat.
+* Pages, sections and questions will all be shown in the order that they are defined.
+* Question IDs **must not** end in `-comments` or `-other` as these are used internally.
+* Sections are designed primarily for dropdowns. Other AnswerTypes **may** be used, but they might not be fully styled.
+* Sections **should** keep all dropdown questions before all non-dropdown questions. No data loss will occur if you don't, but the feedback won't look as neat.
