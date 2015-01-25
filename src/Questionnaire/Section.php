@@ -3,7 +3,6 @@ namespace Ubersite\Questionnaire;
 
 class Section implements \JsonSerializable
 {
-    private $id;
     public $title;
     /** @var Question[] */
     public $questions = [];
@@ -13,7 +12,6 @@ class Section implements \JsonSerializable
     public function __construct($details)
     {
         $this->title = $details->Title;
-        $this->id = strtolower(str_replace(' ', '', $this->title));
         foreach ($details->Questions as $id => $question) {
             $this->questions[] = new Question($id, $question);
         }
