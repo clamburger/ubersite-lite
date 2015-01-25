@@ -1,3 +1,11 @@
+var typewatch = (function(){
+    var timer = 0;
+    return function(callback, ms){
+        clearTimeout (timer);
+        timer = setTimeout(callback, ms);
+    };
+})();
+
 $( document ).ready(function() {
     var id, page;
 
@@ -125,6 +133,12 @@ $( document ).ready(function() {
             location.reload();
         });
         $('button').prop('disabled', true);
+    });
+
+    $('input[data-action=update-section-title]').change(function(event) {
+        var text = $(event.target).val();
+        var section = $(event.target).attr('data-id');
+        $.post('/ajax', {id: id, action: 'update-section-title', page: page, section: section, text: text});
     });
 
 });

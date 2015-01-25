@@ -6,6 +6,7 @@ class Page implements \JsonSerializable
     /** @var string */
     public $title;
     public $intro;
+    /** @var Section[] */
     public $sections = [];
   
     public function __construct($details)
@@ -45,6 +46,11 @@ class Page implements \JsonSerializable
         $details->Title = 'Untitled Page';
         $details->Sections = [];
         return new Page($details);
+    }
+
+    public function getSection($section)
+    {
+        return $this->sections[$section];
     }
 
     public function renderHTML()

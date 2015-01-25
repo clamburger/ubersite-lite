@@ -70,4 +70,8 @@ SQL;
     $questionnaire->getPage($_POST['page'])->deleteSection($_POST['section']);
     $questionnaire->updateDatabase();
 
+} elseif ($action === 'update-section-title') {
+    $questionnaire->getPage($_POST['page'])->getSection($_POST['section'])->title = $_POST['text'];
+    $questionnaire->updateDatabase();
+
 }
