@@ -74,4 +74,8 @@ SQL;
     $questionnaire->getPage($_POST['page'])->getSection($_POST['section'])->title = $_POST['text'];
     $questionnaire->updateDatabase();
 
+} elseif ($action === 'section-collapsible') {
+    $questionnaire->getPage($_POST['page'])->getSection($_POST['section'])->collapsible = (bool)$_POST['value'];
+    $questionnaire->updateDatabase();
+
 }

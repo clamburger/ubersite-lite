@@ -87,7 +87,9 @@
         <div class="editor-section">
           <div class="editor-section-controls">
             <button data-action="duplicate-section" data-id="{{ loop.index0 }}">Duplicate</button>
-            <button data-action="delete-section" data-id="{{ loop.index0 }}">Delete</button>
+            <button data-action="delete-section" data-id="{{ loop.index0 }}">Delete</button><br>
+            <label style="line-height: 3em;">
+              <input data-action="section-collapsible" data-id="{{ loop.index0 }}" type="checkbox" {{ section.collapsible ? 'checked' : '' }}> Collapsible</label>
           </div>
           <input class="h3 invisible" value="{{ section.title }}" data-action="update-section-title" data-id="{{ loop.index0 }}"/>
           <ul>

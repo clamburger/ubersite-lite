@@ -141,4 +141,10 @@ $( document ).ready(function() {
         $.post('/ajax', {id: id, action: 'update-section-title', page: page, section: section, text: text});
     });
 
+    $('input[data-action=section-collapsible]').change(function(event) {
+        var value = $(event.target).prop("checked") ? 1 : 0;
+        var section = $(event.target).attr('data-id');
+        $.post('/ajax', {id: id, action: 'section-collapsible', page: page, section: section, value: value});
+    });
+
 });
