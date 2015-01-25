@@ -16,6 +16,7 @@ A questionnaire is a JSON object containing a list of pages.
 * `Questions` **required**: a dictionary of question objects, indexed by their ID.
 * `Collapsible`: if true, the section will appear with the questions hidden and a button to show them. *Default: false*
 * `Comments`: if true, a multi-line text input will be added at the end of the section with a corresponding label. *Default: true*
+* `Border`: if false, the section will not get the normal fieldset that appears around sections, and `Collapsible` and `Comments` will both be set to false. *Default: true*
 
 
 ## Questions
@@ -37,5 +38,5 @@ A questionnaire is a JSON object containing a list of pages.
 
 * Pages, sections and questions will all be shown in the order that they are defined.
 * Question IDs **must not** end in `-comments` or `-other` as these are used internally.
-* Sections are designed primarily for dropdowns. Other AnswerTypes **may** be used, but they might not be fully styled.
+* Sections are designed primarily for dropdowns. If other AnswerTypes are used, it's recommended that `Border` is set to false.
 * Sections **should** keep all dropdown questions before all non-dropdown questions. No data loss will occur if you don't, but the feedback won't look as neat.

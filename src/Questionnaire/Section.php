@@ -5,10 +5,11 @@ class Section implements \JsonSerializable
 {
     private $id;
     public $title;
+    /** @var Question[] */
     public $questions = [];
     public $collapsible = false;
     public $comments = true;
-    public $border = false;
+    public $border = true;
   
     public function __construct($details)
     {
@@ -31,29 +32,35 @@ class Section implements \JsonSerializable
     public function renderHTML()
     {
         $out = "";
-        $extraClass = $this->collapsible ? "optquest" : "";
-        $out .= "<fieldset class='question-group $extraClass'>";
-        if ($this->collapsible) {
-            $out .= "<legend>{$this->title} <span class='help'>click to view questions</span></legend>";
-            $out .= "<div class='hide-container'>";
+
+        if ($this->border) {
+            $extraClass = $this->collapsible ? "optquest" : "";
+            $out .= "<fieldset class='question-group $extraClass'>";
+            if ($this->collapsible) {
+                $out .= "<legend>{$this->title} <span class='help'>click to view questions</span></legend>";
+                $out .= "<div class='hide-container'>";
+            } else {
+                $out .= "<legend>{$this->title}</legend>";
+            }
+
+            foreach ($this->questions as $key => $question) {
+                $out .= $question->renderHTML(($key + 1) . ". ");
+            }
+
+            if ($this->comments) {
+                $out .= "<label for='question-{$this->id}-comments' class='spacing'>Any other comments?</label>";
+                $out .= "<textarea rows=3 name='{$this->id}-comments' id='question-{$this->id}-comments'>";
+                $out .= "</textarea>";
+            }
+            if ($this->collapsible) {
+                $out .= "</div>";
+            }
+            $out .= "</fieldset>";
         } else {
-            $out .= "<legend>{$this->title}</legend>";
+            foreach ($this->questions as $key => $question) {
+                $out .= $question->renderHTML();
+            }
         }
-
-        /** @var Question $question */
-        foreach ($this->questions as $key => $question) {
-            $out .= $question->renderHTML(($key+1).". ");
-        }
-
-        if ($this->comments) {
-            $out .= "<label for='question-{$this->id}-comments' class='spacing'>Any other comments?</label>";
-            $out .= "<textarea rows=3 name='{$this->id}-comments' id='question-{$this->id}-comments'>";
-            $out .= "</textarea>";
-        }
-        if ($this->collapsible) {
-            $out .= "</div>";
-        }
-        $out .= "</fieldset>";
         return $out;
     }
 
