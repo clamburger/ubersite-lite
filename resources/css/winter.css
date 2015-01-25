@@ -88,3 +88,7 @@ div.progress {
 input.invisible:focus {
   border: 1px solid rgb(77, 144, 254);
 }
+
+.editor-section:first-child {
+  background-color: #dfeaea;
+}

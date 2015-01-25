@@ -47,7 +47,7 @@
 
       <input type="hidden" id="page-number" value="{{ pageNumber }}" />
       <table style='float: right;' class='progress'>
-        <tr><th colspan="2">Questionnaire Pages:</th></tr>
+        <tr><th colspan="2">{{ questionnaire.title }}</th></tr>
         {% for pageRow in questionnaire.pages %}
           <tr>
             {% if loop.index == pageNumber %}
@@ -62,47 +62,38 @@
             <td colspan="2"><a href='/editor/{{ questionnaire.id }}' style='color: maroon'>Back to the list of pages</a></td>
           </tr>
       </table>
-      <h2>{{ questionnaire.title }}</h2>
-      <table class="progress">
-        <tr>
-          <th><label for="title-editor">Page Title</label></th>
-          <td><input type="text" id="title-editor" value="{{ page.title }}" class="h2" /></td>
-          <td>
-            <button id="save-page-title">Save title</button>
-          </td>
-        </tr>
-        <tr>
-          <th><label for="intro-text-editor">Page Intro</label></th>
-          <td><textarea id="intro-text-editor">{{ page.intro }}</textarea></td>
-          <td>
-            <button id="save-page-intro">Save intro text</button>
-          </td>
-        </tr>
-      </table>
+      You are currently editing page {{ pageNumber }} of <strong>{{ questionnaire.title }}</strong>.
 
       {# Section workspace #}
 
       <div class="editor-workspace">
-      {% for section in page.sections %}
-        <div class="editor-section">
-          <div class="editor-section-controls">
-            <button data-action="duplicate-section" data-id="{{ loop.index0 }}">Duplicate</button>
-            <button data-action="delete-section" data-id="{{ loop.index0 }}">Delete</button><br>
-            <label style="line-height: 3em;">
-              <input data-action="section-collapsible" data-id="{{ loop.index0 }}" type="checkbox" {{ section.collapsible ? 'checked' : '' }}> Collapsible</label>
-          </div>
-          <input class="h3 invisible" value="{{ section.title }}" data-action="update-section-title" data-id="{{ loop.index0 }}"/>
-          <ul>
-          {% for question in section.questions %}
-            <li>{{ question.question }}</li>
-          {% endfor %}
-          {% if section.comments and section.border %}
-            <li>Any other comments?</li>
-          {% endif %}
-          </ul>
+        <div class="editor-section" style="background: #dfeaea;">
+          <input id="update-page-title" class="h2 invisible" placeholder="Page Title" value="{{ page.title }}" /><br>
+          <input id="update-page-intro" class="invisible" placeholder="Intro text; will be displayed at the top of the page" style="width: 100%;" value="{{ page.intro }}"/>
         </div>
         <br>
-      {% endfor %}
+        {% for section in page.sections %}
+          <div class="editor-section">
+            <div class="editor-section-controls">
+              <button data-action="duplicate-section" data-id="{{ loop.index0 }}">Duplicate</button>
+              <button data-action="delete-section" data-id="{{ loop.index0 }}">Delete</button><br>
+              <label style="line-height: 3em;">
+                <input data-action="section-collapsible" data-id="{{ loop.index0 }}" type="checkbox" {{ section.collapsible ? 'checked' : '' }}>
+                Collapsible
+              </label>
+            </div>
+            <input class="h3 invisible" value="{{ section.title }}" data-action="update-section-title" data-id="{{ loop.index0 }}" />
+            <ul>
+            {% for question in section.questions %}
+              <li>{{ question.question }}</li>
+            {% endfor %}
+            {% if section.comments and section.border %}
+              <li>Any other comments?</li>
+            {% endif %}
+            </ul>
+          </div>
+          <br>
+        {% endfor %}
         <button id="add-section">Add a new section</button><br>
       </div>
 

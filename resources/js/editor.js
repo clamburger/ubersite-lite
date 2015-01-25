@@ -93,20 +93,14 @@ $( document ).ready(function() {
         $('button').prop('disabled', true);
     });
 
-    $('#save-page-title').click(function(event) {
-        var text = $('#title-editor').val();
-        $(event.target).prop('disabled', true).text('Saving...');
-        $.post('/ajax', {id: id, action: 'update-page-title', page: page, text: text}, function() {
-            $(event.target).prop('disabled', false).text('Save title');
-        });
+    $('#update-page-title').change(function(event) {
+        var text = $(event.target).val();
+        $.post('/ajax', {id: id, action: 'update-page-title', page: page, text: text});
     })
 
-    $('#save-page-intro').click(function(event) {
-        var text = $('#intro-text-editor').val();
-        $(event.target).prop('disabled', true).text('Saving...');
-        $.post('/ajax', {id: id, action: 'update-page-intro', page: page, text: text}, function() {
-            $(event.target).prop('disabled', false).text('Save intro text');
-        });
+    $('#update-page-intro').change(function(event) {
+        var text = $(event.target).val();
+        $.post('/ajax', {id: id, action: 'update-page-intro', page: page, text: text});
     });
 
     $('#add-section').click(function(event) {
