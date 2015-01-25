@@ -25,7 +25,7 @@ if (!$row = $stmt->fetch()) {
 $questionnaire = new Questionnaire($row);
 $pages = $questionnaire->pages;
 
-$twig->addGlobal('title', $questionnaire->title);
+$twig->addGlobal('title', $questionnaire->getTitle());
 
 if ($SEGMENTS[2] == 'smallgroup') {
     $where = "AND DutyTeam = (SELECT DutyTeam FROM users WHERE Username = ?)";

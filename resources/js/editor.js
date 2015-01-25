@@ -31,6 +31,14 @@ $( document ).ready(function() {
         id = hiddenId.val();
     }
 
+    $('#save-title').click(function(event) {
+        var text = $('#title-editor').val();
+        $(event.target).prop('disabled', true).text('Saving...');
+        $.post('/ajax', {id: id, action: 'update-title', text: text}, function() {
+            $(event.target).prop('disabled', false).text('Save title');
+        });
+    })
+
     $('#save-intro-text').click(function(event) {
         var text = $('#intro-text-editor').val();
         $(event.target).prop('disabled', true).text('Saving...');

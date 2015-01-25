@@ -28,7 +28,7 @@ $questionnaire = new Questionnaire($row);
 $pages = $questionnaire->pages;
 
 $twig->addGlobal('questionnaire', $questionnaire);
-$twig->addGlobal('title', $questionnaire->title);
+$twig->addGlobal('title', $questionnaire->getTitle());
 
 $totalStages = count($pages);
 

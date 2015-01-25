@@ -29,7 +29,6 @@
     </table>
     <button data-action="create-questionnaire">Create new questionnaire</button>
   {% else %}
-    <h2>{{ questionnaire.title }}</h2>
     <input type="hidden" id="questionnaire-id" value="{{ questionnaire.id }}" />
 
     {% if page %}
@@ -43,10 +42,25 @@
         {% endfor %}
           <tr><td colspan="2"><a href='/editor/{{ questionnaire.id }}' style='color: maroon'>Back to the editor</a></td></tr>
       </table>
+      <h2>{{ questionnaire.title }}</h2>
       <h2>{{ page.title }}</h2>
     {% else %}
-      <textarea id="intro-text-editor">{{ questionnaire.intro }}</textarea><br>
-      <button id="save-intro-text">Save intro text</button>
+      <table class="progress">
+        <tr>
+          <th><label for="title-editor">Title</label></th>
+          <td><input type="text" id="title-editor" value="{{ questionnaire.title }}" class="h2" /></td>
+          <td>
+            <button id="save-title">Save title</button>
+          </td>
+        </tr>
+        <tr>
+          <th><label for="intro-text-editor">Intro Text</label></th>
+          <td><textarea id="intro-text-editor">{{ questionnaire.intro }}</textarea></td>
+          <td>
+            <button id="save-intro-text">Save intro text</button>
+          </td>
+        </tr>
+      </table>
 
       <table class="progress">
         <tr>
@@ -69,6 +83,7 @@
           </tr>
         {% endfor %}
       </table>
+
       <button data-action="page-create">Create new page</button>
     {% endif %}
   {% endif %}

@@ -28,6 +28,10 @@ SQL;
     $questionnaire = Questionnaire::loadFromDatabase($_POST['id']);
     $questionnaire->deleteQuestionnaire();
 
+} elseif ($action === 'update-title') {
+    $questionnaire = Questionnaire::loadFromDatabase($_POST['id']);
+    $questionnaire->setTitle($_POST['text']);
+
 } elseif ($action === 'update-intro-text') {
     $questionnaire = Questionnaire::loadFromDatabase($_POST['id']);
     $questionnaire->setIntro($_POST['text']);

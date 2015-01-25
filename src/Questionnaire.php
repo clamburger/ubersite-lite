@@ -6,7 +6,7 @@ use Ubersite\Questionnaire\Page;
 class Questionnaire
 {
     public $id;
-    public $title;
+    private $title;
     private $intro;
 
     /** @var Page[] */
@@ -36,6 +36,17 @@ class Questionnaire
         $dbh = DatabaseManager::get();
         $stmt = $dbh->prepare('DELETE FROM questionnaires WHERE Id = ?');
         $stmt->execute([$_POST['id']]);
+    }
+
+    public function getTitle()
+    {
+        return $this->title;
+    }
+
+    public function setTitle($title)
+    {
+        $this->title = $title;
+        $this->updateDatabase();
     }
 
     public function getIntro()
