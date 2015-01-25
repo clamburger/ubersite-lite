@@ -27,10 +27,10 @@ class Section implements \JsonSerializable
     {
         foreach ($this->questions as $index => $question) {
             if ($question->id === $questionId) {
+                array_splice($this->questions, $index, 1);
                 break;
             }
         }
-        array_splice($this->questions, $index, 1);
     }
   
     public function renderHTML()
