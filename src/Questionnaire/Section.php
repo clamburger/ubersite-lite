@@ -22,6 +22,16 @@ class Section implements \JsonSerializable
             $this->border = $details->Border;
         }
     }
+
+    public function deleteQuestion($questionId)
+    {
+        foreach ($this->questions as $index => $question) {
+            if ($question->id === $questionId) {
+                break;
+            }
+        }
+        array_splice($this->questions, $index, 1);
+    }
   
     public function renderHTML()
     {

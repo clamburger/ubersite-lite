@@ -98,7 +98,7 @@
             <input class="h3 invisible" placeholder="Section Title" value="{{ section.title }}" data-action="update-section-title" data-id="{{ loop.index0 }}" />
             <ul>
             {% for question in section.questions %}
-              <li>{{ question.question }}</li>
+              <li data-section="{{ loop.index0 }}" data-question="{{ question.id }}">{{ question.question }} <a data-action="delete-question">✕</a></li>
             {% endfor %}
             {% if section.comments and section.border %}
               <li>Any other comments?</li>

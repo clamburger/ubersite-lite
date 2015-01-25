@@ -182,4 +182,14 @@ $( document ).ready(function() {
         $.post('/ajax', {id: id, action: 'move-section', page: page, section: section, movement: movement}, reloadPage);
     });
 
+    $('a[data-action=delete-question]').click(function(event) {
+        if (!confirm('Delete this question?')) {
+            return false;
+        }
+        showAjax();
+        var section = $(event.target).parent().attr('data-section');
+        var question = $(event.target).parent().attr('data-question');
+        $.post('/ajax', {id: id, action: 'delete-question', page: page, section: section, question: question}, reloadPage);
+    });
+
 });

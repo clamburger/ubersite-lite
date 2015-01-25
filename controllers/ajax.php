@@ -86,4 +86,8 @@ SQL;
     $questionnaire->getPage($_POST['page'])->moveSection($_POST['section'], (int)$_POST['movement']);
     $questionnaire->updateDatabase();
 
+} elseif ($action === 'delete-question') {
+    $questionnaire->getPage($_POST['page'])->getSection($_POST['section'])->deleteQuestion($_POST['question']);
+    $questionnaire->updateDatabase();
+
 }
