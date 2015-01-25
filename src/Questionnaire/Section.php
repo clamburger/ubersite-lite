@@ -158,6 +158,9 @@ class Section implements \JsonSerializable
         if (!$this->comments) {
             $return['Comments'] = false;
         }
+        if (!$this->border) {
+            $return['Border'] = false;
+        }
         return $return;
     }
 }

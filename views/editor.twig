@@ -7,7 +7,11 @@
 {% block title %}Questionnaire Editor{% endblock %}
 
 {% block content %}
+
   {% if showAll %}
+
+    {# List of questionnaires #}
+
     {% if questionnaires | length > 0 %}
       <table class="progress">
         <tr>
@@ -32,10 +36,15 @@
       <p>There are currently no questionnaires.</p>
     {% endif %}
     <button data-action="create-questionnaire">Create new questionnaire</button>
+
   {% else %}
+
     <input type="hidden" id="questionnaire-id" value="{{ questionnaire.id }}" />
 
     {% if page %}
+
+      {# Editing a single page in a questionnaire #}
+
       <input type="hidden" id="page-number" value="{{ pageNumber }}" />
       <table style='float: right;' class='progress'>
         <tr><th colspan="2">Questionnaire Pages:</th></tr>
@@ -70,7 +79,35 @@
           </td>
         </tr>
       </table>
+
+      {# Section workspace #}
+
+      <div class="editor-workspace">
+      {% for section in page.sections %}
+        <div class="editor-section">
+          <div class="editor-section-controls">
+            <button data-action="duplicate-section">Duplicate</button>
+            <button data-action="delete-section">Delete</button>
+          </div>
+          <input class="h3 invisible" value="{{ section.title }}" />
+          <ul>
+          {% for question in section.questions %}
+            <li>{{ question.question }}</li>
+          {% endfor %}
+          {% if section.comments and section.border %}
+            <li>Any other comments?</li>
+          {% endif %}
+          </ul>
+        </div>
+        <br>
+      {% endfor %}
+        <button id="add-section">Add a new section</button><br>
+      </div>
+
     {% else %}
+
+      {# Editing a questionnaires; viewing the list of pages #}
+
       <table class="progress">
         <tr>
           <th><label for="title-editor">Title</label></th>

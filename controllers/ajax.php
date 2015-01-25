@@ -58,4 +58,7 @@ SQL;
     $questionnaire->getPage($_POST['page'])->intro = $_POST['text'];
     $questionnaire->updateDatabase();
 
+} elseif ($action === 'add-section') {
+    $questionnaire->getPage($_POST['page'])->addSection();
+    $questionnaire->updateDatabase();
 }

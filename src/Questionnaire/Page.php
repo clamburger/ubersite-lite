@@ -19,12 +19,20 @@ class Page implements \JsonSerializable
         }
     }
 
+    public function addSection()
+    {
+        $section = new \stdClass();
+        $section->Title = 'Untitled Section';
+        $section->Questions = [];
+        $this->sections[] = new Section($section);
+    }
+
     public static function createNew()
     {
         $details = new \stdClass();
         $details->Title = 'Untitled Page';
-        $details->Questions = [];
-        return new Page($details, [], []);
+        $details->Sections = [];
+        return new Page($details);
     }
 
     public function renderHTML()
@@ -47,13 +55,7 @@ class Page implements \JsonSerializable
 
     public function jsonSerialize()
     {
-        $return = ['Title' => $this->title];
-
-        $questions = [];
-        foreach ($this->sections as $question) {
-            $questions[$question->id] = $question;
-        }
-        $return['Questions'] = $questions;
+        $return = ['Title' => $this->title, 'Sections' => $this->sections];
         if ($this->intro !== null) {
             $return['Intro'] = $this->intro;
         }

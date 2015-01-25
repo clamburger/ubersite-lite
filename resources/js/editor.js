@@ -101,4 +101,11 @@ $( document ).ready(function() {
         });
     });
 
+    $('#add-section').click(function(event) {
+        $.post('/ajax', {id: id, action: 'add-section', page: page}, function() {
+            location.reload();
+        });
+        $('button').prop('disabled', true);
+    })
+
 });
