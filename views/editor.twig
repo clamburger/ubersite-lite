@@ -78,6 +78,12 @@
         {% for section in page.sections %}
           <div class="editor-section">
             <div class="editor-section-controls">
+              {% if not loop.first %}
+              <button data-action="move-section" data-id="{{ loop.index0 }}" data-movement="-1">&uarr;</button>
+              {% endif %}
+              {% if not loop.last %}
+              <button data-action="move-section" data-id="{{ loop.index0 }}" data-movement="1">&darr;</button>
+              {% endif %}
               <button data-action="duplicate-section" data-id="{{ loop.index0 }}">Duplicate</button>
               <button data-action="delete-section" data-id="{{ loop.index0 }}">Delete</button><br>
               <label style="line-height: 3em;">

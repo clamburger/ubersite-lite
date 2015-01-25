@@ -63,6 +63,11 @@ $( document ).ready(function() {
         }
     }
 
+    function reloadPage() {
+        clearAjax();
+        location.reload();
+    }
+
     $('#save-title').click(function(event) {
         var text = $('#title-editor').val();
         $(event.target).prop('disabled', true).text('Saving...');
@@ -127,17 +132,15 @@ $( document ).ready(function() {
     });
 
     $('#add-section').click(function(event) {
-        $.post('/ajax', {id: id, action: 'add-section', page: page}, function() {
-            location.reload();
-        });
+        showAjax();
+        $.post('/ajax', {id: id, action: 'add-section', page: page}, reloadPage);
         $('button').prop('disabled', true);
     });
 
     $('button[data-action=duplicate-section]').click(function(event) {
+        showAjax();
         var section = $(event.target).attr('data-id');
-        $.post('/ajax', {id: id, action: 'duplicate-section', page: page, section: section}, function() {
-            location.reload();
-        });
+        $.post('/ajax', {id: id, action: 'duplicate-section', page: page, section: section}, reloadPage);
         $('button').prop('disabled', true);
     });
 
@@ -145,25 +148,31 @@ $( document ).ready(function() {
         if (!confirm('Are you sure you want to delete this section?')) {
             return false;
         }
+        showAjax();
         var section = $(event.target).attr('data-id');
-        $.post('/ajax', {id: id, action: 'delete-section', page: page, section: section}, function() {
-            location.reload();
-        });
+        $.post('/ajax', {id: id, action: 'delete-section', page: page, section: section}, reloadPage);
         $('button').prop('disabled', true);
     });
 
     $('input[data-action=update-section-title]').change(function(event) {
+        showAjax();
         var text = $(event.target).val();
         var section = $(event.target).attr('data-id');
-        showAjax();
         $.post('/ajax', {id: id, action: 'update-section-title', page: page, section: section, text: text}, clearAjax);
     });
 
     $('input[data-action=section-collapsible]').change(function(event) {
+        showAjax();
         var value = $(event.target).prop("checked") ? 1 : 0;
         var section = $(event.target).attr('data-id');
-        showAjax();
         $.post('/ajax', {id: id, action: 'section-collapsible', page: page, section: section, value: value}, clearAjax);
+    });
+
+    $('button[data-action=move-section]').click(function(event) {
+        showAjax();
+        var section = $(event.target).attr('data-id');
+        var movement = $(event.target).attr('data-movement');
+        $.post('/ajax', {id: id, action: 'move-section', page: page, section: section, movement: movement}, reloadPage);
     });
 
 });
