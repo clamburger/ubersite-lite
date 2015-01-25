@@ -41,11 +41,17 @@
         <tr><th colspan="2">Questionnaire Pages:</th></tr>
         {% for pageRow in questionnaire.pages %}
           <tr>
-            <td><a href='/editor/{{ questionnaire.id }}/{{ loop.index }}'>{{ loop.index }}. {{ pageRow.title }}</td>
+            {% if loop.index == pageNumber %}
+            <td>{{ loop.index }}. <strong>{{ pageRow.title }}</strong></td>
+            {% else %}
+            <td>{{ loop.index }}. <a href='/editor/{{ questionnaire.id }}/{{ loop.index }}'>{{ pageRow.title }}</td>
+            {% endif %}
             <td>{{ pageRow.questions | length }} question{{ pageRow.questions | length == 1 ? '' : 's' }}</td>
           </tr>
         {% endfor %}
-          <tr><td colspan="2"><a href='/editor/{{ questionnaire.id }}' style='color: maroon'>Back to the editor</a></td></tr>
+          <tr>
+            <td colspan="2"><a href='/editor/{{ questionnaire.id }}' style='color: maroon'>Back to the list of pages</a></td>
+          </tr>
       </table>
       <h2>{{ questionnaire.title }}</h2>
       <table class="progress">
