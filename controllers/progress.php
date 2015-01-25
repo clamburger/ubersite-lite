@@ -22,7 +22,7 @@ if (!$row = $stmt->fetch()) {
 
 $details = json_decode($row['Pages']);
 $pages = [];
-foreach ($details->Pages as $page) {
+foreach ($details as $page) {
     $pages[] = $page->Title;
 }
 

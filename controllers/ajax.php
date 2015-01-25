@@ -10,11 +10,7 @@ if (!$user->isLeader()) {
 $action = $_POST['action'];
 
 if ($action === 'create-questionnaire') {
-    $query = <<<SQL
-    INSERT INTO questionnaires (Name, Pages, Intro) VALUES (
-      'Untitled Questionnaire', '{"Questions": {}, "Groups": {}, "Pages": []}', ''
-    );
-SQL;
+    $query = "INSERT INTO questionnaires (Name, Pages, Intro) VALUES ('Untitled Questionnaire', '[]', '')";
     $dbh->exec($query);
     exit;
 }

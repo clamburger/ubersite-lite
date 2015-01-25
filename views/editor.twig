@@ -8,25 +8,29 @@
 
 {% block content %}
   {% if showAll %}
-    <table class="progress">
-      <tr>
-        <th>ID</th>
-        <th>Title</th>
-        <th>Pages</th>
-        <th>Controls</th>
-      </tr>
-      {% for questionnaire in questionnaires %}
-      <tr>
-        <th>{{ questionnaire.id }}</th>
-        <td><a href='/editor/{{ questionnaire.id }}'>{{ questionnaire.title }}</a></td>
-        <td>{{ questionnaire.pages | length }}</td>
-        <td>
-          <button data-action="duplicate" data-id="{{ questionnaire.id }}">Duplicate</button>
-          <button data-action="delete" data-id="{{ questionnaire.id }}">Delete</button>
-        </td>
-      </tr>
-      {% endfor %}
-    </table>
+    {% if questionnaires | length > 0 %}
+      <table class="progress">
+        <tr>
+          <th>ID</th>
+          <th>Title</th>
+          <th>Pages</th>
+          <th>Controls</th>
+        </tr>
+        {% for questionnaire in questionnaires %}
+        <tr>
+          <th>{{ questionnaire.id }}</th>
+          <td><a href='/editor/{{ questionnaire.id }}'>{{ questionnaire.title }}</a></td>
+          <td>{{ questionnaire.pages | length }}</td>
+          <td>
+            <button data-action="duplicate" data-id="{{ questionnaire.id }}">Duplicate</button>
+            <button data-action="delete" data-id="{{ questionnaire.id }}">Delete</button>
+          </td>
+        </tr>
+        {% endfor %}
+      </table>
+    {% else %}
+      <p>There are currently no questionnaires.</p>
+    {% endif %}
     <button data-action="create-questionnaire">Create new questionnaire</button>
   {% else %}
     <input type="hidden" id="questionnaire-id" value="{{ questionnaire.id }}" />
@@ -78,28 +82,31 @@
         </tr>
       </table>
 
-      <table class="progress">
-        <tr>
-          <th>&nbsp;</th>
-          <th>Page Title</th>
-          <th>Questions</th>
-          <th>Controls</th>
-        </tr>
-        {% for page in questionnaire.pages %}
+      {% if questionnaire.pages | length > 0 %}
+        <table class="progress">
           <tr>
-            <th>{{ loop.index }}</th>
-            <td><a href='/editor/{{ questionnaire.id }}/{{ loop.index }}'>{{ page.title }}</a></td>
-            <td>{{ page.questions | length }}</td>
-            <td>
-              <button data-action="move-page" data-id="{{ loop.index }}" data-movement="-1">&uarr;</button>
-              <button data-action="move-page" data-id="{{ loop.index }}" data-movement="1">&darr;</button>
-              <button data-action="page-duplicate" data-id="{{ loop.index }}">Duplicate</button>
-              <button data-action="page-delete" data-id="{{ loop.index }}">Delete</button>
-            </td>
+            <th>&nbsp;</th>
+            <th>Page Title</th>
+            <th>Questions</th>
+            <th>Controls</th>
           </tr>
-        {% endfor %}
-      </table>
-
+          {% for page in questionnaire.pages %}
+            <tr>
+              <th>{{ loop.index }}</th>
+              <td><a href='/editor/{{ questionnaire.id }}/{{ loop.index }}'>{{ page.title }}</a></td>
+              <td>{{ page.questions | length }}</td>
+              <td>
+                <button data-action="move-page" data-id="{{ loop.index }}" data-movement="-1">&uarr;</button>
+                <button data-action="move-page" data-id="{{ loop.index }}" data-movement="1">&darr;</button>
+                <button data-action="page-duplicate" data-id="{{ loop.index }}">Duplicate</button>
+                <button data-action="page-delete" data-id="{{ loop.index }}">Delete</button>
+              </td>
+            </tr>
+          {% endfor %}
+        </table>
+      {% else %}
+        <p>This questionnaire doesn't have any pages yet.</p>
+      {% endif %}
       <button data-action="page-create">Create new page</button>
     {% endif %}
   {% endif %}

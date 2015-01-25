@@ -1,6 +1,5 @@
 <?php
 use Ubersite\Questionnaire;
-use Ubersite\Questionnaire\Question;
 use Ubersite\Utils;
 
 if (!$user->isLeader()) {
