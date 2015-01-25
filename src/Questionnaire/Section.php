@@ -8,7 +8,6 @@ class Section implements \JsonSerializable
     /** @var Question[] */
     public $questions = [];
     public $collapsible = false;
-    public $comments = true;
     public $border = true;
   
     public function __construct($details)
@@ -23,9 +22,6 @@ class Section implements \JsonSerializable
         }
         if (isset($details->Border)) {
             $this->border = $details->Border;
-        }
-        if (isset($details->Comments)) {
-            $this->comments = $details->Comments;
         }
     }
   
@@ -47,11 +43,6 @@ class Section implements \JsonSerializable
                 $out .= $question->renderHTML(($key + 1) . ". ");
             }
 
-            if ($this->comments) {
-                $out .= "<label for='question-{$this->id}-comments' class='spacing'>Any other comments?</label>";
-                $out .= "<textarea rows=3 name='{$this->id}-comments' id='question-{$this->id}-comments'>";
-                $out .= "</textarea>";
-            }
             if ($this->collapsible) {
                 $out .= "</div>";
             }
@@ -62,16 +53,6 @@ class Section implements \JsonSerializable
             }
         }
         return $out;
-    }
-
-    // TODO: not a huge fan of this special case
-    private function createCommentsQuestion()
-    {
-        $details = new \stdClass();
-        $id = $this->id . "-comments";
-        $details->Question = "Any other comments?";
-        $details->AnswerType = "Textarea";
-        return new Question($id, $details);
     }
 
     public function renderFeedback($allResponses, $users)
@@ -128,10 +109,6 @@ class Section implements \JsonSerializable
             $output .= "</table>\n";
         }
 
-        if ($this->comments) {
-            $this->questions[] = $this->createCommentsQuestion();
-        }
-
         foreach ($this->questions as $key => $question) {
             if ($key < $dropdowns) {
                 continue;
@@ -154,9 +131,6 @@ class Section implements \JsonSerializable
 
         if ($this->collapsible) {
             $return['Collapsible'] = true;
-        }
-        if (!$this->comments) {
-            $return['Comments'] = false;
         }
         if (!$this->border) {
             $return['Border'] = false;
