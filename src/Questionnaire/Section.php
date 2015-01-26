@@ -7,7 +7,6 @@ class Section implements \JsonSerializable
     /** @var Question[] */
     public $questions = [];
     public $collapsible = false;
-    public $border = true;
 
     public function populateFromDetails($details)
     {
@@ -19,9 +18,6 @@ class Section implements \JsonSerializable
         }
         if (isset($details['Collapsible'])) {
             $this->collapsible = $details['Collapsible'];
-        }
-        if (isset($details['Border'])) {
-            $this->border = $details['Border'];
         }
     }
 
@@ -116,9 +112,6 @@ class Section implements \JsonSerializable
 
         if ($this->collapsible) {
             $return['Collapsible'] = true;
-        }
-        if (!$this->border) {
-            $return['Border'] = false;
         }
         return $return;
     }

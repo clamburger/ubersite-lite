@@ -46,15 +46,15 @@
     {{ page.intro | raw | nl2br }}
 
   {% for section in page.sections %}
-    <div class="section {{ section.border ? 'fieldset' : '' }}">
-      {% if section.border %}
-        {% if section.collapsible %}
-          <div class="toggle">click to view questions</div>
-        {% endif %}
-        <h3>{{ section.title }}</h3>
+    <div class="section fieldset">
+      {% if section.collapsible %}
+        <div class="toggle">click to view questions</div>
+      {% endif %}
+      {% if loop.length > 1 %}
+      <h3>{{ section.title }}</h3>
       {% endif %}
 
-      <div class="{{ section.border ? "question-group" : "" }}" style="{{ section.collapsible ? "display: none" : "" }}">
+      <div class="question-group" style="{{ section.collapsible ? "display: none" : "" }}">
         {% for question in section.questions %}
           <div class='question question-{{ question.answerType | lower }}'>
             {{ question.renderHtml | raw }}

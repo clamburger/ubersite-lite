@@ -88,10 +88,6 @@
                 <input data-action="section-collapsible" data-id="{{ loop.index0 }}" type="checkbox" {{ section.collapsible ? 'checked' : '' }}>
                 Collapsible
               </label>
-              <label style="line-height: 3em;" class="help" title="Turning off the border will also hide the section title. Useful for pages with only one section.">
-                <input data-action="section-border" data-id="{{ loop.index0 }}" type="checkbox" {{ section.border ? 'checked' : '' }}>
-                Border
-              </label>
             </div>
             <input class="h3 invisible" placeholder="Section Title" value="{{ section.title }}" data-action="update-section-title" data-id="{{ loop.index0 }}" />
             <ul>
@@ -104,9 +100,6 @@
                 {% endif %}
               </li>
             {% endfor %}
-            {% if section.comments and section.border %}
-              <li>Any other comments?</li>
-            {% endif %}
             </ul>
             <div>
               <input type="text" placeholder="Question text" required style="width: 300px;" />
