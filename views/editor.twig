@@ -87,11 +87,11 @@
               {% endif %}
               <button data-action="duplicate-section" data-id="{{ loop.index0 }}">Duplicate</button>
               <button data-action="delete-section" data-id="{{ loop.index0 }}">Delete</button><br>
-              <label style="line-height: 3em;">
+              <label style="line-height: 3em;" class="help" title="Collapsible sections start collapsed and prompt the user to open them if relevant. Useful for electives.">
                 <input data-action="section-collapsible" data-id="{{ loop.index0 }}" type="checkbox" {{ section.collapsible ? 'checked' : '' }}>
                 Collapsible
               </label>
-              <label style="line-height: 3em;">
+              <label style="line-height: 3em;" class="help" title="Turning off the border will also hide the section title. Useful for pages with only one section.">
                 <input data-action="section-border" data-id="{{ loop.index0 }}" type="checkbox" {{ section.border ? 'checked' : '' }}>
                 Border
               </label>
