@@ -22,6 +22,15 @@ class Page implements \JsonSerializable
         }
     }
 
+    public function getQuestionCount()
+    {
+        $count = 0;
+        foreach ($this->sections as $section) {
+            $count += count($section->questions);
+        }
+        return $count;
+    }
+
     public function addSection()
     {
         $this->sections[] = new Section();

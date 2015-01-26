@@ -18,6 +18,8 @@
           <th>ID</th>
           <th>Title</th>
           <th>Pages</th>
+          <th>Sections</th>
+          <th>Questions</th>
           <th>Controls</th>
         </tr>
         {% for questionnaire in questionnaires %}
@@ -25,6 +27,8 @@
           <th>{{ questionnaire.id }}</th>
           <td><a href='/editor/{{ questionnaire.id }}'>{{ questionnaire.title }}</a></td>
           <td>{{ questionnaire.pages | length }}</td>
+          <td>{{ questionnaire.sectionCount }}</td>
+          <td>{{ questionnaire.questionCount }}</td>
           <td>
             <button data-action="duplicate" data-id="{{ questionnaire.id }}">Duplicate</button>
             <button data-action="delete" data-id="{{ questionnaire.id }}">Delete</button>
@@ -148,6 +152,7 @@
             <th>&nbsp;</th>
             <th>Page Title</th>
             <th>Sections</th>
+            <th>Questions</th>
             <th>Controls</th>
           </tr>
           {% for page in questionnaire.pages %}
@@ -155,6 +160,7 @@
               <th>{{ loop.index }}</th>
               <td><a href='/editor/{{ questionnaire.id }}/{{ loop.index }}'>{{ page.title }}</a></td>
               <td>{{ page.sections | length }}</td>
+              <td>{{ page.questionCount }}</td>
               <td>
                 <button data-action="move-page" data-id="{{ loop.index }}" data-movement="-1">&uarr;</button>
                 <button data-action="move-page" data-id="{{ loop.index }}" data-movement="1">&darr;</button>

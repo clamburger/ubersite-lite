@@ -111,6 +111,24 @@ class Questionnaire
         return $this->pages[$pageNumber - 1];
     }
 
+    public function getSectionCount()
+    {
+        $count = 0;
+        foreach ($this->pages as $page) {
+            $count += count($page->sections);
+        }
+        return $count;
+    }
+
+    public function getQuestionCount()
+    {
+        $count = 0;
+        foreach ($this->pages as $page) {
+            $count += $page->getQuestionCount();
+        }
+        return $count;
+    }
+
     /**
      * Updates the database with changes made to the questionnaire.
      */
