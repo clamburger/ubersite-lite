@@ -76,10 +76,10 @@ class Section implements \JsonSerializable
         $output .= "<legend>{$this->title}</legend>";
 
         $dropdowns = 0;
-        $acceptedTypes = ["1-5", "Length", "Dropdown"];
+        $acceptedTypes = ["Dropdown"];
         $responders = [];
         foreach ($this->questions as $question) {
-            if (in_array($question->answerType, $acceptedTypes)) {
+            if (in_array($question->getAnswerType(), $acceptedTypes)) {
                 $dropdowns++;
 
                 if (!isset($allResponses[$question->id])) {

@@ -27,8 +27,6 @@ A questionnaire is a JSON object containing a list of pages.
  * `Textarea`: multi-line text input
  * `Radio`: radio buttons
  * `Dropdown`: dropdown menu
- * `1-5`: dropdown menu containing the numbers 5 to 1
- * `Length`: dropdown menu containing values related to length of time
 * `AnswerOptions`: an array of answers that the user will be able to choose from. **Required** if using AnswerType "Radio" or "Dropdown", ignored otherwise.
 * `AnswerOther`: if true, adds a single-line text input under the last radio button. Only valid for AnswerType "Radio". Note that this doesn't add a corresponding label, so you should include an "Other" option as the last AnswerOption if you use this. *Default: false*
 

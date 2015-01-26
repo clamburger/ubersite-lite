@@ -190,7 +190,7 @@ $( document ).ready(function() {
         var answerType = $(event.target).prev().val();
 
         if (question == '') {
-            alert("The question text can't be empty.");
+            alert("You need to fill in the question text.");
             return false;
         }
 

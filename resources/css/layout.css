@@ -331,7 +331,7 @@ table.formTable {
   display: table-cell;
 }
 
-.question-1-5, .question-length, .question-dropdown {
+.question-dropdown {
   display: table-row;
 }
 
