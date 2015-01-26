@@ -185,10 +185,14 @@ $( document ).ready(function() {
     });
 
     $('button[data-action=add-question]').click(function(event) {
-        showAjax();
         var section = $(event.target).attr('data-id');
         var question = $(event.target).prev().prev().val();
         var answerType = $(event.target).prev().val();
+
+        if (question == '') {
+            alert("The question text can't be empty.");
+            return false;
+        }
 
         var data = {
             id: id, action: 'add-question', page: page, section: section, question: question, answerType: answerType
@@ -201,9 +205,14 @@ $( document ).ready(function() {
                     answerOptions.push($(this).val());
                 }
             });
+            if (answerOptions.length == 0) {
+                alert("You need to fill in at least one option.");
+                return false;
+            }
             data.answerOptions = answerOptions;
         }
 
+        showAjax();
         $.post('/ajax', data, reloadPage);
     });
 
