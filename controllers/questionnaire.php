@@ -3,25 +3,15 @@ use Ubersite\Message;
 use Ubersite\Questionnaire;
 use Ubersite\Utils;
 
-// These will almost certainly be overidden.
-$stage = 0;
-
 // Which questionnaire.
 $id = $SEGMENTS[1];
 
-if (!$id) {
-    header('Location: /choose?src=questionnaire');
-    exit;
-}
-
 // Check that the questionnaire exists, and if it does, load up information about it
-$stmt = $dbh->prepare('SELECT * FROM questionnaires WHERE Id = ?');
-$stmt->execute([$id]);
-if (!$row = $stmt->fetch()) {
+$questionnaire = Questionnaire::loadFromDatabase($id);
+if ($questionnaire === null) {
     header('Location: /choose?src=questionnaire');
     exit;
 }
-$questionnaire = new Questionnaire($row);
 $pages = $questionnaire->pages;
 
 $twig->addGlobal('questionnaire', $questionnaire);
@@ -35,6 +25,8 @@ $stmt->execute([$user->Username, $id]);
 if ($row = $stmt->fetch()) {
     $stage = intval($row['QuestionStage']);
     $currentData = json_decode($row['Responses'], true);
+} else {
+    $stage = 0;
 }
 
 // Add a skeleton entry to the database

@@ -24,14 +24,12 @@ if (!$id) {
     $twig->addGlobal('questionnaires', $questionnaires);
 
 } else {
-    $stmt = $dbh->prepare('SELECT * FROM questionnaires WHERE Id = ?');
-    $stmt->execute([$id]);
-    if (!$row = $stmt->fetch()) {
+    $questionnaire = Questionnaire::loadFromDatabase($id);
+    if ($questionnaire === null) {
         $messages->addMessage(new Message('error', 'Invalid questionnaire ID.'));
         header('Location: /editor');
         exit;
     }
-    $questionnaire = new Questionnaire($row);
     $twig->addGlobal('questionnaire', $questionnaire);
 
     $page = $SEGMENTS[2];

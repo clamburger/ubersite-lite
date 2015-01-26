@@ -1,4 +1,5 @@
 <?php
+use Ubersite\Questionnaire;
 use Ubersite\Utils;
 
 if (!$user->isLeader()) {
@@ -6,24 +7,15 @@ if (!$user->isLeader()) {
 }
 
 $id = $SEGMENTS[1];
-
-if (!$id) {
+$questionnaire = Questionnaire::loadFromDatabase($id);
+if ($questionnaire === null) {
     header('Location: /choose?src=progress');
     exit;
 }
 
-// Check that the questionnaire exists, and if it does, load up information about it
-$stmt = $dbh->prepare('SELECT * FROM questionnaires WHERE Id = ?');
-$stmt->execute([$id]);
-if (!$row = $stmt->fetch()) {
-    header('Location: /choose?src=progress');
-    exit;
-}
-
-$details = json_decode($row['Pages']);
 $pages = [];
-foreach ($details as $page) {
-    $pages[] = $page->Title;
+foreach ($questionnaire->pages as $page) {
+    $pages[] = $page->title;
 }
 
 $twig->addGlobal("pages", $pages);
