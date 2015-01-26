@@ -465,3 +465,8 @@ textarea.invisible:focus, input.invisible:focus {
 .help {
   cursor: help;
 }
+
+.editor-workspace .progress {
+  float: right;
+  margin: 0;
+}

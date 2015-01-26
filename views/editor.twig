@@ -47,30 +47,27 @@
 
       {# Editing a single page in a questionnaire #}
 
-      <input type="hidden" id="page-number" value="{{ pageNumber }}" />
-      <table style='float: right;' class='progress'>
-        <tr><th colspan="2">{{ questionnaire.title }}</th></tr>
-        {% for pageRow in questionnaire.pages %}
-          <tr>
-            {% if loop.index == pageNumber %}
-            <td>{{ loop.index }}. <strong>{{ pageRow.title }}</strong></td>
-            {% else %}
-            <td>{{ loop.index }}. <a href='/editor/{{ questionnaire.id }}/{{ loop.index }}'>{{ pageRow.title }}</td>
-            {% endif %}
-            <td>{{ pageRow.sections | length }} section{{ pageRow.sections | length == 1 ? '' : 's' }}</td>
-          </tr>
-        {% endfor %}
+      <div class="editor-workspace">
+        <input type="hidden" id="page-number" value="{{ pageNumber }}" />
+        <table class='progress'>
+          <tr><th colspan="2">{{ questionnaire.title }}</th></tr>
+          {% for pageRow in questionnaire.pages %}
+            <tr>
+              {% if loop.index == pageNumber %}
+                <td>{{ loop.index }}. <strong>{{ pageRow.title }}</strong></td>
+              {% else %}
+                <td>{{ loop.index }}. <a href='/editor/{{ questionnaire.id }}/{{ loop.index }}'>{{ pageRow.title }}</td>
+              {% endif %}
+              <td>{{ pageRow.sections | length }} section{{ pageRow.sections | length == 1 ? '' : 's' }}</td>
+            </tr>
+          {% endfor %}
           <tr>
             <td colspan="2"><a href='/editor/{{ questionnaire.id }}' style='color: maroon'>Back to the list of pages</a></td>
           </tr>
           <tr id="ajax-status" style="display: none;">
             <th colspan="2">saving data...</th>
           </tr>
-      </table>
-
-      {# Section workspace #}
-
-      <div class="editor-workspace">
+        </table>
         <div class="editor-section" style="background: #dfeaea;">
           <input id="update-page-title" class="h2 invisible" placeholder="Page Title" value="{{ page.title }}" /><br>
           <input id="update-page-intro" class="invisible" placeholder="Intro text; will be displayed at the top of the page" style="width: 100%;" value="{{ page.intro }}"/>
@@ -129,7 +126,7 @@
           </div>
           <br>
         {% endfor %}
-        <button id="add-section">Add a new section</button><br>
+        <button id="add-section">Add a new section</button><br style="clear: both;">
       </div>
 
     {% else %}
