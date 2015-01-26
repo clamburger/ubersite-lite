@@ -11,15 +11,15 @@ class Section implements \JsonSerializable
   
     public function __construct($details)
     {
-        $this->title = $details->Title;
-        foreach ($details->Questions as $id => $question) {
+        $this->title = $details['Title'];
+        foreach ($details['Questions'] as $id => $question) {
             $this->questions[] = new Question($id, $question);
         }
-        if (isset($details->Collapsible)) {
-            $this->collapsible = $details->Collapsible;
+        if (isset($details['Collapsible'])) {
+            $this->collapsible = $details['Collapsible'];
         }
-        if (isset($details->Border)) {
-            $this->border = $details->Border;
+        if (isset($details['Border'])) {
+            $this->border = $details['Border'];
         }
     }
 

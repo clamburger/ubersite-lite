@@ -11,21 +11,18 @@ class Page implements \JsonSerializable
   
     public function __construct($details)
     {
-        $this->title = $details->Title;
-        foreach ($details->Sections as $section) {
+        $this->title = $details['Title'];
+        foreach ($details['Sections'] as $section) {
             $this->sections[] = new Section($section);
         }
-        if (isset($details->Intro)) {
-            $this->intro = $details->Intro;
+        if (isset($details['Intro'])) {
+            $this->intro = $details['Intro'];
         }
     }
 
     public function addSection()
     {
-        $section = new \stdClass();
-        $section->Title = 'Untitled Section';
-        $section->Questions = [];
-        $this->sections[] = new Section($section);
+        $this->sections[] = new Section(['Title' => 'Untitled Section', 'Questions' => []]);
     }
 
     public function duplicateSection($section)
@@ -38,14 +35,6 @@ class Page implements \JsonSerializable
     public function deleteSection($section)
     {
         array_splice($this->sections, $section, 1);
-    }
-
-    public static function createNew()
-    {
-        $details = new \stdClass();
-        $details->Title = 'Untitled Page';
-        $details->Sections = [];
-        return new Page($details);
     }
 
     public function getSection($section)

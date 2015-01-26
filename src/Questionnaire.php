@@ -20,7 +20,7 @@ class Questionnaire
         $this->title = $row['Name'];
         $this->intro = $row['Intro'];
 
-        $pages = json_decode($row['Pages']);
+        $pages = json_decode($row['Pages'], true);
 
         if (json_last_error() != JSON_ERROR_NONE) {
             throw new \Exception(
@@ -72,7 +72,7 @@ class Questionnaire
 
     public function createNewPage()
     {
-        $this->pages[] = Page::createNew();
+        $this->pages[] = new Page(['Title' => 'Untitled Page', 'Sections' => []]);
         $this->updateDatabase();
     }
 

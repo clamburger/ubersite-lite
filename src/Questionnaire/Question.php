@@ -53,18 +53,18 @@ class Question implements \JsonSerializable
     public function __construct($id, $details)
     {
         $this->id = $id;
-        $this->question = $details->Question;
-        $this->answerType = $details->AnswerType;
-        if (isset($details->AnswerOptions)) {
-            $this->answerOptions = $details->AnswerOptions;
+        $this->question = $details['Question'];
+        $this->answerType = $details['AnswerType'];
+        if (isset($details['AnswerOptions'])) {
+            $this->answerOptions = $details['AnswerOptions'];
         }
-        if (isset($details->AnswerOther)) {
-            $this->answerOther = $details->AnswerOther;
+        if (isset($details['AnswerOther'])) {
+            $this->answerOther = $details['AnswerOther'];
         }
-        if (isset($details->QuestionShort)) {
-            $this->questionShort = $details->QuestionShort;
+        if (isset($details['QuestionShort'])) {
+            $this->questionShort = $details['QuestionShort'];
         } else {
-            $this->questionShort = $details->Question;
+            $this->questionShort = $details['Question'];
         }
     }
   
