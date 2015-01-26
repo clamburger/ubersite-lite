@@ -114,6 +114,11 @@ class Questionnaire
         return $this->pages[$pageNumber - 1];
     }
 
+    public function getPageCount()
+    {
+        return count($this->pages);
+    }
+
     public function getSectionCount()
     {
         $count = 0;

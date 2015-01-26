@@ -2,21 +2,40 @@
 
 {% block content %}
 <table style='float: right;' class='progress'>
-<tr><th colspan='2'>Questionnaire Progress:</th></tr>
-{% for row in progress %}
-  <tr>{{ row | raw }}</tr>
-{% endfor %}
-{% if user.leader %}
-<tr><td colspan='2'><a href='/questionnaire/{{ questionnaire.id }}/delete'>Delete current progress</a></td></tr>
-<tr><td colspan='2'><a href='/progress/{{ questionnaire.id }}' style='color: maroon;'>Check camper progress</a></td></tr>
-{% endif %}
+  <tr>
+    <th colspan='2'>Questionnaire Progress:</th>
+  </tr>
+  {% for page in questionnaire.pages %}
+    <tr>
+      <td>{{ loop.index }}. {{ page.title }}</td>
+      {% if stage < loop.index %}
+        <td style="color: red;">Incomplete</td>
+      {% elseif stage == loop.index %}
+        <td style="color: orange;">In Progress</td>
+      {% else %}
+        <td style="color: green;">Completed</td>
+      {% endif %}
+    </tr>
+  {% endfor %}
+  {% if user.leader %}
+    <tr>
+      <td colspan='2'><a href='/questionnaire/{{ questionnaire.id }}/delete'>Delete current progress</a></td>
+    </tr>
+    <tr>
+      <td colspan='2'><a href='/progress/{{ questionnaire.id }}' style='color: maroon;'>Check camper progress</a></td>
+    </tr>
+  {% endif %}
 </table>
 
-{% if start %}
+{% if stage == 0 %}
   {{ questionnaire.intro | raw | nl2br }}
   <br>
   <br>
   <h3><a href='/questionnaire/{{ questionnaire.id }}/begin'>Begin the Questionnaire</a></h3>
+{% elseif stage > questionnaire.pageCount %}
+  <h3>Your questionnaire has been submitted!</h3>
+  <h3>Thank you for all your responses!</h3>
+  If you made a mistake you would like to correct, please contact the nearest leader for assistance.
 {% endif %}
 
 {% if questions %}
@@ -27,12 +46,6 @@
     value="Submit your responses and move onto the next section"
     style="font-size:150%;" />
 </form>
-{% endif %}
-
-{% if end %}
-  <h3>Your questionnaire has been submitted!</h3>
-  <h3>Thank you for all your responses!</h3>
-  If you made a mistake you would like to correct, please contact the nearest leader for assistance.
 {% endif %}
 
 <script type="text/javascript">

@@ -4,10 +4,7 @@ use Ubersite\Questionnaire;
 use Ubersite\Utils;
 
 // These will almost certainly be overidden.
-$submitted = false;
 $stage = 0;
-$totalStages = 0;
-$currentData = [];
 
 // Which questionnaire.
 $id = $SEGMENTS[1];
@@ -73,31 +70,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 }
 
-// Update the progress table on the right
-$incomplete = "<td style='color: red;'>Incomplete</td>";
-$inProgress = "<td style='color: orange;'>In Progress</td>";
-$complete = "<td style='color: green;'>Completed</td>";
-$progress = [];
-for ($i = 1; $i <= $totalStages; ++$i) {
-    $line = "<td>$i. {$pages[$i-1]->title}</td>";
-    if ($i > $stage) {
-        $line .= $incomplete;
-    } elseif ($i == $stage) {
-        $line .= $inProgress;
-    } else {
-        $line .= $complete;
-    }
-    $progress[] = $line;
-}
-
-$twig->addGlobal("start", false);
-$twig->addGlobal("end", false);
-$twig->addGlobal("questions", false);
 $twig->addGlobal("stage", $stage);
-$twig->addGlobal("progress", $progress);
-if ($stage === 0) {
-    $twig->addGlobal("start", true);
-} elseif ($stage > $totalStages) {
+if ($stage > $totalStages) {
     $message = "Congratulations. The test is now over. ".
         "All Aperture technologies remain safely operational up to 4000 degrees Kelvin. ".
         "Rest assured that there is absolutely no chance of a dangerous equipment malfunction ".
@@ -105,7 +79,7 @@ if ($stage === 0) {
         "computer-aided enrichment activity. Goodbye.";
     $messages->addMessage(new Message("alert", $message));
     $twig->addGlobal("end", true);
-} else {
+} elseif ($stage > 0) {
     $twig->addGlobal("title", $pages[$stage-1]->title);
     $twig->addGlobal("questions", $pages[$stage-1]->renderHTML());
 }
