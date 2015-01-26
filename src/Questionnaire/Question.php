@@ -15,7 +15,6 @@ class Question implements \JsonSerializable
 
     public static $answerTypes = [
         'Text',
-        'Textarea',
         'Radio',
         'Dropdown',
         '1-5',
@@ -95,12 +94,9 @@ class Question implements \JsonSerializable
             if ($this->answerOther) {
                 $out .= "<input type='text' name='{$this->id}-other' class='other'>";
             }
-        } elseif ($this->answerType == "Textarea") {
-            $out .= "<label for='question-{$this->id}'>$prefix{$this->question}</label><br>";
-            $out .= "<textarea rows=3 id='question-{$this->id}' name='{$this->id}'></textarea>";
         } elseif ($this->answerType == "Text") {
             $out .= "<label for='question-{$this->id}'>$prefix{$this->question}</label><br>";
-            $out .= "<input type='text' id='question-{$this->id}' name='{$this->id}'>";
+            $out .= "<textarea rows=1 id='question-{$this->id}' name='{$this->id}'></textarea>";
         } elseif ($this->answerType == "Dropdown") {
             $out .= "<label for='question-{$this->id}'>$prefix{$this->question}</label>";
             $out .= "<select id='question-{$this->id}' name='{$this->id}'>";
@@ -110,8 +106,7 @@ class Question implements \JsonSerializable
             }
             $out .= "</select>\n";
         } else {
-            $out = "<div style='color: red; font: 15px tahoma;'>" .
-            $this->id . ": \"{$this->answerType}\" not yet implemented</div>";
+            throw new \Exception('Answer type not handled: ' . $this->answerType);
         }
         $out .= "</div>";
         return $out;
@@ -125,7 +120,7 @@ class Question implements \JsonSerializable
         }
 
         // For text, return as-is.
-        if ($this->answerType == "Textarea" || $this->answerType == "Text") {
+        if ($this->answerType == "Text") {
             return $response;
         }
 

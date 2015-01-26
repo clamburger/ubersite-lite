@@ -23,8 +23,7 @@ A questionnaire is a JSON object containing a list of pages.
 * `Question` **required**: the actual question that will be displayed.
 * `QuestionShort`: a short version of the question that will be used for table headers on the feedback page. If not provided, will default to the value of Question.
 * `AnswerType` **required**: the type of response that is expected. Valid values are:
- * `Text`: single-line text input
- * `Textarea`: multi-line text input
+ * `Text`: text input
  * `Radio`: radio buttons
  * `Dropdown`: dropdown menu
 * `AnswerOptions`: an array of answers that the user will be able to choose from. **Required** if using AnswerType "Radio" or "Dropdown", ignored otherwise.

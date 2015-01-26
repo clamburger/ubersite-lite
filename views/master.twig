@@ -16,6 +16,12 @@
 
     {% if not standalone %}
       <script src='/resources/js/jquery-2.1.3.js'></script>
+      <script src='/resources/js/jquery.autosize.min.js'></script>
+      <script type="text/javascript">
+        $(document).ready(function(){
+          $('textarea').autosize({append: false});
+        });
+      </script>
     {% endif %}
 
     {% block head %}{% endblock %}
