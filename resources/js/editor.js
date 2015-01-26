@@ -192,4 +192,24 @@ $( document ).ready(function() {
         $.post('/ajax', {id: id, action: 'add-question', page: page, section: section, question: question, answerType: answerType}, reloadPage());
     });
 
+    $('.editor-section select').change(function(event) {
+        var selected = $(event.target).val();
+        var extraBoxes = $(event.target).siblings('div');
+        if (selected == 'Radio' || selected == 'Dropdown') {
+            extraBoxes.show();
+        } else {
+            extraBoxes.hide();
+        }
+    });
+
+    $('button[data-action=add-radio-box]').click(function(event) {
+        $(event.target).parent().before($(event.target).parent().prev().clone(true));
+    });
+
+    $('a[data-action=delete-radio-box]').click(function(event) {
+        if ($(event.target).parent().siblings().length > 1) {
+            $(event.target).parent().remove();
+        }
+    });
+
 });
