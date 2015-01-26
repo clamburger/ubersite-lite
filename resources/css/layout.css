@@ -395,6 +395,10 @@ table.formTable {
   border-bottom: 1px dotted black;
 }
 
+textarea {
+  resize: none;
+}
+
 /* Questionnaire Feedback */
 .question-group.feedback {
   width: auto;
@@ -439,7 +443,6 @@ textarea.invisible, input.invisible {
   padding: 3px;
   display: block;
   background-color: transparent;
-  resize: none;
 }
 
 textarea.invisible:hover, input.invisible:hover {
