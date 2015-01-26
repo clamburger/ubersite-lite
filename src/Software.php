@@ -4,7 +4,7 @@ namespace Ubersite;
 class Software
 {
     public static $name = "Übersite";
-    public static $version = "2.2.0";
+    public static $version = "2.2.1";
     public static $codename = "Ghost";
 
     public function getFullName()
