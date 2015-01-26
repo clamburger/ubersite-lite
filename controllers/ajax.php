@@ -97,6 +97,9 @@ SQL;
     $question = new Question($id);
     $question->question = $_POST['question'];
     $question->answerType = $_POST['answerType'];
+    if (isset($_POST['answerOptions'])) {
+        $question->answerOptions = $_POST['answerOptions'];
+    }
 
     $questionnaire->getPage($_POST['page'])->getSection($_POST['section'])->addQuestion($question);
     $questionnaire->updateDatabase();

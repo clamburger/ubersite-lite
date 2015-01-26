@@ -189,7 +189,22 @@ $( document ).ready(function() {
         var section = $(event.target).attr('data-id');
         var question = $(event.target).prev().prev().val();
         var answerType = $(event.target).prev().val();
-        $.post('/ajax', {id: id, action: 'add-question', page: page, section: section, question: question, answerType: answerType}, reloadPage());
+
+        var data = {
+            id: id, action: 'add-question', page: page, section: section, question: question, answerType: answerType
+        };
+
+        if (answerType == 'Radio' || answerType == 'Dropdown') {
+            var answerOptions = [];
+            $(event.target).next().find('input[type=text]').each(function() {
+                if ($(this).val() != '') {
+                    answerOptions.push($(this).val());
+                }
+            });
+            data.answerOptions = answerOptions;
+        }
+
+        $.post('/ajax', data, reloadPage);
     });
 
     $('.editor-section select').change(function(event) {
@@ -203,7 +218,9 @@ $( document ).ready(function() {
     });
 
     $('button[data-action=add-radio-box]').click(function(event) {
-        $(event.target).parent().before($(event.target).parent().prev().clone(true));
+        var element = $(event.target).parent().prev().clone(true);
+        element.find('input').val('');
+        $(event.target).parent().before(element);
     });
 
     $('a[data-action=delete-radio-box]').click(function(event) {
