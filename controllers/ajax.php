@@ -36,7 +36,7 @@ SQL;
 } elseif ($action === 'update-title') {
     $questionnaire->setTitle($_POST['text']);
 
-} elseif ($action === 'update-intro-text') {
+} elseif ($action === 'update-intro') {
     $questionnaire->setIntro($_POST['text']);
 
 } elseif ($action === 'duplicate-page') {

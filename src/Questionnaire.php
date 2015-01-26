@@ -56,6 +56,9 @@ class Questionnaire
 
     public function setTitle($title)
     {
+        if ($title == '') {
+            $title = 'Untitled Questionnaire';
+        }
         $this->title = $title;
         $this->updateDatabase();
     }

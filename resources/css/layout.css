@@ -434,19 +434,20 @@ table.formTable {
   margin-top: 0;
 }
 
-input.invisible {
+textarea.invisible, input.invisible {
   border: 1px solid transparent;
   padding: 3px;
   display: block;
   background-color: transparent;
+  resize: none;
 }
 
-input.invisible:hover {
+textarea.invisible:hover, input.invisible:hover {
   border: 1px solid rgb(192, 192, 192);
   background-color: white;
 }
 
-input.invisible:focus {
+textarea.invisible:focus, input.invisible:focus {
   background-color: white;
 }
 
@@ -459,4 +460,8 @@ input.invisible:focus {
 
 #ajax-status th {
   background-color: #62F4B0;
+}
+
+.help {
+  cursor: help;
 }

@@ -60,20 +60,14 @@ $( document ).ready(function() {
         location.reload();
     }
 
-    $('#save-title').click(function(event) {
-        var text = $('#title-editor').val();
-        $(event.target).prop('disabled', true).text('Saving...');
-        $.post('/ajax', {id: id, action: 'update-title', text: text}, function() {
-            $(event.target).prop('disabled', false).text('Save title');
-        });
+    $('#update-title').change(function(event) {
+        var text = $(event.target).val();
+        $.post('/ajax', {id: id, action: 'update-title', page: page, text: text});
     });
 
-    $('#save-intro-text').click(function(event) {
-        var text = $('#intro-text-editor').val();
-        $(event.target).prop('disabled', true).text('Saving...');
-        $.post('/ajax', {id: id, action: 'update-intro-text', text: text}, function() {
-            $(event.target).prop('disabled', false).text('Save intro text');
-        });
+    $('#update-intro').change(function(event) {
+        var text = $(event.target).val();
+        $.post('/ajax', {id: id, action: 'update-intro', page: page, text: text});
     });
 
     $('button[data-action=page-duplicate]').click(function(event) {

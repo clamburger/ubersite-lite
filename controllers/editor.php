@@ -8,6 +8,8 @@ if (!$user->isLeader()) {
     Utils::send403($twig);
 }
 
+$twig->addGlobal('title', 'Questionnaire Editor');
+
 // Which questionnaire.
 $id = $SEGMENTS[1];
 
@@ -42,5 +44,6 @@ if (!$id) {
         $twig->addGlobal('page', $questionnaire->pages[$page-1]);
         $twig->addGlobal('pageNumber', $page);
         $twig->addGlobal('answerTypes', Question::$answerTypes);
+        $twig->addGlobal('title', $questionnaire->getTitle());
     }
 }

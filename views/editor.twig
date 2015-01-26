@@ -4,8 +4,6 @@
   <script src='/resources/js/editor.js'></script>
 {% endblock %}
 
-{% block title %}Questionnaire Editor{% endblock %}
-
 {% block content %}
 
   {% if showAll %}
@@ -69,7 +67,6 @@
             <th colspan="2">saving data...</th>
           </tr>
       </table>
-      You are currently editing page {{ pageNumber }} of <strong>{{ questionnaire.title }}</strong>.
 
       {# Section workspace #}
 
@@ -133,22 +130,12 @@
 
       {# Editing a questionnaires; viewing the list of pages #}
 
-      <table class="progress">
-        <tr>
-          <th><label for="title-editor">Title</label></th>
-          <td><input type="text" id="title-editor" value="{{ questionnaire.title }}" class="h2" /></td>
-          <td>
-            <button id="save-title">Save title</button>
-          </td>
-        </tr>
-        <tr>
-          <th><label for="intro-text-editor">Intro Text</label></th>
-          <td><textarea id="intro-text-editor">{{ questionnaire.intro }}</textarea></td>
-          <td>
-            <button id="save-intro-text">Save intro text</button>
-          </td>
-        </tr>
-      </table>
+      <div class="editor-workspace">
+        <div class="editor-section" style="background: #dfeaea;">
+          <input id="update-title" class="h2 invisible" placeholder="Questionnaire Title" value="{{ questionnaire.title }}" /><br>
+          <textarea id="update-intro" class="invisible" placeholder="Intro text that will be displayed before the first page of the questionnaire. Supports HTML." style="width: 100%;">{{ questionnaire.intro }}</textarea>
+        </div>
+      </div>
 
       {% if questionnaire.pages | length > 0 %}
         <table class="progress">
