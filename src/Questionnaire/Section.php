@@ -39,36 +39,6 @@ class Section implements \JsonSerializable
     {
         $this->questions[] = $question;
     }
-  
-    public function renderHTML()
-    {
-        $out = "";
-
-        if ($this->border) {
-            $extraClass = $this->collapsible ? "optquest" : "";
-            $out .= "<fieldset class='question-group $extraClass'>";
-            if ($this->collapsible) {
-                $out .= "<legend>{$this->title} <span class='help'>click to view questions</span></legend>";
-                $out .= "<div class='hide-container'>";
-            } else {
-                $out .= "<legend>{$this->title}</legend>";
-            }
-
-            foreach ($this->questions as $key => $question) {
-                $out .= $question->renderHTML(($key + 1) . ". ");
-            }
-
-            if ($this->collapsible) {
-                $out .= "</div>";
-            }
-            $out .= "</fieldset>";
-        } else {
-            foreach ($this->questions as $key => $question) {
-                $out .= $question->renderHTML();
-            }
-        }
-        return $out;
-    }
 
     public function renderFeedback($allResponses, $users)
     {

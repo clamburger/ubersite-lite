@@ -41,7 +41,26 @@
   <input type="hidden" name="stage" value="{{ stage }}" />
   {{ page.intro | raw | nl2br }}
   {% for section in page.sections %}
-    {{ section.renderHtml | raw }}
+    {% if section.border %}
+      <fieldset class="question-group {{ section.collapsible ? "optquest" : "" }}">
+        {% if section.collapsible %}
+          <legend>{{ section.title }} <span class='expand'>click to view questions</span></legend>
+          <div class="hide-container">
+        {% else %}
+          <legend>{{ section.title }}</legend>
+        {% endif %}
+        {% for question in section.questions %}
+          {{ question.renderHtml | raw }}
+        {% endfor %}
+        {% if section.collapsible %}
+          </div>
+        {% endif %}
+      </fieldset>
+    {% else %}
+      {% for question in section.questions %}
+        {{ question.renderHtml | raw }}
+      {% endfor %}
+    {% endif %}
   {% endfor %}
   <input type="submit"
       value="Submit your responses and move onto the next section"

@@ -389,7 +389,7 @@ table.formTable {
   display: none;
 }
 
-.optquest .help {
+.optquest .expand {
   font-size: small;
   font-weight: normal;
   border-bottom: 1px dotted black;
