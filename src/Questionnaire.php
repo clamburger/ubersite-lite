@@ -28,8 +28,9 @@ class Questionnaire
             );
         }
 
-        foreach ($pages as $page) {
-            $page = new Page($page);
+        foreach ($pages as $pageDetails) {
+            $page = new Page();
+            $page->populateFromDetails($pageDetails);
             $this->pages[] = $page;
 
             // Enumurate through each page and section to get a list of used question IDs.
@@ -72,7 +73,7 @@ class Questionnaire
 
     public function createNewPage()
     {
-        $this->pages[] = new Page(['Title' => 'Untitled Page', 'Sections' => []]);
+        $this->pages[] = new Page();
         $this->updateDatabase();
     }
 

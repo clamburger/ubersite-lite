@@ -93,7 +93,11 @@ SQL;
 
 } elseif ($action === 'add-question') {
     $id = $questionnaire->getUnusedQuestionId($_POST['question']);
-    $question = new Question($id, ['Question' => $_POST['question'], 'AnswerType' => $_POST['answerType']]);
+
+    $question = new Question($id);
+    $question->question = $_POST['question'];
+    $question->answerType = $_POST['answerType'];
+
     $questionnaire->getPage($_POST['page'])->getSection($_POST['section'])->addQuestion($question);
     $questionnaire->updateDatabase();
 

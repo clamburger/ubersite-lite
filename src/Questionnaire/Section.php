@@ -3,17 +3,19 @@ namespace Ubersite\Questionnaire;
 
 class Section implements \JsonSerializable
 {
-    public $title;
+    public $title = 'Untitled Section';
     /** @var Question[] */
     public $questions = [];
     public $collapsible = false;
     public $border = true;
-  
-    public function __construct($details)
+
+    public function populateFromDetails($details)
     {
         $this->title = $details['Title'];
-        foreach ($details['Questions'] as $id => $question) {
-            $this->questions[] = new Question($id, $question);
+        foreach ($details['Questions'] as $id => $questionDetails) {
+            $question = new Question($id);
+            $question->populateFromDetails($questionDetails);
+            $this->questions[] = $question;
         }
         if (isset($details['Collapsible'])) {
             $this->collapsible = $details['Collapsible'];
