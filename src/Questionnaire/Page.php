@@ -65,19 +65,6 @@ class Page implements \JsonSerializable
         array_splice($this->sections, $newIndex, 0, $section);
     }
 
-    public function renderHTML()
-    {
-        $out = "";
-        if ($this->intro) {
-            $out .= "<p>$this->intro</p>";
-        }
-        /** @var Question $item */
-        foreach ($this->sections as $item) {
-            $out .= $item->renderHTML();
-        }
-        return $out;
-    }
-  
     public function __toString()
     {
         return $this->title;

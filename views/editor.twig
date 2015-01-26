@@ -70,7 +70,7 @@
         </table>
         <div class="editor-section" style="background: #dfeaea;">
           <input id="update-page-title" class="h2 invisible" placeholder="Page Title" value="{{ page.title }}" /><br>
-          <input id="update-page-intro" class="invisible" placeholder="Intro text that will be displayed at the top of the page. Supports HTML." style="width: 100%;" value="{{ page.intro }}"/>
+          <textarea rows="1" id="update-page-intro" class="invisible" placeholder="Intro text that will be displayed at the top of the page. Supports HTML." style="width: 100%;">{{ page.intro }}</textarea>
         </div>
         <br>
         {% for section in page.sections %}

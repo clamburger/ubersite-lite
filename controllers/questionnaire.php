@@ -27,6 +27,7 @@ if ($row = $stmt->fetch()) {
     $currentData = json_decode($row['Responses'], true);
 } else {
     $stage = 0;
+    $currentData = [];
 }
 
 // Add a skeleton entry to the database
@@ -51,7 +52,7 @@ if ($SEGMENTS[2] == 'delete' && $user->isLeader()) {
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (isset($_POST['stage']) && $stage === intval($_POST['stage'])) {
         unset($_POST['stage']);
-      // Merge the data that currently exists with the newly submitted data
+        // Merge the data that currently exists with the newly submitted data
         $responses = json_encode(array_merge($currentData, $_POST));
         $query = 'UPDATE responses SET Responses = ?, QuestionStage = ?
               WHERE QuizId = ? AND Username = ?';
@@ -70,8 +71,7 @@ if ($stage > $totalStages) {
         "prior to your victory candescence. Thank you for participating in this Aperture Science ".
         "computer-aided enrichment activity. Goodbye.";
     $messages->addMessage(new Message("alert", $message));
-    $twig->addGlobal("end", true);
 } elseif ($stage > 0) {
     $twig->addGlobal("title", $pages[$stage-1]->title);
-    $twig->addGlobal("questions", $pages[$stage-1]->renderHTML());
+    $twig->addGlobal("page", $pages[$stage-1]);
 }
