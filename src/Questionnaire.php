@@ -10,7 +10,7 @@ class Questionnaire
     private $intro;
 
     /** @var Page[] */
-    public $pages;
+    public $pages = [];
 
     private $usedQuestionIds = [];
 
