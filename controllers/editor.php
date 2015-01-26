@@ -1,6 +1,7 @@
 <?php
 use Ubersite\Message;
 use Ubersite\Questionnaire;
+use Ubersite\Questionnaire\Question;
 use Ubersite\Utils;
 
 if (!$user->isLeader()) {
@@ -40,5 +41,6 @@ if (!$id) {
         }
         $twig->addGlobal('page', $questionnaire->pages[$page-1]);
         $twig->addGlobal('pageNumber', $page);
+        $twig->addGlobal('answerTypes', Question::$answerTypes);
     }
 }

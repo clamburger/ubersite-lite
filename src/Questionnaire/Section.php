@@ -32,6 +32,11 @@ class Section implements \JsonSerializable
             }
         }
     }
+
+    public function addQuestion($question)
+    {
+        $this->questions[] = $question;
+    }
   
     public function renderHTML()
     {

@@ -1,11 +1,3 @@
-var typewatch = (function(){
-    var timer = 0;
-    return function(callback, ms){
-        clearTimeout (timer);
-        timer = setTimeout(callback, ms);
-    };
-})();
-
 $( document ).ready(function() {
     var id, page;
 
@@ -123,7 +115,7 @@ $( document ).ready(function() {
         var text = $(event.target).val();
         showAjax();
         $.post('/ajax', {id: id, action: 'update-page-title', page: page, text: text}, clearAjax);
-    })
+    });
 
     $('#update-page-intro').change(function(event) {
         var text = $(event.target).val();
@@ -131,7 +123,7 @@ $( document ).ready(function() {
         $.post('/ajax', {id: id, action: 'update-page-intro', page: page, text: text}, clearAjax);
     });
 
-    $('#add-section').click(function(event) {
+    $('#add-section').click(function() {
         showAjax();
         $.post('/ajax', {id: id, action: 'add-section', page: page}, reloadPage);
         $('button').prop('disabled', true);
@@ -190,6 +182,14 @@ $( document ).ready(function() {
         var section = $(event.target).parent().attr('data-section');
         var question = $(event.target).parent().attr('data-question');
         $.post('/ajax', {id: id, action: 'delete-question', page: page, section: section, question: question}, reloadPage);
+    });
+
+    $('button[data-action=add-question]').click(function(event) {
+        showAjax();
+        var section = $(event.target).attr('data-id');
+        var question = $(event.target).prev().prev().val();
+        var answerType = $(event.target).prev().val();
+        $.post('/ajax', {id: id, action: 'add-question', page: page, section: section, question: question, answerType: answerType}, reloadPage());
     });
 
 });

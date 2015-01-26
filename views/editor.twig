@@ -104,6 +104,17 @@
               <li>Any other comments?</li>
             {% endif %}
             </ul>
+            <div>
+              <input type="text" placeholder="Question text" required style="width: 300px;" />
+              <select>
+                <option value="Text">Text</option>
+                <option value="Textarea">Textarea</option>
+                {#{% for answerType in answerTypes %}
+                <option value="{{ answerType }}">{{ answerType }}</option>
+                {% endfor %}#}
+              </select>
+              <button data-action="add-question" data-id="{{ loop.index0 }}">Add question</button>
+            </div>
           </div>
           <br>
         {% endfor %}

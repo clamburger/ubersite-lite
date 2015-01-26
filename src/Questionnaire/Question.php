@@ -13,6 +13,15 @@ class Question implements \JsonSerializable
     const OTHER_RESPONSE = 42;
     const DEFAULT_COLOUR = "white";
 
+    public static $answerTypes = [
+        'Text',
+        'Textarea',
+        'Radio',
+        'Dropdown',
+        '1-5',
+        'Length'
+    ];
+
   // TODO: we shouldn't have any special cases for things like this (not here, anyway)
     public static $lengthLookup = [
         "--",

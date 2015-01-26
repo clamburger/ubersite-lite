@@ -1,6 +1,7 @@
 <?php
 use Ubersite\Message;
 use Ubersite\Questionnaire;
+use Ubersite\Questionnaire\Question;
 use Ubersite\Utils;
 
 if (!$user->isLeader()) {
@@ -88,6 +89,14 @@ SQL;
 
 } elseif ($action === 'delete-question') {
     $questionnaire->getPage($_POST['page'])->getSection($_POST['section'])->deleteQuestion($_POST['question']);
+    $questionnaire->updateDatabase();
+
+} elseif ($action === 'add-question') {
+    $id = $questionnaire->getUnusedQuestionId($_POST['question']);
+    $question = new stdClass();
+    $question->Question = $_POST['question'];
+    $question->AnswerType = $_POST['answerType'];
+    $questionnaire->getPage($_POST['page'])->getSection($_POST['section'])->addQuestion(new Question($id, $question));
     $questionnaire->updateDatabase();
 
 }
