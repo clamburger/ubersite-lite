@@ -1,46 +1,49 @@
 {% extends "master.twig" %}
 
 {% block content %}
-<table style='float: right;' class='progress'>
-  <tr>
-    <th colspan='2'>Questionnaire Progress:</th>
-  </tr>
-  {% for page in questionnaire.pages %}
+<div class="workspace">
+  <table class='progress'>
     <tr>
-      <td>{{ loop.index }}. {{ page.title }}</td>
-      {% if stage < loop.index %}
-        <td style="color: red;">Incomplete</td>
-      {% elseif stage == loop.index %}
-        <td style="color: orange;">In Progress</td>
-      {% else %}
-        <td style="color: green;">Completed</td>
-      {% endif %}
+      <th colspan='2'>Questionnaire Progress:</th>
     </tr>
-  {% endfor %}
-  {% if user.leader %}
-    <tr>
-      <td colspan='2'><a href='/questionnaire/{{ questionnaire.id }}/delete'>Delete current progress</a></td>
-    </tr>
-    <tr>
-      <td colspan='2'><a href='/progress/{{ questionnaire.id }}' style='color: maroon;'>Check camper progress</a></td>
-    </tr>
-  {% endif %}
-</table>
+    {% for page in questionnaire.pages %}
+      <tr>
+        <td>{{ loop.index }}. {{ page.title }}</td>
+        {% if stage < loop.index %}
+          <td style="color: red;">Incomplete</td>
+        {% elseif stage == loop.index %}
+          <td style="color: orange;">In Progress</td>
+        {% else %}
+          <td style="color: green;">Completed</td>
+        {% endif %}
+      </tr>
+    {% endfor %}
+    {% if user.leader %}
+      <tr>
+        <td colspan='2'><a href='/questionnaire/{{ questionnaire.id }}/delete'>Delete current progress</a></td>
+      </tr>
+      <tr>
+        <td colspan='2'><a href='/progress/{{ questionnaire.id }}' style='color: maroon;'>Check camper progress</a></td>
+      </tr>
+    {% endif %}
+  </table>
 
 {% if stage == 0 %}
-  {{ questionnaire.intro | raw | nl2br }}
-  <br>
-  <br>
-  <h3><a href='/questionnaire/{{ questionnaire.id }}/begin'>Begin the Questionnaire</a></h3>
+  <div class="section">
+    {{ questionnaire.intro | raw | nl2br }}
+    <br><br>
+    <h3><a href='/questionnaire/{{ questionnaire.id }}/begin'>Begin the Questionnaire!</a></h3>
+  </div>
 {% elseif stage > questionnaire.pageCount %}
-  <h3>Your questionnaire has been submitted!</h3>
-  <h3>Thank you for all your responses!</h3>
-  If you made a mistake you would like to correct, please contact the nearest leader for assistance.
+  <div class="section">
+    <h3>Your questionnaire has been submitted!</h3>
+    <h3>Thank you for all your responses!</h3>
+    If you made a mistake you would like to correct, please contact the nearest leader for assistance.
+  </div>
 {% else %}
   <form action="/questionnaire/{{ questionnaire.id }}" method="POST">
     <input type="hidden" name="stage" value="{{ stage }}" />
     {{ page.intro | raw | nl2br }}
-    <div class="workspace">
 
   {% for section in page.sections %}
     <div class="section {{ section.border ? 'fieldset' : '' }}">
@@ -63,10 +66,11 @@
   {% endfor %}
       <input type="submit"
              value="Submit your responses and move onto the next section"
-             style="font-size: 150%;" /><br style="clear: both;">
-    </div>
+             style="font-size: 150%;" />
   </form>
 {% endif %}
+<br style="clear: both;">
+</div>
 
 <script type="text/javascript">
   $(".toggle").click(function (event) {
