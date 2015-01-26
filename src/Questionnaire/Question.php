@@ -81,11 +81,11 @@ class Question implements \JsonSerializable
         $this->answerType = $answerType;
     }
   
-    public function renderHTML($prefix = "")
+    public function renderHTML()
     {
-        $out = "<div class='question question-".strtolower($this->answerType)."'>";
+        $out = "";
         if ($this->answerType == "Radio") {
-            $out .= $prefix.$this->question;
+            $out .= $this->question;
             $out .= "<ul>";
             foreach ($this->answerOptions as $key => $option) {
                 $out .= "<li><label><input type='radio' name='{$this->id}' value='".($key+1)."'> $option";
@@ -95,10 +95,10 @@ class Question implements \JsonSerializable
                 $out .= "<input type='text' name='{$this->id}-other' class='other'>";
             }
         } elseif ($this->answerType == "Text") {
-            $out .= "<label for='question-{$this->id}'>$prefix{$this->question}</label><br>";
+            $out .= "<label for='question-{$this->id}'>{$this->question}</label>";
             $out .= "<textarea rows=1 id='question-{$this->id}' name='{$this->id}'></textarea>";
         } elseif ($this->answerType == "Dropdown") {
-            $out .= "<label for='question-{$this->id}'>$prefix{$this->question}</label>";
+            $out .= "<label for='question-{$this->id}'>{$this->question}</label>";
             $out .= "<select id='question-{$this->id}' name='{$this->id}'>";
             $out .= "  <option value='0'>--</option>\n";
             foreach ($this->answerOptions as $key => $option) {
@@ -108,7 +108,6 @@ class Question implements \JsonSerializable
         } else {
             throw new \Exception('Answer type not handled: ' . $this->answerType);
         }
-        $out .= "</div>";
         return $out;
     }
 

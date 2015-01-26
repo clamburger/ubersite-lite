@@ -53,7 +53,9 @@
 
       <div class="{{ section.border ? "question-group" : "" }}" style="{{ section.collapsible ? "display: none" : "" }}">
         {% for question in section.questions %}
-          {{ question.renderHtml | raw }}
+          <div class='question question-{{ question.answerType | lower }}'>
+            {{ question.renderHtml | raw }}
+          </div>
         {% endfor %}
       </div>
     </div>
