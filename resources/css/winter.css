@@ -21,7 +21,7 @@ tr.alt td {
   background-color: #dfeaea;
 }
 
-#header, .editor-workspace {
+#header, .workspace {
   background-color: #87B8DE;
 }
 
@@ -76,10 +76,6 @@ table.content, table.timetable, table.formTable, table.progress {
   border-color: #2A2AA5;
 }
 
-.optquest {
-  background-color: #dfeaea;
-}
-
 div.progress {
   background-color: #87B8DE;
   border-color: #6798BE;
@@ -89,6 +85,6 @@ input.invisible:focus {
   border: 1px solid rgb(77, 144, 254);
 }
 
-.editor-section:first-child {
+.editor.workspace .section:first-child {
   background-color: #dfeaea;
 }

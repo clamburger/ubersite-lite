@@ -210,7 +210,7 @@ $( document ).ready(function() {
         $.post('/ajax', data, reloadPage);
     });
 
-    $('.editor-section select').change(function(event) {
+    $('.editor .section select').change(function(event) {
         var selected = $(event.target).val();
         var extraBoxes = $(event.target).siblings('div');
         if (selected == 'Radio' || selected == 'Dropdown') {

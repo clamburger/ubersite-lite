@@ -38,44 +38,42 @@
   If you made a mistake you would like to correct, please contact the nearest leader for assistance.
 {% else %}
   <form action="/questionnaire/{{ questionnaire.id }}" method="POST">
-  <input type="hidden" name="stage" value="{{ stage }}" />
-  {{ page.intro | raw | nl2br }}
+    <input type="hidden" name="stage" value="{{ stage }}" />
+    {{ page.intro | raw | nl2br }}
+    <div class="workspace">
+
   {% for section in page.sections %}
-    {% if section.border %}
-      <fieldset class="question-group {{ section.collapsible ? "optquest" : "" }}">
+    <div class="section {{ section.border ? 'fieldset' : '' }}">
+      {% if section.border %}
         {% if section.collapsible %}
-          <legend>{{ section.title }} <span class='expand'>click to view questions</span></legend>
-          <div class="hide-container">
-        {% else %}
-          <legend>{{ section.title }}</legend>
+          <div class="toggle">click to view questions</div>
         {% endif %}
+        <h3>{{ section.title }}</h3>
+      {% endif %}
+
+      <div class="{{ section.border ? "question-group" : "" }}" style="{{ section.collapsible ? "display: none" : "" }}">
         {% for question in section.questions %}
           {{ question.renderHtml | raw }}
         {% endfor %}
-        {% if section.collapsible %}
-          </div>
-        {% endif %}
-      </fieldset>
-    {% else %}
-      {% for question in section.questions %}
-        {{ question.renderHtml | raw }}
-      {% endfor %}
-    {% endif %}
+      </div>
+    </div>
+    <br>
   {% endfor %}
-  <input type="submit"
-      value="Submit your responses and move onto the next section"
-      style="font-size: 150%;" />
+      <input type="submit"
+             value="Submit your responses and move onto the next section"
+             style="font-size: 150%;" /><br style="clear: both;">
+    </div>
   </form>
 {% endif %}
 
 <script type="text/javascript">
-  $(".optquest legend").click(function (event) {
+  $(".toggle").click(function (event) {
     event.preventDefault();
-    $(this).next().toggle();
-    if ($(this).next().is(":visible")) {
-      $(this).find(".help").text("click to hide questions");
+    $(this).next().next().toggle();
+    if ($(this).next().next().is(":visible")) {
+      $(this).text("click to hide questions");
     } else {
-      $(this).find(".help").text("click to view questions");
+      $(this).text("click to view questions");
     }
   });
 </script>
