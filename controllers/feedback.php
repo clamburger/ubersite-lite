@@ -16,7 +16,7 @@ $pages = $questionnaire->pages;
 
 $twig->addGlobal('title', $questionnaire->getTitle());
 
-if ($SEGMENTS[2] == 'smallgroup' && strlen((string)$user->DutyTeam) > 0) {
+if ($SEGMENTS[2] == 'smallgroup' && strlen((string)$user->smallGroup) > 0) {
     $smallgroup = true;
     $where = "AND DutyTeam = (SELECT DutyTeam FROM users WHERE Username = ?)";
 } else {
@@ -31,7 +31,7 @@ $query = "SELECT Name, Username, Responses FROM responses
 $stmt = $dbh->prepare($query);
 
 if ($smallgroup) {
-    $stmt->execute([$id, $user->Username]);
+    $stmt->execute([$id, $user->username]);
 } else {
     $stmt->execute([$id]);
 }

@@ -1,7 +1,7 @@
 {% extends "master.twig" %}
 
 {% block content %}
-{% if user.DutyTeam | length > 0 and not standalone %}
+{% if user.smallGroup | length > 0 and not standalone %}
   {% if smallgroup %}
     <h3><a href="/feedback/{{ questionnaire.id }}">View feedback from all campers</a></h3>
   {% else %}

@@ -10,9 +10,9 @@ class NullUser extends User
 
     public function __construct()
     {
-        $this->Username = "";
-        $this->Name = "";
-        $this->Role = "camper";
-        $this->LoggedIn = false;
+        $this->username = "";
+        $this->name = "";
+        $this->role = "camper";
+        $this->loggedIn = false;
     }
 }

@@ -9,18 +9,18 @@
   <th>Role</th>
   <th>Username</th>
   <th>Name</th>
-  <th>Duty Team</th>
+  <th>Small Group</th>
   <th>Manage</th>
 </tr>
 {% for row in users %}
 <tr>
-  <td class="userRole {{ row.Role }}">{{ row.Role }}</td>
-  <td><strong>{{ row.Username }}</strong></td>
-  <td>{{ row.Name }}</td>
-  <td>{{ row.DutyTeam }}</td>
-  <td><a href='/accounts/edit/{{ row.Username }}#new'>Edit</a>
-    {% if row.Username != user.Username %}
-    | <a href='/accounts/delete/{{ row.Username }}'>Delete</a>
+  <td class="userRole {{ row.role }}">{{ row.role }}</td>
+  <td><strong>{{ row.username }}</strong></td>
+  <td>{{ row.name }}</td>
+  <td>{{ row.smallGroup }}</td>
+  <td><a href='/accounts/edit/{{ row.username }}#new'>Edit</a>
+    {% if row.username != user.username %}
+    | <a href='/accounts/delete/{{ user.username }}'>Delete</a>
     {% endif %}
   </td>
 </tr>
@@ -31,7 +31,7 @@
 {% if editing %}
   <h2 id="new">Editing User:</h2>
   <input type="hidden" name='action' value='edit'>
-  <input type="hidden" name='username' value='{{ form.Username }}'>
+  <input type="hidden" name='username' value='{{ form.username }}'>
 {% else %}
   <h2 id="new">New User:</h2>
   <input type="hidden" name='action' value='new'>
@@ -41,9 +41,9 @@
     <th><label for="username">Username:</label></th>
     <td>
     {% if editing %}
-      <input id="username" value="{{ form.Username }}" disabled>
+      <input id="username" value="{{ form.username }}" disabled>
     {% else %}
-      <input type='text' id='username' name="username" value="{{ form.Username }}" placeholder="Required" required>
+      <input type='text' id='username' name="username" value="{{ form.username }}" placeholder="Required" required>
     {% endif %}
     </td>
   </tr>
@@ -55,15 +55,15 @@
     <th><label for="role">Role:</label></th>
     <td>
       <select name='role' id="role">
-        {% for role, selected in roles %}
-        <option value='{{ role }}' {{ selected ? 'selected' : '' }}>{{ role | capitalize }}</option>
+        {% for role in roles %}
+          <option value="{{ role }}" {{ form.role == role ? 'selected' : '' }}>{{ role | capitalize }}</option>
         {% endfor %}
       </select>
     </td>
   </tr>
   <tr>
-    <th><label for="dutyTeam">Duty Team:</label></th>
-    <td><input type='text' name='dutyTeam' id='dutyTeam' value='{{ form.dutyTeam }}' placeholder="Optional"></td>
+    <th><label for="dutyTeam">Small Group:</label></th>
+    <td><input type='text' name='dutyTeam' id='dutyTeam' value='{{ form.smallGroup }}' placeholder="Optional"></td>
   </tr>
   <tr>
     <th colspan="2" class="submitRow">

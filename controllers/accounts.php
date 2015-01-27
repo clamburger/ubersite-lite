@@ -1,6 +1,7 @@
 <?php
 use Ubersite\Message;
 use Ubersite\Utils;
+use Ubersite\User;
 
 if (!$user->isLeader()) {
     Utils::send403($twig);
@@ -8,19 +9,15 @@ if (!$user->isLeader()) {
 
 $twig->addGlobal('submit', "Create User");
 
-$roles = ['camper', 'leader', 'director', 'cook', 'visitor'];
+$twig->addGlobal('roles', User::$validRoles);
 
-// This stores the values for the role dropdown list as well as which role is selected
-$roleList = array_fill_keys($roles, false);
-
-$editing = false;
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && $user->isLeader()) {
     if ($_POST['action'] == "new") {
       // Creating a new user
         $username = $_POST['username'];
         $name = $_POST['name'];
         $role = $_POST['role'];
-        if (in_array($role, $roles)) {
+        if (in_array($role, User::$validRoles)) {
             $roleList[$role] = true;
         }
         if ($username === '') {
@@ -45,7 +42,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && $user->isLeader()) {
 
     } else {
       // Editing an account
-        $editing = true;
         $username = $_POST['username'];
         $name = $_POST['name'];
         $role = $_POST['role'];
@@ -71,27 +67,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && $user->isLeader()) {
 
 // Edit link clicked
 if ($SEGMENTS[1] == "edit") {
-    $editing = true;
     if (!isset($people[$SEGMENTS[2]])) {
         header("Location: /accounts");
         exit;
     }
     $stmt = $dbh->prepare('SELECT * FROM users WHERE Username = ?');
     $stmt->execute([$SEGMENTS[2]]);
-    $row = $stmt->fetch();
-
-    $form = [
-    'username' => $row['username'],
-    'name' => $row['Name'],
-    'role' => $row['Role'],
-    'dutyTeam' => $row['DutyTeam']
-    ];
-    $roleList[$row['Role']] = true;
-    $twig->addGlobal('form', $form);
+    $editingUser = new User($stmt->fetch());
+    $twig->addGlobal('editing', true);
+    $twig->addGlobal('form', $editingUser);
 }
-
-$twig->addGlobal('editing', $editing);
-$twig->addGlobal('roles', $roleList);
 
 # Delete link clicked
 if ($SEGMENTS[1] == "delete") {
@@ -127,7 +112,7 @@ if ($SEGMENTS[1] == "delete") {
             unset($_SESSION['deleteID']);
             unset($_SESSION['deleteTime']);
         } else {
-            if ($username == $user->Username) {
+            if ($username == $user->username) {
                 $messages->addMessage(new Message("error", "You cannot delete your own account!"));
             } else {
                 $_SESSION['deleteID'] = $username;
@@ -142,18 +127,7 @@ if ($SEGMENTS[1] == "delete") {
 
 // This sorts the list of people by role.
 usort($people, function($user1, $user2) {
-    $precedence = array_flip(['director', 'leader', 'camper', 'cook', 'visitor']);
-
-  // The max(1) in each of these will make directors be sorted the same as leaders.
-    $c = max(1, $precedence[$user1->Role]);
-    $d = max(1, $precedence[$user2->Role]);
-
-  // If the role is the same, sort by the username.
-    if ($c === $d) {
-        return strcmp($user1->Username, $user2->Username);
-    }
-
-    return ($c < $d) ? -1 : 1;
+    return strcmp($user1->username, $user2->username);
 });
 
 $twig->addGlobal('users', $people);

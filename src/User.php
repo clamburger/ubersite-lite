@@ -6,23 +6,25 @@ namespace Ubersite;
  */
 class User
 {
-    public $Username;
-    public $Name;
-    public $Role;
-    public $DutyTeam;
+    public $username;
+    public $name;
+    public $role;
+    public $smallGroup;
 
-    public $LoggedIn = true;
+    public $loggedIn = true;
+
+    public static $validRoles = ['camper', 'leader', 'director', 'cook', 'visitor'];
 
     public function __construct($row)
     {
-        $this->Username = $row['Username'];
-        $this->Name = $row['Name'];
-        $this->Role = $row['Role'];
-        $this->DutyTeam = $row['DutyTeam'];
+        $this->username = $row['Username'];
+        $this->name = $row['Name'];
+        $this->role = $row['Role'];
+        $this->smallGroup = $row['DutyTeam'];
     }
 
     public function isLeader()
     {
-        return in_array($this->Role, ['leader', 'director']);
+        return in_array($this->role, ['leader', 'director']);
     }
 }

@@ -110,7 +110,7 @@ if (isset($_GET['standalone'])) {
     $twig->addGlobal('standalone', $standalone);
 }
 
-$loginURL = $user->LoggedIn ? '/login' : '';
+$loginURL = $user->loggedIn ? '/login' : '';
 
 // TODO: we probably shouldn't be using $twig->addGlobal so much
 

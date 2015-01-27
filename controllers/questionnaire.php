@@ -21,7 +21,7 @@ $totalStages = count($pages);
 
 // Get the current page for the user.
 $stmt = $dbh->prepare('SELECT * FROM responses WHERE Username = ? AND QuizId = ?');
-$stmt->execute([$user->Username, $id]);
+$stmt->execute([$user->username, $id]);
 if ($row = $stmt->fetch()) {
     $stage = intval($row['QuestionStage']);
     $currentData = json_decode($row['Responses'], true);
@@ -35,14 +35,14 @@ if ($SEGMENTS[2] == 'begin' && $row === false) {
     $query = "INSERT INTO responses (Username, QuizId, QuestionStage, Responses)
             VALUES (?, ?, 1, '{}')";
     $stmt = $dbh->prepare($query);
-    $stmt->execute([$user->Username, $id]);
+    $stmt->execute([$user->username, $id]);
     $stage = 1;
 }
 
 // Delete current progress
 if ($SEGMENTS[2] == 'delete' && $user->isLeader()) {
     $stmt = $dbh->prepare('DELETE FROM responses WHERE Username = ? AND `QuizId` = ?');
-    $stmt->execute([$user->Username, $id]);
+    $stmt->execute([$user->username, $id]);
     $stage = 0;
     $messages->addMessage(new Message("success", "Hopes deleted."));
     header('Location: /questionnaire/' . $id);
@@ -57,7 +57,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $query = 'UPDATE responses SET Responses = ?, QuestionStage = ?
               WHERE QuizId = ? AND Username = ?';
         $stmt = $dbh->prepare($query);
-        $stmt->execute([$responses, ++$stage, $id, $user->Username]);
+        $stmt->execute([$responses, ++$stage, $id, $user->username]);
         $messages->addMessage(new Message("success", $pages[$stage-2]->title." successfully submitted."));
         Utils::refresh();
     }
