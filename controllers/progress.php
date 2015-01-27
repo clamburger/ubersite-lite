@@ -35,7 +35,7 @@ while ($row = $stmt->fetch()) {
 $status = [];
 $totals = array_fill(1, count($pages), 0);
 foreach ($rawStatus as $username => $userStatus) {
-    $temp = array("name" => $people[$username]->Name);
+    $temp = array("name" => $people[$username]->name);
     for ($i = 1; $i <= count($pages); $i++) {
         if ($i > $userStatus) {
             $temp["stages"][] = "<td style='text-align: center;'>---</td>";

@@ -52,7 +52,7 @@ class Section implements \JsonSerializable
                     continue;
                 }
                 foreach ($allResponses[$question->id] as $response) {
-                    $responders[$response['Username']] = $users[$response['Username']]->Name;
+                    $responders[$response['Username']] = $users[$response['Username']]->name;
                 }
             } else {
                 break;

@@ -114,7 +114,7 @@ class Question implements \JsonSerializable
             $output .= "<li><span style='color: silver;'>No responses for this question</span></li>";
         } else {
             foreach ($allResponses[$this->id] as $response) {
-                $sig = "- <em>" . $users[$response['Username']]->Name . "</em>";
+                $sig = "- <em>" . $users[$response['Username']]->name . "</em>";
                 $stringResponse = $this->getAnswerString($response['Answer']);
                 if ($stringResponse === self::OTHER_RESPONSE) {
                     $output .= "<li>Other: ".$allResponses[$this->id."-other"]
