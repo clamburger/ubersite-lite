@@ -10,6 +10,7 @@ html, body {
   min-width: 995px;
 }
 
+
 /* Links */
 a, a:link, a:visited {
   text-decoration: none;
@@ -142,16 +143,6 @@ textarea {
 
 #header .logo {
   float: left;
-}
-
-#header h1 {
-  float: left;
-  font-family: "Tahoma", Verdana, Arial, sans-serif;
-  font-size: 300%;
-  color: #333;
-  margin: 0;
-  padding: 25px 20px 10px 20px;
-  line-height: 75%;
 }
 
 .title {
@@ -408,6 +399,7 @@ textarea.invisible, input.invisible, select.invisible {
   padding: 3px;
   display: block;
   background-color: transparent;
+  font: normal 12px "Tahoma", Verdana, Arial, Sans-Serif;
 }
 
 select.invisible {
