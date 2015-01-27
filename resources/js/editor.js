@@ -198,7 +198,7 @@ $( document ).ready(function() {
             }
             data.answerOptions = answerOptions;
         }
-
+        $('button').prop('disabled', true);
         showAjax();
         $.post('/ajax', data, reloadPage);
     });
