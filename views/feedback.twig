@@ -12,7 +12,7 @@
   {% for page in questionnaire.pages %}
     <h2>{{ page.title }}</h2>
     {% for section in page.sections %}
-      <div class="section question-group feedback">
+      <div class="section">
         {% if loop.length > 1 %}
           <h3>{{ section.title }}</h3>
         {% endif %}

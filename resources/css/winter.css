@@ -1,3 +1,4 @@
+/* Text Elements */
 a, a:link, a:visited {
   color: #000099;
   border-bottom-color: #000099;
@@ -13,18 +14,12 @@ h1 {
   border-color: #000CC0;
 }
 
-th {
-  background-color: #cfe0e0;
-}
-
-tr.alt td {
-  background-color: #dfeaea;
-}
-
+/* Common background colours */
 #header, .workspace {
   background-color: #87B8DE;
 }
 
+/* Menu */
 #menu {
   background-color: #66CCFF;
 }
@@ -38,28 +33,22 @@ tr.alt td {
   background-color: #000080;
 }
 
-#messages  {
-  background-color: #b5b3ff;
+/* Questionnaire */
+input.invisible:focus {
+  border: 1px solid rgb(77, 144, 254);
 }
 
-table.content, table.timetable, table.formTable, table.progress {
-  border-color: #2A2AA5;
+.editor.workspace .section:first-child {
+  background-color: #dfeaea;
 }
 
-.content th, .timetable th, .progress th {
+
+/* Tables */
+th {
   background-color: #60A4F4;
-  border-color: #2A2AA5;
-}
-
-.formTable th {
-  border-color: #2A2AA5;
 }
 
 .formTable input, .formTable select {
-  border-color: #2A2AA5;
-}
-
-.content td, .formTable td {
   border-color: #2A2AA5;
 }
 
@@ -72,19 +61,6 @@ table.content, table.timetable, table.formTable, table.progress {
   background-color: #60a4f4;
 }
 
-.progress td {
+table, th, td {
   border-color: #2A2AA5;
-}
-
-div.progress {
-  background-color: #87B8DE;
-  border-color: #6798BE;
-}
-
-input.invisible:focus {
-  border: 1px solid rgb(77, 144, 254);
-}
-
-.editor.workspace .section:first-child {
-  background-color: #dfeaea;
 }

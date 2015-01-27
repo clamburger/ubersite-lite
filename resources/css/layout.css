@@ -22,7 +22,7 @@ a:hover, a:active {
   border-bottom: 1px solid;
 }
 
-/* Html Elements */
+/* Unsorted Elements */
 h1, h2, h3, h4 {
   margin: 10px 0 10px 0;
   padding: 0 0 5px 0;
@@ -37,7 +37,6 @@ h1 {
 h2, input.h2 {
   font-size: 26px;
   font-weight: bold;
-  color: #000;
 }
 
 input.h2, input.h3 {
@@ -48,14 +47,12 @@ h3, input.h3 {
   padding: 0;
   font-size: 16px;
   font-weight: bold;
-  color: #000;
 }
 
 h4 {
   padding: 0;
   font-weight:bold;
   font-size: 13px;
-  color: #000;
 }
 
 ul, ol {
@@ -70,16 +67,6 @@ ul {
 
 #content {
   margin: 0 10px;
-}
-
-fieldset {
-  padding: 10px 15px 10px 15px;
-}
-
-fieldset legend {
-  font-size: 15px;
-  font-weight: bold;
-  padding: 0 10px;
 }
 
 textarea {
@@ -216,53 +203,48 @@ textarea {
 /* Tables */
 table {
   border-collapse: collapse;
-  color: #333;
   margin: 10px 10px 20px;
-  border-left: 1px solid #b4cbcb;
-  border-top: 1px solid #b4cbcb;
   font-size: 90%;
 }
 
 th, td {
-  border-right: 1px solid #b4cbcb;
-  border-bottom: 1px solid #b4cbcb;
+  border: 1px solid black;
   padding: 2px 10px;
 }
 
-table.progress {
-  font-family: "Tahoma", Verdana, Arial, sans-serif;
+.progress {
   font-size: 14px;
-  border: 2px solid;
-  border-collapse: collapse;
   background-color: white;
 }
 
-table.progress th {
+.progress th {
   padding: 5px 5px 5px 5px;
-  font-weight: bold;
   height: 18px;
-  border: 2px solid;
 }
 
-table.progress {
+.progress {
   text-align: center;
 }
 
-table.progress td {
+.progress td {
   padding: 5px 25px;
 }
 
-table.formTable {
-  font-family: "Tahoma", Verdana, Arial, sans-serif;
+.formTable {
   font-size: 14px;
-  border: 2px solid;
-  border-collapse: collapse;
+}
+
+.progress, .formTable td, .formTable th, .progress td, .progress th {
+  border-width: 2px;
+  border-style: solid;
+}
+
+.progress td {
+  border-width: 1px;
 }
 
 .formTable th {
   padding: 5px 5px 5px 15px;
-  font-weight: bold;
-  border: 2px solid;
   text-align: right;
   background-color: inherit;
   border-right-style: none;
@@ -275,18 +257,12 @@ table.formTable {
 
 .formTable td {
   padding: 5px 15px 5px 5px;
-  border: 2px solid;
   text-align: left;
   border-left-style: none;
 }
 
 .formTable .submitRow {
   padding: 5px 5px 5px 5px;
-  font-weight: bold;
-  border: 2px solid;
-}
-
-.formTable .header {
   font-weight: bold;
 }
 
@@ -391,14 +367,7 @@ textarea {
 }
 
 /* Questionnaire Feedback */
-.question-group.feedback {
-  width: auto;
-}
 
-.feedback table, table.feedback {
-  border-collapse: separate;
-  border-spacing: 1px;
-}
 
 
 /* Questionnaire Editor */
