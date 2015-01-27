@@ -16,13 +16,13 @@ $pages = $questionnaire->pages;
 
 $twig->addGlobal('title', $questionnaire->getTitle());
 
-if ($SEGMENTS[2] == 'smallgroup') {
+if ($SEGMENTS[2] == 'smallgroup' && strlen((string)$user->DutyTeam) > 0) {
+    $smallgroup = true;
     $where = "AND DutyTeam = (SELECT DutyTeam FROM users WHERE Username = ?)";
 } else {
+    $smallgroup = false;
     $where = '';
 }
-
-$smallgroup = $SEGMENTS[2] == 'smallgroup';
 
 // Find the responses
 $query = "SELECT Name, Username, Responses FROM responses
