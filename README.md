@@ -10,6 +10,7 @@ work.
 
 * PHP 5.5 or higher.
 * PDO and the SQLite3 driver must be available.
+* [Composer](https://getcomposer.org/download/)
 
 ## Installation
 
@@ -17,9 +18,7 @@ You will need a web server to run Übersite. Your options are Apache (the files 
 vhost or placed in the webserver root) or PHP's
 [built-in web server](http://php.net/manual/en/features.commandline.webserver.php).
 
+Run `composer install` once in order to download the dependencies that Übersite needs.
+
 Once you've got the web server set up, open the site in the browser and you'll be greeted with a
 very short setup process which will create the database and allow you to import users.
-
-## The Questionnaire
-
-There is [additional documentation](docs/questionnaire.md) available for the questionnaire setup. 

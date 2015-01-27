@@ -1,4 +1,9 @@
 <?php
+if (!file_exists('vendor/autoload.php')) {
+    echo 'You need to run <code>composer install</code> before you can use this software.';
+    exit;
+}
+
 require 'vendor/autoload.php';
 
 use Ubersite\Config;

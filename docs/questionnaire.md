@@ -1,7 +1,9 @@
-# Questionnaire Format
+# Questionnaire Specification
 
-A questionnaire is a JSON object containing a list of pages.
+This document details how questionnaires are stored in the database. It's recommended to use the editor rather than
+editing the JSON manually, as it's significantly easier and less prone to error.
 
+At the top level, a questionnaire is a JSON object containing a list of pages.
 
 ## Pages
 
