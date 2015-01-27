@@ -21,6 +21,14 @@ if ($action === 'create-questionnaire') {
         new Message("success", "You have successfully deleted {$people[$_POST['username']]->name}'s account.")
     );
     exit;
+} elseif ($action === 'change-user-name') {
+    $stmt = $dbh->prepare('UPDATE users SET Name = ? WHERE Username = ?');
+    $stmt->execute([$_POST['name'], $_POST['username']]);
+    exit;
+} elseif ($action === 'change-user-smallgroup') {
+    $stmt = $dbh->prepare('UPDATE users SET DutyTeam = ? WHERE Username = ?');
+    $stmt->execute([$_POST['smallGroup'], $_POST['username']]);
+    exit;
 }
 
 $questionnaire = Questionnaire::loadFromDatabase($_POST['id']);

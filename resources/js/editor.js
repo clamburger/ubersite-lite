@@ -234,4 +234,16 @@ $( document ).ready(function() {
         $.post('/ajax', {username: username, action: 'delete-user'}, reloadPage);
     });
 
+    $('input[data-action=user-name]').change(function(event) {
+        var username = $(event.target).parents('tr').attr('data-username');
+        var name = $(event.target).val();
+        $.post('/ajax', {username: username, action: 'change-user-name', name: name});
+    });
+
+    $('input[data-action=user-smallgroup]').change(function(event) {
+        var username = $(event.target).parents('tr').attr('data-username');
+        var smallGroup = $(event.target).val();
+        $.post('/ajax', {username: username, action: 'change-user-smallgroup', smallGroup: smallGroup});
+    });
+
 });

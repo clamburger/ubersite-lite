@@ -16,8 +16,8 @@
 <tr data-username="{{ row.username }}">
   <td class="userRole {{ row.role }}">{{ row.role }}</td>
   <td><strong>{{ row.username }}</strong></td>
-  <td>{{ row.name }}</td>
-  <td>{{ row.smallGroup }}</td>
+  <td><input data-action="user-name" class="invisible small" type="text" value="{{ row.name }}"></td>
+  <td><input data-action="user-smallgroup" class="invisible small" type="text" value="{{ row.smallGroup }}"></td>
   <td>
     {% if row.username != user.username %}
       <a data-action="delete-user">Delete</a>
