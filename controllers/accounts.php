@@ -27,7 +27,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     } else {
       // The default password is the same as the username.
         $password = password_hash($username, PASSWORD_DEFAULT);
-        $query = 'INSERT INTO users (Username, Name, Password, Role, DutyTeam)
+        $query = 'INSERT INTO users (Username, Name, Password, Role, SmallGroup)
             VALUES(?, ?, ?, ?, ?)';
         $stmt = $dbh->prepare($query);
         $stmt->execute([$username, $name, $password, $role, $_POST['dutyTeam']]);

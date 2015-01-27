@@ -26,7 +26,7 @@ if ($action === 'create-questionnaire') {
     $stmt->execute([$_POST['name'], $_POST['username']]);
     exit;
 } elseif ($action === 'change-user-smallgroup') {
-    $stmt = $dbh->prepare('UPDATE users SET DutyTeam = ? WHERE Username = ?');
+    $stmt = $dbh->prepare('UPDATE users SET SmallGroup = ? WHERE Username = ?');
     $stmt->execute([$_POST['smallGroup'], $_POST['username']]);
     exit;
 } elseif ($action === 'change-user-role') {

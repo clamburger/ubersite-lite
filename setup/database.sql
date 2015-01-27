@@ -17,6 +17,6 @@ CREATE TABLE users (
   Username TEXT NOT NULL PRIMARY KEY,
   Name TEXT NOT NULL,
   Role TEXT NOT NULL DEFAULT 'camper',
-  DutyTeam TEXT,
+  SmallGroup TEXT,
   Password TEXT
 );

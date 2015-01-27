@@ -20,7 +20,7 @@ class User
         $this->username = $row['Username'];
         $this->name = $row['Name'];
         $this->role = $row['Role'];
-        $this->smallGroup = $row['DutyTeam'];
+        $this->smallGroup = $row['SmallGroup'];
     }
 
     public function isLeader()
