@@ -147,6 +147,25 @@ class Questionnaire
         $stmt->execute([$this->title, json_encode($this->pages, JSON_PRETTY_PRINT), $this->intro, $this->id]);
     }
 
+    /**
+     * @return Questionnaire[]
+     */
+    public static function loadAllFromDatabase()
+    {
+        $dbh = DatabaseManager::get();
+        $stmt = $dbh->query('SELECT * FROM questionnaires');
+
+        $questionnaires = [];
+        while ($row = $stmt->fetch()) {
+            $questionnaires[] = new Questionnaire($row);
+        }
+
+        return $questionnaires;
+    }
+
+    /**
+     * @return null|Questionnaire
+     */
     public static function loadFromDatabase($id)
     {
         $dbh = DatabaseManager::get();

@@ -1,10 +1,12 @@
 {% extends "master.twig" %}
 
+{% block title %}Choose Questionnaire{% endblock %}
+
 {% block content %}
   {% if questionnaires | length > 0 %}
     <ul>
     {% for questionnaire in questionnaires %}
-      <li><a href="{{ redirect }}/{{ questionnaire.Id }}">{{ questionnaire.Name }}</a></li>
+      <li><a href="{{ redirect }}/{{ questionnaire.id }}">{{ questionnaire.title }}</a></li>
     {% endfor %}
     </ul>
   {% else %}

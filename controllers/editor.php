@@ -15,12 +15,7 @@ $id = $SEGMENTS[1];
 
 if (!$id) {
     $twig->addGlobal('showAll', true);
-    $stmt = $dbh->query("SELECT * FROM questionnaires");
-
-    $questionnaires = [];
-    foreach ($stmt as $row) {
-        $questionnaires[] = new Questionnaire($row);
-    }
+    $questionnaires = Questionnaire::loadAllFromDatabase();
     $twig->addGlobal('questionnaires', $questionnaires);
 
 } else {
