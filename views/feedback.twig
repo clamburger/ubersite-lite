@@ -3,10 +3,24 @@
 {% block content %}
 {% if not standalone %}
   {% if smallgroup %}
-    <h3><a href="/feedback/{{ id }}">View feedback from all campers</a></h3>
+    <h3><a href="/feedback/{{ questionnaire.id }}">View feedback from all campers</a></h3>
   {% else %}
-    <h3><a href="/feedback/{{ id }}/smallgroup">View feedback from your small group only</a></h3>
+    <h3><a href="/feedback/{{ questionnaire.id }}/smallgroup">View feedback from your small group only</a></h3>
   {% endif %}
 {% endif %}
+<div class="workspace">
+  {% for page in questionnaire.pages %}
+    <h2>{{ page.title }}</h2>
+    {% for section in page.sections %}
+      <div class="section question-group feedback">
+        {% if loop.length > 1 %}
+          <h3>{{ section.title }}</h3>
+        {% endif %}
+        {{ section.feedback | raw }}
+      </div>
+      <br>
+    {% endfor %}
+  {% endfor %}
 {{ output | raw }}
+</div>
 {% endblock %}

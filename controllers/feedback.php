@@ -55,15 +55,11 @@ while ($row = $stmt->fetch()) {
 
 asort($allResponders);
 
-$output = "";
-
 foreach ($pages as $page) {
-    $output .= "<h2>{$page->title}</h2>\n";
-    foreach ($page->sections as $question) {
-        $output .= $question->renderFeedback($allResponses, $people);
+    foreach ($page->sections as $section) {
+        $section->renderFeedback($allResponses, $people);
     }
 }
 
-$twig->addGlobal("id", $id);
-$twig->addGlobal("output", $output);
+$twig->addGlobal("questionnaire", $questionnaire);
 $twig->addGlobal("smallgroup", $smallgroup);

@@ -8,6 +8,9 @@ class Section implements \JsonSerializable
     public $questions = [];
     public $collapsible = false;
 
+    // Temporary, until the feedback is redone
+    public $feedback;
+
     public function populateFromDetails($details)
     {
         $this->title = $details['Title'];
@@ -38,9 +41,6 @@ class Section implements \JsonSerializable
 
     public function renderFeedback($allResponses, $users)
     {
-        $output = "<fieldset class='question-group feedback'>";
-        $output .= "<legend>{$this->title}</legend>";
-
         $dropdowns = 0;
         $acceptedTypes = ["Dropdown"];
         $responders = [];
@@ -61,6 +61,7 @@ class Section implements \JsonSerializable
 
         asort($responders);
 
+        $output = "";
         if ($dropdowns && $responders) {
             $output .= "<table>\n";
             $output .= "<tr>\n";
@@ -96,8 +97,8 @@ class Section implements \JsonSerializable
             }
             $output .= $question->renderFeedback($allResponses, $users);
         }
-        $output .= "</fieldset>";
-        return $output;
+
+        $this->feedback = $output;
     }
 
     public function jsonSerialize()

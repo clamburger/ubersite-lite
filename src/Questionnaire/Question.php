@@ -111,7 +111,7 @@ class Question implements \JsonSerializable
         $output = "<h3>{$this->question}</h3>\n";
         $output .= "<ul>";
         if (!isset($allResponses[$this->id])) {
-            $output .= "<li><em style='color: silver;'>No responses for this question</em></li>";
+            $output .= "<li><span style='color: silver;'>No responses for this question</span></li>";
         } else {
             foreach ($allResponses[$this->id] as $response) {
                 $sig = "- <em>" . $users[$response['Username']]->Name . "</em>";
