@@ -95,6 +95,12 @@ textarea {
   font-size: medium;
 }
 
+span.alert {
+  padding: 2px 3px;
+  font-size: 11px;
+  margin: 3px;
+}
+
 .alert.alert-alert {
   background-color: #b7ffff;
   border-color: #0000F0;

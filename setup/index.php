@@ -65,7 +65,7 @@ if (!isset($checks['config'])) {
 }
 
 if (!in_array('sqlite', PDO::getAvailableDrivers()) || !class_exists('SQLite3')) {
-    $checks['sqlite'] = ['no', 'important', 'you may need to install <code>php5-sqlite3</code>.'];
+    $checks['sqlite'] = ['no', 'error', 'you may need to install <code>php5-sqlite3</code>.'];
 } elseif (file_exists('../config/database.db')) {
     $checks['sqlite'] = ['warning', 'warning', 'the database already exists. It will not be overwritten.'];
 } else {
@@ -74,7 +74,7 @@ if (!in_array('sqlite', PDO::getAvailableDrivers()) || !class_exists('SQLite3'))
 
 $error = false;
 foreach ($checks as $key => $data) {
-    $html = "<span class='label {$data[1]}'>{$data[0]}</span>";
+    $html = "<span class='alert alert-{$data[1]}'>{$data[0]}</span>";
     if (isset($data[2])) {
         $html .= " - {$data[2]}";
     }
