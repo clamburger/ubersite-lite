@@ -29,6 +29,10 @@ if ($action === 'create-questionnaire') {
     $stmt = $dbh->prepare('UPDATE users SET DutyTeam = ? WHERE Username = ?');
     $stmt->execute([$_POST['smallGroup'], $_POST['username']]);
     exit;
+} elseif ($action === 'change-user-role') {
+    $stmt = $dbh->prepare('UPDATE users SET Role = ? WHERE Username = ?');
+    $stmt->execute([$_POST['role'], $_POST['username']]);
+    exit;
 }
 
 $questionnaire = Questionnaire::loadFromDatabase($_POST['id']);

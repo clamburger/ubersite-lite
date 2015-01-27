@@ -399,18 +399,23 @@ textarea {
   margin-top: 0;
 }
 
-input.small {
+input.small, select.small {
   font-size: 12px;
 }
 
-textarea.invisible, input.invisible {
+textarea.invisible, input.invisible, select.invisible {
   border: 1px solid transparent;
   padding: 3px;
   display: block;
   background-color: transparent;
 }
 
-textarea.invisible:hover, input.invisible:hover {
+select.invisible {
+  -moz-appearance: none;
+  -webkit-appearance: none;
+}
+
+textarea.invisible:hover, input.invisible:hover, select.invisible:hover {
   border: 1px solid rgb(192, 192, 192);
   background-color: white;
 }

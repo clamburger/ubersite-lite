@@ -246,4 +246,10 @@ $( document ).ready(function() {
         $.post('/ajax', {username: username, action: 'change-user-smallgroup', smallGroup: smallGroup});
     });
 
+    $('select[data-action=user-role]').change(function(event) {
+        var username = $(event.target).parents('tr').attr('data-username');
+        var role = $(event.target).val();
+        $.post('/ajax', {username: username, action: 'change-user-role', role: role});
+    });
+
 });
