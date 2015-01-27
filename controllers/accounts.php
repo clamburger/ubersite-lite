@@ -30,7 +30,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $query = 'INSERT INTO users (Username, Name, Password, Role, SmallGroup)
             VALUES(?, ?, ?, ?, ?)';
         $stmt = $dbh->prepare($query);
-        $stmt->execute([$username, $name, $password, $role, $_POST['dutyTeam']]);
+        $stmt->execute([$username, $name, $password, $role, $_POST['smallGroup']]);
         $messages->addMessage(new Message('success', 'Account successfully created!'));
 
         Utils::refresh();

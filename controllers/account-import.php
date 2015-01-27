@@ -54,13 +54,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 break;
             }
 
-          // Handle default values for role, password and duty team
-            list($username, $fullName, $role, $password, $dutyTeam) = $row;
+          // Handle default values for role, password and small group
+            list($username, $fullName, $role, $password, $smallGroup) = $row;
             $role = ($role === '' ? 'camper' : strtolower($role));
             $password = ($password === '' ? null : password_hash($password, PASSWORD_DEFAULT));
-            $dutyTeam = ($dutyTeam === '' ? null : $dutyTeam);
+            $smallGroup = ($smallGroup === '' ? null : $smallGroup);
 
-            $stmt->execute([$username, $fullName, $role, $dutyTeam, $password]);
+            $stmt->execute([$username, $fullName, $role, $smallGroup, $password]);
         }
 
       // If there were no errors, commit the transaction.
