@@ -28,23 +28,12 @@
 </table>
 
 <form method="POST" action="/accounts">
-{% if editing %}
-  <h2 id="new">Editing User:</h2>
-  <input type="hidden" name='action' value='edit'>
-  <input type="hidden" name='username' value='{{ form.username }}'>
-{% else %}
-  <h2 id="new">New User:</h2>
-  <input type="hidden" name='action' value='new'>
-{% endif %}
+<h2>New User:</h2>
 <table class='formTable'>
   <tr>
     <th><label for="username">Username:</label></th>
     <td>
-    {% if editing %}
-      <input id="username" value="{{ form.username }}" disabled>
-    {% else %}
       <input type='text' id='username' name="username" value="{{ form.username }}" placeholder="Required" required>
-    {% endif %}
     </td>
   </tr>
   <tr>
@@ -67,8 +56,7 @@
   </tr>
   <tr>
     <th colspan="2" class="submitRow">
-    <input type='button' value="Cancel" onclick="document.location = '/accounts'" />
-    <input type='submit' value="{{ editing ? 'Save User' : 'Create User' }}" />
+      <input type='submit' value="Create User" />
     </th>
   </tr>
 </table>
