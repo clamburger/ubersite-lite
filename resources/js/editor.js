@@ -225,4 +225,13 @@ $( document ).ready(function() {
         }
     });
 
+    $('a[data-action=delete-user]').click(function(event) {
+        var username = $(event.target).parents('tr').attr('data-username');
+        var name = $(event.target).parents('tr').children('td')[2].innerText;
+        if (!confirm('Are you sure you want to delete '+name+'?')) {
+            return false;
+        }
+        $.post('/ajax', {username: username, action: 'delete-user'}, reloadPage);
+    });
+
 });

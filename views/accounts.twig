@@ -10,17 +10,17 @@
   <th>Username</th>
   <th>Name</th>
   <th>Small Group</th>
-  <th>Manage</th>
+  <th>Controls</th>
 </tr>
 {% for row in users %}
-<tr>
+<tr data-username="{{ row.username }}">
   <td class="userRole {{ row.role }}">{{ row.role }}</td>
   <td><strong>{{ row.username }}</strong></td>
   <td>{{ row.name }}</td>
   <td>{{ row.smallGroup }}</td>
-  <td><a href='/accounts/edit/{{ row.username }}#new'>Edit</a>
+  <td>
     {% if row.username != user.username %}
-    | <a href='/accounts/delete/{{ user.username }}'>Delete</a>
+      <a data-action="delete-user">Delete</a>
     {% endif %}
   </td>
 </tr>

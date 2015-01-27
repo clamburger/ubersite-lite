@@ -63,6 +63,8 @@ if ($pageName == 'logout') {
 
 // Populate array of users (Username => User object)
 $stmt = $dbh->query('SELECT * FROM users');
+
+/** @var User[] */
 $people = [];
 while ($row = $stmt->fetch()) {
     $people[$row['Username']] = new User($row);

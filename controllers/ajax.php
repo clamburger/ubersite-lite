@@ -14,6 +14,13 @@ if ($action === 'create-questionnaire') {
     $query = "INSERT INTO questionnaires (Name, Pages, Intro) VALUES ('Untitled Questionnaire', '[]', '')";
     $dbh->exec($query);
     exit;
+} elseif ($action === 'delete-user') {
+    $stmt = $dbh->prepare('DELETE FROM users WHERE Username = ?');
+    $stmt->execute([$_POST['username']]);
+    $messages->addMessage(
+        new Message("success", "You have successfully deleted {$people[$_POST['username']]->name}'s account.")
+    );
+    exit;
 }
 
 $questionnaire = Questionnaire::loadFromDatabase($_POST['id']);

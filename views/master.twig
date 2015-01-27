@@ -17,6 +17,7 @@
     {% if not standalone %}
       <script src='/resources/js/jquery-2.1.3.js'></script>
       <script src='/resources/js/jquery.autosize.min.js'></script>
+      <script src='/resources/js/editor.js'></script>
       <script type="text/javascript">
         $(document).ready(function(){
           $('textarea').autosize({append: false});
@@ -53,7 +54,7 @@
           {% endfor %}
         {% endif %}
         <li class="right"><a href='/logout'>Logout</a></li>
-        <li class="right"><strong>{{ user.Name }}</strong></li>
+        <li class="right"><strong>{{ user.name }}</strong></li>
         </ul>
       </div>
 
