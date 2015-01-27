@@ -57,7 +57,30 @@
       <div class="question-group" style="{{ section.collapsible ? "display: none" : "" }}">
         {% for question in section.questions %}
           <div class='question question-{{ question.answerType | lower }}'>
-            {{ question.renderHtml | raw }}
+            {% if question.answerType == 'Radio' %}
+              {{ question.question }}
+              <ul>
+                {% for option in question.answerOptions %}
+                  <li>
+                    <label><input type="radio" name="{{ question.id }}" value="{{ loop.index }}"> {{ option }}</label>
+                  </li>
+                {% endfor %}
+              </ul>
+              {% if question.answerOther %}
+                <textarea rows="1" name="{{ question.id }}-other"></textarea>
+              {% endif %}
+            {% elseif question.answerType == 'Dropdown' %}
+              <label for="question-{{ question.id }}">{{ question.question }}</label>
+              <select id="question-{{ question.id }}" name="{{ question.id }}">
+                <option value="0">--</option>
+                {% for option in question.answerOptions %}
+                  <option value="{{ loop.index }}">{{ option }}</option>
+                {% endfor %}
+              </select>
+            {% else %}
+              <label for="question-{{ question.id }}">{{ question.question }}</label>
+              <textarea rows="1" id="question-{{ question.id }}" name="{{ question.id }}"></textarea>
+            {% endif %}
           </div>
         {% endfor %}
       </div>
