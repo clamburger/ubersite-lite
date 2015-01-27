@@ -29,6 +29,9 @@ class Utils
         exit;
     }
 
+    /**
+     * @param $twig \Twig_Environment
+     */
     public static function send403($twig)
     {
         echo $twig->render('403.twig');
