@@ -21,7 +21,8 @@
     {{ row.role | capitalize }}
   </td>
   <td>
-    <button data-action="delete-user" {{ row.username == user.username ? 'disabled' : '' }}>Delete User</button>
+    <button data-action="change-password">Reset Password</button>
+    <button data-action="delete-user" {{ row.username == user.username ? 'disabled' : '' }}>Delete</button>
   </td>
 </tr>
 {% endfor %}

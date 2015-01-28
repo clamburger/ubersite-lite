@@ -33,6 +33,15 @@ if ($action === 'create-questionnaire') {
     $stmt = $dbh->prepare('UPDATE users SET Role = ? WHERE Username = ?');
     $stmt->execute([$_POST['role'], $_POST['username']]);
     exit;
+} elseif ($action === 'change-password') {
+    $stmt = $dbh->prepare('UPDATE users SET Password = ? WHERE Username = ?');
+    $password = $_POST['password'];
+    if ($password === '') {
+        $password = $_POST['username'];
+    }
+    $password = password_hash($password, PASSWORD_DEFAULT);
+    $stmt->execute([$password, $_POST['username']]);
+    exit;
 }
 
 $questionnaire = Questionnaire::loadFromDatabase($_POST['id']);

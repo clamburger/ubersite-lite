@@ -231,6 +231,7 @@ $( document ).ready(function() {
         if (!confirm('Are you sure you want to delete '+name+'?')) {
             return false;
         }
+        $('button').prop('disabled', true);
         $.post('/ajax', {username: username, action: 'delete-user'}, reloadPage);
     });
 
@@ -251,5 +252,18 @@ $( document ).ready(function() {
         var role = $(event.target).val();
         $.post('/ajax', {username: username, action: 'change-user-role', role: role});
     });
+
+    $('button[data-action=change-password]').click(function(event) {
+        var username = $(event.target).parents('tr').attr('data-username');
+        var name = $(event.target).parents('tr').children('td')[1].innerText;
+        var password = prompt('Enter a new password for '+name+' (leave blank to use the username as the password)');
+        if (password === null) {
+            return false;
+        }
+        $.post('/ajax', {username: username, action: 'change-password', password: password}, function(data) {
+            alert('Password successfully changed.');
+        });
+    });
+
 
 });
