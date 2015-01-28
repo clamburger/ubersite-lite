@@ -200,8 +200,7 @@ span.alert {
 /* Tables */
 table {
   border-collapse: collapse;
-  margin: 10px 10px 20px;
-  font-size: 90%;
+  margin: 10px 10px 20px
 }
 
 th, td {
