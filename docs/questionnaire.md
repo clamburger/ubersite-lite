@@ -29,6 +29,7 @@ At the top level, a questionnaire is a JSON object containing a list of pages.
  * `Dropdown`: dropdown menu
 * `AnswerOptions`: an array of answers that the user will be able to choose from. **Required** if using AnswerType "Radio" or "Dropdown", ignored otherwise.
 * `AnswerOther`: if true, adds a single-line text input under the last radio button. Only valid for AnswerType "Radio". Note that this doesn't add a corresponding label, so you should include an "Other" option as the last AnswerOption if you use this. *Default: false*
+* `ColouredDropdown`: adds background colours (green/yellow/red) to dropdown options. A value of 1 will display green first, 2 will display green last, and 3 will display green in the middle. Only valid for AnswerType "Dropdown". 
 
 
 # Things to note

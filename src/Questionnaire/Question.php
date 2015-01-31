@@ -3,12 +3,18 @@ namespace Ubersite\Questionnaire;
 
 class Question implements \JsonSerializable
 {
+    // Constants relating to the order of colours in dropdown boxes
+    const BEST_FIRST = 1;
+    const BEST_LAST = 2;
+    const BEST_IN_MIDDLE = 3;
+
     public $id;
     public $question;
     public $questionShort;
     private $answerType;
-    public $answerOptions = null;
-    public $answerOther = null;
+    public $answerOptions;
+    public $answerOther;
+    public $colouredDropdown;
 
     private static $dropdownColours = [
         [99, 190, 123],     // Green    #63BE7B
@@ -46,6 +52,9 @@ class Question implements \JsonSerializable
             $this->questionShort = $details['QuestionShort'];
         } else {
             $this->questionShort = $details['Question'];
+        }
+        if (isset($details['ColouredDropdown'])) {
+            $this->colouredDropdown = $details['ColouredDropdown'];
         }
     }
 
@@ -152,16 +161,31 @@ class Question implements \JsonSerializable
         }
 
         $colours = [];
-        $count = 0;
-        $percent = 0.0;
+
+        $answerCount = count($this->answerOptions);
+        if ($this->colouredDropdown == self::BEST_IN_MIDDLE) {
+            $denominator = ($answerCount - 1) / 2;
+        } else {
+            $denominator = $answerCount - 1;
+        }
+
+        $fraction = 1 / $denominator;
 
         // If we have n responses, we need multiples of 1 / (n-1) to get a smooth scale between 0.0 and 1.0.
         // The reason it's n-1 and not just n is because we start with 0.0.
         // Example for five responses: 0.0, 0.25, 0.5, 0.75, 1.0 (note the multiples of 1/4, starting from 0.0)
-        while ($percent <= 1.0) {
-            $colours[] = $this->getGradientColourAtPosition($percent);
+        $count = -1;
+        while ($count < $answerCount - 1) {
             $count++;
-            $percent = (1 / count($this->answerOptions) - 1) * $count;
+            if ($this->colouredDropdown == self::BEST_IN_MIDDLE) {
+                $distanceFromHalfway = abs($denominator - $count);
+                $percent = 1 - $fraction * $distanceFromHalfway;
+            } elseif ($this->colouredDropdown == self::BEST_LAST) {
+                $percent = 1 - $fraction * $count;
+            } else {
+                $percent = $fraction * $count;
+            }
+            $colours[] = $this->getGradientColourAtPosition($percent);
         }
 
         return $colours;
