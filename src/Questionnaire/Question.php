@@ -10,6 +10,12 @@ class Question implements \JsonSerializable
     public $answerOptions = null;
     public $answerOther = null;
 
+    private static $dropdownColours = [
+        [99, 190, 123],     // Green    #63BE7B
+        [255, 235, 132],    // Yellow   #FFEB84
+        [248, 105, 107]     // Red      #F8696B
+    ];
+
     const OTHER_RESPONSE = 42;
     const DEFAULT_COLOUR = "white";
 
@@ -19,25 +25,6 @@ class Question implements \JsonSerializable
         'Dropdown',
         '1-5',
         'Length'
-    ];
-
-    // TODO: we shouldn't have any special cases for things like this (not here, anyway)
-    public static $coloursFive = [
-        "white",
-        "#F8696B",
-        "#FBAA77",
-        "#FFEB84",
-        "#B1D580",
-        "#63BE7B"
-    ];
-
-    public static $coloursFiveTwo = [
-        "white",
-        "#F8696B",
-        "#FFEB84",
-        "#63BE7B",
-        "#FFEB84",
-        "#F8696B"
     ];
 
     public function __construct($id)
@@ -147,5 +134,62 @@ class Question implements \JsonSerializable
             $return['AnswerOther'] = $this->answerOther;
         }
         return $return;
+    }
+
+    /**
+     * Get the list of colours used for the dropdown responses.
+     * @return array An array of colours in hexadecimal format (e.g. #000000)
+     */
+    public function getColourScale()
+    {
+        if ($this->getAnswerType() !== 'Dropdown') {
+            throw new \RuntimeException('Colour scales are only supported with dropdown questions.');
+        }
+
+        // In the unlikely event that this function is called with only one response, return green
+        if (count($this->answerOptions) <= 1) {
+            return $this->getGradientColourAtPosition(0.0);
+        }
+
+        $colours = [];
+        $count = 0;
+        $percent = 0.0;
+
+        // If we have n responses, we need multiples of 1 / (n-1) to get a smooth scale between 0.0 and 1.0.
+        // The reason it's n-1 and not just n is because we start with 0.0.
+        // Example for five responses: 0.0, 0.25, 0.5, 0.75, 1.0 (note the multiples of 1/4, starting from 0.0)
+        while ($percent <= 1.0) {
+            $colours[] = $this->getGradientColourAtPosition($percent);
+            $count++;
+            $percent = (1 / count($this->answerOptions) - 1) * $count;
+        }
+
+        return $colours;
+    }
+
+    /**
+     * A helper function to get the colour at a particular point in the three colour gradient we use
+     * @param float $percent A number between 0.0 and 1.0, indicating how far through the gradient you are
+     * @return string A colour in hexadecimal format (e.g. #000000)
+     */
+    private function getGradientColourAtPosition($percent)
+    {
+        list($start, $middle, $end) = self::$dropdownColours;
+
+        if ($percent <= 0.5) {
+            // At 50% or less, look between green and yellow
+            $percent *= 2;
+            $red = round($start[0] + $percent * ($middle[0] - $start[0]));
+            $green = round($start[1] + $percent * ($middle[1] - $start[1]));
+            $blue = round($start[2] + $percent * ($middle[2] - $start[2]));
+        } else {
+            // At more than 50%, look between yellow and red
+            $percent *= 2 - 1;
+            $red = round($middle[0] + $percent * ($end[0] - $middle[0]));
+            $green = round($middle[1] + $percent * ($end[1] - $middle[1]));
+            $blue = round($middle[2] + $percent * ($end[2] - $middle[2]));
+        }
+
+        return sprintf('#%02x%02x%02x', $red, $green, $blue);
     }
 }
