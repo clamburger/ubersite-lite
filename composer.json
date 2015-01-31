@@ -4,6 +4,9 @@
         "league/csv": "~6.1"
     },
     "autoload": {
-        "psr-4": {"Ubersite\\": "src/"}
+        "psr-4": {
+            "Ubersite\\": "src/",
+            "Ubersite\\Tests\\": "tests/"
+        }
     }
 }
