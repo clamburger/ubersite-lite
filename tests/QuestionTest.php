@@ -65,4 +65,30 @@ class QuestionTest extends \PHPUnit_Framework_TestCase
         $expectedColours = ['#63be7b', '#ffeb84', '#f8696b', '#ffeb84', '#63be7b'];
         $this->assertEquals($expectedColours, $colours);
     }
+
+    public function testTextResponse()
+    {
+        $question = new Question('test');
+        $question->setAnswerType('Text');
+        $response = 'It was a good activity.';
+        $responseGiven = $question->getAnswerString($response);
+        $this->assertEquals($response, $responseGiven);
+    }
+
+    public function testDropdownResponse()
+    {
+        $question = new Question('test');
+        $question->setAnswerType('Dropdown');
+        $question->answerOptions = ['Excellent', 'Okay', 'Average', 'Bad', 'Terrible'];
+        $this->assertEquals('Excellent', $question->getAnswerString('1'));
+        $this->assertEquals('Bad', $question->getAnswerString(4));
+    }
+
+    public function test1To5AnswerType()
+    {
+        $question = new Question('test');
+        $question->setAnswerType('1-5');
+        $this->assertEquals('Dropdown', $question->getAnswerType());
+        $this->assertEquals([5, 4, 3, 2, 1], $question->answerOptions);
+    }
 }
