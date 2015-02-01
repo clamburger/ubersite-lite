@@ -54,8 +54,9 @@ $twig = new Twig_Environment($loader);
 session_start();
 
 $messages = new MessageBank();
+/** @var User $user */
+$user = null;
 
-$user = new NullUser();
 $script = explode("/", $_SERVER['SCRIPT_NAME']);
 $pageName = $PAGE;
 
@@ -72,7 +73,7 @@ $stmt = $dbh->query('SELECT * FROM users');
 /** @var User[] */
 $people = [];
 while ($row = $stmt->fetch()) {
-    $people[$row['Username']] = new User($row);
+    $people[$row['Username']] = User::createFromRow($row);
 }
 
 if (count($people) === 0) {
@@ -87,6 +88,7 @@ if (count($people) === 0) {
             header('Location: /logout');
             exit;
         }
+
         $user = $people[$_SESSION['username']];
 
     } else {
@@ -99,7 +101,7 @@ if (count($people) === 0) {
 }
 
 // Disable error reporting for campers
-if (!$user->isLeader()) {
+if ($user && !$user->isLeader()) {
     error_reporting(0);
 }
 
@@ -110,19 +112,16 @@ if (isset($_GET['standalone'])) {
     $colourCSS = file_get_contents("resources/css/winter.css");
 
     $standalone = [
-    'logo' => Utils::dataURI("resources/img/logo.png", "image/png"),
-    'icon' => Utils::dataURI("resources/img/icon.png", "image/png"),
-    'css' => $layoutCSS . "\n\n" . $colourCSS
+        'logo' => Utils::dataURI("resources/img/logo.png", "image/png"),
+        'icon' => Utils::dataURI("resources/img/icon.png", "image/png"),
+        'css' => $layoutCSS . "\n\n" . $colourCSS
     ];
     $twig->addGlobal('standalone', $standalone);
 }
 
-$loginURL = $user->loggedIn ? '/login' : '';
-
 // TODO: we probably shouldn't be using $twig->addGlobal so much
 
 $twig->addGlobal('config', $config);
-$twig->addGlobal('loginURL', $loginURL);
 $twig->addGlobal("software", new Software());
 $twig->addGlobal("user", $user);
 

@@ -8,19 +8,19 @@ class User
 {
     public $username;
     public $name;
-    public $role;
+    public $role = 'camper';
     public $smallGroup;
-
-    public $loggedIn = true;
 
     public static $validRoles = ['camper', 'leader', 'director', 'cook', 'visitor'];
 
-    public function __construct($row)
+    public static function createFromRow($row)
     {
-        $this->username = $row['Username'];
-        $this->name = $row['Name'];
-        $this->role = $row['Role'];
-        $this->smallGroup = $row['SmallGroup'];
+        $user = new User();
+        $user->username = $row['Username'];
+        $user->name = $row['Name'];
+        $user->role = $row['Role'];
+        $user->smallGroup = $row['SmallGroup'];
+        return $user;
     }
 
     public function isLeader()
