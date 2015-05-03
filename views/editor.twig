@@ -134,14 +134,17 @@
       </div>
 
       {% if questionnaire.pages | length > 0 %}
-        <table class="progress">
-          <tr>
-            <th>&nbsp;</th>
-            <th>Page Title</th>
-            <th>Sections</th>
-            <th>Questions</th>
-            <th>Controls</th>
-          </tr>
+        <table class="progress sortable">
+          <thead>
+            <tr>
+              <th>&nbsp;</th>
+              <th>Page Title</th>
+              <th>Sections</th>
+              <th>Questions</th>
+              <th colspan="2">Controls</th>
+            </tr>
+          </thead>
+          <tbody>
           {% for page in questionnaire.pages %}
             <tr>
               <th>{{ loop.index }}</th>
@@ -149,13 +152,15 @@
               <td>{{ page.sections | length }}</td>
               <td>{{ page.questionCount }}</td>
               <td>
-                <button data-action="move-page" data-id="{{ loop.index }}" data-movement="-1">&uarr;</button>
-                <button data-action="move-page" data-id="{{ loop.index }}" data-movement="1">&darr;</button>
-                <button data-action="page-duplicate" data-id="{{ loop.index }}">Duplicate</button>
-                <button data-action="page-delete" data-id="{{ loop.index }}">Delete</button>
+                <button data-action="page-duplicate" data-id="{{ loop.index }}" title="Duplicate"><i class="fa fa-files-o"></i></button>
+                <button data-action="page-delete" data-id="{{ loop.index }}" title="Delete"><i class="fa fa-trash-o"></i></button>
+              </td>
+              <td class="inverse handle">
+                <i class="fa fa-bars"></i>
               </td>
             </tr>
           {% endfor %}
+          </tbody>
         </table>
       {% else %}
         <p>This questionnaire doesn't have any pages yet.</p>

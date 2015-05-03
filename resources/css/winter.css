@@ -64,3 +64,8 @@ th {
 table, th, td {
   border-color: #2A2AA5;
 }
+
+.inverse {
+  background-color: #2A2AA5;
+  color: white;
+}

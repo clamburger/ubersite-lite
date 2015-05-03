@@ -266,4 +266,27 @@ $( document ).ready(function() {
     });
 
 
+    var fixHelper = function(e, ui) {
+        ui.children().each(function() {
+            $(this).width($(this).width());
+        });
+        return ui;
+    };
+
+    $('.sortable tbody').sortable({
+        handle: '.handle',
+        axis: 'y',
+        start: function (event, ui) {
+            var children = ui.item.children();
+            ui.placeholder.children().each(function(index, value) {
+                $(value).replaceWith($(children[index]).clone());
+            });
+            ui.item.addClass('being-dragged');
+        },
+        stop: function (event, ui) {
+            ui.item.removeClass('being-dragged');
+        },
+        placeholder: 'placeholder',
+        helper: fixHelper
+    });
 });

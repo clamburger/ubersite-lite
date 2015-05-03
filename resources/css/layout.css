@@ -440,3 +440,15 @@ textarea.invisible:focus, input.invisible:focus {
   float: right;
   margin: 0;
 }
+
+.handle {
+  cursor: move;
+}
+
+.placeholder {
+  opacity: 0.5;
+}
+
+.being-dragged {
+  background-color: white;
+}
