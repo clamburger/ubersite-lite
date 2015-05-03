@@ -404,7 +404,7 @@ textarea.invisible, input.invisible, select.invisible {
   padding: 3px;
   display: block;
   background-color: transparent;
-  font: normal 12px "Tahoma", Verdana, Arial, Sans-Serif;
+  font-family: "Tahoma", Verdana, Arial, Sans-Serif;
 }
 
 select.invisible {
