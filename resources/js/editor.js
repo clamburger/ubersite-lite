@@ -82,11 +82,21 @@ $( document ).ready(function() {
         if (!confirm('Are you sure you want to delete this page?')) {
             return false;
         }
-        page = $(event.target).attr('data-id');
-        $.post('/ajax', {id: id, action: 'delete-page', page: page}, function() {
-            location.reload();
-        });
-        $('button').prop('disabled', true);
+
+        var row = $(event.target).parents('tr');
+        var table = row.parents('table');
+        var page = row.attr('data-id');
+
+        $.post('/ajax', {id: id, action: 'delete-page', page: page});
+        row.effect('highlight').effect({effect: 'fade', complete: function() {
+            row.remove();
+
+            table.children('tbody').children().each(function (index, value) {
+                var row2 = $(value);
+                row2.attr('data-id', index + 1);
+                row2.children().first().text(index + 1);
+            });
+        }});
     });
 
     $('button[data-action=move-page]').click(function(event) {
