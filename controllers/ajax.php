@@ -53,10 +53,11 @@ if ($questionnaire === null) {
 if ($action === 'duplicate-questionnaire') {
     $query = <<<SQL
       INSERT INTO questionnaires (Name, Pages, Intro)
-      SELECT Name || ' (copy)', Pages, Intro FROM questionnaires WHERE Id = ?
+      SELECT Name, Pages, Intro FROM questionnaires WHERE Id = ?
 SQL;
     $stmt = $dbh->prepare($query);
     $stmt->execute([$_POST['id']]);
+    echo $dbh->lastInsertId();
 
 } elseif ($action === 'delete-questionnaire') {
     $questionnaire->deleteQuestionnaire();

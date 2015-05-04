@@ -9,21 +9,40 @@ $( document ).ready(function() {
     });
 
     $('button[data-action=duplicate]').click(function(event) {
-        id = $(event.target).attr('data-id');
-        $.post('/ajax', {id: id, action: 'duplicate-questionnaire'}, function() {
-            location.reload();
+        var row = $(event.target).parents('tr');
+        var id = row.attr('data-id');
+
+        showAjax();
+        $.post('/ajax', {id: id, action: 'duplicate-questionnaire'}, function(data) {
+            clearAjax()
+            var nextRow = row.next();
+            nextRow.find('button').prop('disabled', false);
+            nextRow.attr('data-id', data);
+            var cell = nextRow.children().first();
+            cell.text(data);
+            cell.effect('highlight');
         });
-        $('button').prop('disabled', true);
+
+        var clone = row.clone(true);
+        clone.children().first().text('');
+        clone.find('button').prop('disabled', true);
+        clone.removeAttr('data-id');
+        clone.insertAfter(row).effect('highlight');
     });
     $('button[data-action=delete]').click(function(event) {
         if (!confirm('Are you sure you want to delete this questionnaire?')) {
             return false;
         }
-        id = $(event.target).attr('data-id');
-        $.post('/ajax', {id: id, action: 'delete-questionnaire'}, function() {
-            location.reload();
-        });
-        $('button').prop('disabled', true);
+
+        var row = $(event.target).parents('tr');
+        var id = row.attr('data-id');
+
+        showAjax();
+        $.post('/ajax', {id: id, action: 'delete-questionnaire'}, clearAjax);
+
+        row.effect({effect: 'fade', complete: function() {
+            row.remove();
+        }});
     });
 
     var hiddenId;

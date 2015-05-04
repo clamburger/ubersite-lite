@@ -21,15 +21,15 @@
           <th>Controls</th>
         </tr>
         {% for questionnaire in questionnaires %}
-        <tr>
+        <tr data-id="{{ questionnaire.id }}">
           <th>{{ questionnaire.id }}</th>
           <td><a href='/editor/{{ questionnaire.id }}'>{{ questionnaire.title }}</a></td>
           <td>{{ questionnaire.pages | length }}</td>
           <td>{{ questionnaire.sectionCount }}</td>
           <td>{{ questionnaire.questionCount }}</td>
           <td>
-            <button data-action="duplicate" data-id="{{ questionnaire.id }}">Duplicate</button>
-            <button data-action="delete" data-id="{{ questionnaire.id }}">Delete</button>
+            <button data-action="duplicate" title="Duplicate"><i class="fa fa-files-o"></i></button>
+            <button data-action="delete" title="Delete"><i class="fa fa-trash-o"></i></button>
           </td>
         </tr>
         {% endfor %}
@@ -155,7 +155,7 @@
                 <button data-action="page-duplicate" data-id="{{ loop.index }}" title="Duplicate"><i class="fa fa-files-o"></i></button>
                 <button data-action="page-delete" data-id="{{ loop.index }}" title="Delete"><i class="fa fa-trash-o"></i></button>
               </td>
-              <td class="inverse handle">
+              <td class="inverse handle" title="Drag to reorder">
                 <i class="fa fa-bars"></i>
               </td>
             </tr>
