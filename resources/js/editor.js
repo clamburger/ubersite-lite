@@ -14,7 +14,7 @@ $( document ).ready(function() {
 
         showAjax();
         $.post('/ajax', {id: id, action: 'duplicate-questionnaire'}, function(data) {
-            clearAjax()
+            clearAjax();
             var nextRow = row.next();
             nextRow.find('button').prop('disabled', false);
             nextRow.attr('data-id', data);
