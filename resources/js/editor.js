@@ -60,6 +60,14 @@ $( document ).ready(function() {
         location.reload();
     }
 
+    function reindexPages() {
+        $('#page-list').find('tbody tr').each(function (index, value) {
+            var row = $(value);
+            row.attr('data-id', index + 1);
+            row.children().first().text(index + 1);
+        });
+    }
+
     $('#update-title').change(function(event) {
         var text = $(event.target).val();
         $.post('/ajax', {id: id, action: 'update-title', page: page, text: text});
@@ -71,11 +79,14 @@ $( document ).ready(function() {
     });
 
     $('button[data-action=page-duplicate]').click(function(event) {
-        page = $(event.target).attr('data-id');
-        $.post('/ajax', {id: id, action: 'duplicate-page', page: page}, function() {
-            location.reload();
-        });
-        $('button').prop('disabled', true);
+        var row = $(event.target).parents('tr');
+        var page = row.attr('data-id');
+
+        showAjax();
+        $.post('/ajax', {id: id, action: 'duplicate-page', page: page}, clearAjax);
+
+        row.clone(true).insertAfter(row).effect('highlight');
+        reindexPages();
     });
 
     $('button[data-action=page-delete]').click(function(event) {

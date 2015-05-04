@@ -105,8 +105,8 @@ class Questionnaire
     public function duplicatePage($pageNumber)
     {
         $newPage = clone $this->pages[$pageNumber-1];
-        $newPage->title = $newPage->title . ' (copy)';
-        $this->pages[] = $newPage;
+        array_splice($this->pages, $pageNumber - 1, 0, [$newPage]);
+
         $this->updateDatabase();
     }
 
