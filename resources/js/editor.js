@@ -98,25 +98,12 @@ $( document ).ready(function() {
         var table = row.parents('table');
         var page = row.attr('data-id');
 
-        $.post('/ajax', {id: id, action: 'delete-page', page: page});
-        row.effect('highlight').effect({effect: 'fade', complete: function() {
+        showAjax();
+        $.post('/ajax', {id: id, action: 'delete-page', page: page}, clearAjax);
+        row.effect({effect: 'fade', complete: function() {
             row.remove();
-
-            table.children('tbody').children().each(function (index, value) {
-                var row2 = $(value);
-                row2.attr('data-id', index + 1);
-                row2.children().first().text(index + 1);
-            });
+            reindexPages();
         }});
-    });
-
-    $('button[data-action=move-page]').click(function(event) {
-        var page = $(event.target).attr('data-id');
-        var movement = $(event.target).attr('data-movement');
-        $.post('/ajax', {id: id, action: 'move-page', page: page, movement: movement}, function() {
-            location.reload();
-        });
-        $('button').prop('disabled', true);
     });
 
     $('button[data-action=page-create]').click(function() {
@@ -302,13 +289,9 @@ $( document ).ready(function() {
             var page = ui.item.attr('data-id');
             var newPosition = ui.item.index() + 1;
 
-            $.post('/ajax', {id: id, action: 'move-page', page: page, newPosition: newPosition});
-
-            ui.item.parent().children().each(function (index, value) {
-                var row = $(value);
-                row.attr('data-id', index + 1);
-                row.children().first().text(index + 1);
-            });
+            showAjax();
+            $.post('/ajax', {id: id, action: 'move-page', page: page, newPosition: newPosition}, clearAjax);
+            reindexPages();
         },
         placeholder: 'placeholder',
         helper: function (event, ui) {
