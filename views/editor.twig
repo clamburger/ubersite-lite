@@ -146,7 +146,7 @@
           </thead>
           <tbody>
           {% for page in questionnaire.pages %}
-            <tr>
+            <tr data-id="{{ loop.index }}">
               <th>{{ loop.index }}</th>
               <td><a href='/editor/{{ questionnaire.id }}/{{ loop.index }}'>{{ page.title }}</a></td>
               <td>{{ page.sections | length }}</td>

@@ -74,7 +74,7 @@ SQL;
     $questionnaire->deletePage($_POST['page']);
 
 } elseif ($action === 'move-page') {
-    $questionnaire->movePage($_POST['page'], (int)$_POST['movement']);
+    $questionnaire->movePage($_POST['page'], (int)$_POST['newPosition']);
 
 } elseif ($action === 'create-page') {
     $questionnaire->createNewPage();

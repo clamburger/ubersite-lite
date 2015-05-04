@@ -80,10 +80,10 @@ class Questionnaire
         $this->updateDatabase();
     }
 
-    public function movePage($pageNumber, $movement)
+    public function movePage($pageNumber, $newPosition)
     {
         $index = $pageNumber - 1;
-        $newIndex = $index + $movement;
+        $newIndex = $newPosition - 1;
 
         if ($newIndex < 0 || $newIndex > count($this->pages) - 1) {
             return;
@@ -91,6 +91,7 @@ class Questionnaire
 
         $page = array_splice($this->pages, $index, 1);
         array_splice($this->pages, $newIndex, 0, $page);
+
         $this->updateDatabase();
     }
 
