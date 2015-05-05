@@ -166,9 +166,7 @@ $( document ).ready(function() {
         showAjax();
         $.post('/ajax', {id: id, action: 'duplicate-section', page: page, section: section}, clearAjax);
 
-        var clone = sectionElement.clone(true);
-        var br = $('<br>').insertAfter(sectionElement);
-        clone.insertAfter(br).effect('highlight');
+        sectionElement.clone(true).insertAfter(sectionElement).effect('highlight');
         reindexSections();
     });
 
@@ -184,7 +182,6 @@ $( document ).ready(function() {
         $.post('/ajax', {id: id, action: 'delete-section', page: page, section: section}, clearAjax);
 
         sectionElement.effect({effect: 'fade', complete: function() {
-            sectionElement.next().remove();
             sectionElement.remove();
             reindexSections();
         }});
@@ -342,6 +339,20 @@ $( document ).ready(function() {
                 $(this).width($(this).width());
             });
             return ui;
+        }
+    });
+
+    $('#all-sections').sortable({
+        handle: '.handle',
+        axis: 'y',
+        constrain: 'parent',
+        stop: function (event, ui) {
+            var section = ui.item.attr('data-id');
+            var newPosition = ui.item.index();
+
+            showAjax();
+            $.post('/ajax', {id: id, action: 'move-section', page: page, section: section, newPosition: newPosition}, clearAjax);
+            reindexSections();
         }
     });
 });

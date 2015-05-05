@@ -109,7 +109,7 @@ SQL;
     $questionnaire->updateDatabase();
 
 } elseif ($action === 'move-section') {
-    $questionnaire->getPage($_POST['page'])->moveSection($_POST['section'], (int)$_POST['movement']);
+    $questionnaire->getPage($_POST['page'])->moveSection($_POST['section'], (int)$_POST['newPosition']);
     $questionnaire->updateDatabase();
 
 } elseif ($action === 'delete-question') {

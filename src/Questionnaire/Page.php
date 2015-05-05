@@ -52,16 +52,14 @@ class Page implements \JsonSerializable
         return $this->sections[$section];
     }
 
-    public function moveSection($index, $movement)
+    public function moveSection($index, $newPosition)
     {
-        $newIndex = $index + $movement;
-
-        if ($newIndex < 0 || $newIndex > count($this->sections) - 1) {
+        if ($newPosition < 0 || $newPosition > count($this->sections) - 1) {
             return;
         }
 
         $section = array_splice($this->sections, $index, 1);
-        array_splice($this->sections, $newIndex, 0, $section);
+        array_splice($this->sections, $newPosition, 0, $section);
     }
 
     public function __toString()

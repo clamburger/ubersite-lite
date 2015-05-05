@@ -389,6 +389,7 @@ textarea {
   padding: 20px;
   max-width: 800px;
   position: relative;
+  margin-bottom: 15px;
 }
 
 .section h2, .section h3 {
