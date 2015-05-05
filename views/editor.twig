@@ -68,7 +68,7 @@
             <th colspan="2">saving data...</th>
           </tr>
         </table>
-        <div class="section" style="background: #dfeaea;">
+        <div class="section first" style="background: #dfeaea;">
           <input id="update-page-title" class="h2 invisible" placeholder="Page Title" value="{{ page.title }}" /><br>
           <textarea rows="1" id="update-page-intro" class="invisible" placeholder="Intro text that will be displayed at the top of the page. Supports HTML." style="width: 100%;">{{ page.intro }}</textarea>
         </div>
@@ -123,7 +123,7 @@
       {# Editing a questionnaires; viewing the list of pages #}
 
       <div class="editor workspace">
-        <div class="section" style="background: #dfeaea;">
+        <div class="section first" style="background: #dfeaea;">
           <input id="update-title" class="h2 invisible" placeholder="Questionnaire Title" value="{{ questionnaire.title }}" /><br>
           <textarea id="update-intro" class="invisible" placeholder="Intro text that will be displayed before the first page of the questionnaire. Supports HTML." style="width: 100%;">{{ questionnaire.intro }}</textarea>
         </div>

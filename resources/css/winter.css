@@ -38,7 +38,7 @@ input.invisible:focus {
   border: 1px solid rgb(77, 144, 254);
 }
 
-.editor.workspace .section:first-child {
+.editor.workspace .section.first {
   background-color: #dfeaea;
 }
 
