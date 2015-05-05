@@ -36,11 +36,10 @@ class Page implements \JsonSerializable
         $this->sections[] = new Section();
     }
 
-    public function duplicateSection($section)
+    public function duplicateSection($sectionNumber)
     {
-        $section = clone $this->sections[$section];
-        $section->title .= ' (copy)';
-        $this->sections[] = $section;
+        $section = clone $this->sections[$sectionNumber];
+        array_splice($this->sections, $sectionNumber, 0, [$section]);
     }
 
     public function deleteSection($section)

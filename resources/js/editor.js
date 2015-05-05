@@ -90,6 +90,12 @@ $( document ).ready(function() {
         });
     }
 
+    function reindexSections() {
+        $('#all-sections').find('.section').each(function (index, element) {
+            $(element).attr('data-id', index);
+        });
+    }
+
     $('#update-title').change(function(event) {
         var text = $(event.target).val();
         $.post('/ajax', {id: id, action: 'update-title', page: page, text: text});
@@ -154,20 +160,35 @@ $( document ).ready(function() {
     });
 
     $('button[data-action=duplicate-section]').click(function(event) {
+        var sectionElement = $(event.target).parents('.section');
+        var section = sectionElement.attr('data-id');
+
         showAjax();
-        var section = $(event.target).attr('data-id');
-        $.post('/ajax', {id: id, action: 'duplicate-section', page: page, section: section}, reloadPage);
-        $('button').prop('disabled', true);
+        $.post('/ajax', {id: id, action: 'duplicate-section', page: page, section: section}, clearAjax);
+
+        var clone = sectionElement.clone(true);
+        var br = $('<br>').insertAfter(sectionElement);
+        clone.insertAfter(br).effect('highlight');
+        reindexSections();
     });
 
     $('button[data-action=delete-section]').click(function(event) {
         if (!confirm('Are you sure you want to delete this section?')) {
             return false;
         }
+
+        var sectionElement = $(event.target).parents('.section');
+        var section = sectionElement.attr('data-id');
+
         showAjax();
-        var section = $(event.target).attr('data-id');
-        $.post('/ajax', {id: id, action: 'delete-section', page: page, section: section}, reloadPage);
-        $('button').prop('disabled', true);
+        $.post('/ajax', {id: id, action: 'delete-section', page: page, section: section}, clearAjax);
+
+        sectionElement.effect({effect: 'fade', complete: function() {
+            sectionElement.next().remove();
+            sectionElement.remove();
+            reindexSections();
+        }});
+
     });
 
     $('input[data-action=update-section-title]').change(function(event) {

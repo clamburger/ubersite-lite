@@ -73,17 +73,13 @@
           <textarea rows="1" id="update-page-intro" class="invisible" placeholder="Intro text that will be displayed at the top of the page. Supports HTML." style="width: 100%;">{{ page.intro }}</textarea>
         </div>
         <br>
+        <div id="all-sections">
         {% for section in page.sections %}
-          <div class="section">
+          <div class="section" data-id="{{ loop.index0 }}">
             <div class="editor-section-controls">
-              {% if not loop.first %}
-              <button data-action="move-section" data-id="{{ loop.index0 }}" data-movement="-1">&uarr;</button>
-              {% endif %}
-              {% if not loop.last %}
-              <button data-action="move-section" data-id="{{ loop.index0 }}" data-movement="1">&darr;</button>
-              {% endif %}
-              <button data-action="duplicate-section" data-id="{{ loop.index0 }}">Duplicate</button>
-              <button data-action="delete-section" data-id="{{ loop.index0 }}">Delete</button><br>
+              <button data-action="duplicate-section" title="Duplicate"><i class="fa fa-files-o"></i></button>
+              <button data-action="delete-section" title="Delete"><i class="fa fa-trash-o"></i></button>
+                <span class="handle">&nbsp;<i class="fa fa-bars"></i>&nbsp;</span><br>
               <label style="line-height: 3em;" class="help" title="Collapsible sections start collapsed and prompt the user to open them if relevant. Useful for electives.">
                 <input data-action="section-collapsible" data-id="{{ loop.index0 }}" type="checkbox" {{ section.collapsible ? 'checked' : '' }}>
                 Collapsible
@@ -108,7 +104,7 @@
                 <option value="{{ answerType }}">{{ answerType }}</option>
                 {% endfor %}
               </select>
-              <button data-action="add-question" data-id="{{ loop.index0 }}">Add question</button>
+              <button data-action="add-question">Add question</button>
               <div style="display: none;">
                 <ul>
                   <li><input type="text" placeholder="Answer option" /> <a data-action="delete-radio-box">✕</a></li>
@@ -119,6 +115,7 @@
           </div>
           <br>
         {% endfor %}
+        </div>
         <button id="add-section">Add a new section</button><br style="clear: both;">
       </div>
 
@@ -152,8 +149,8 @@
               <td>{{ page.sections | length }}</td>
               <td>{{ page.questionCount }}</td>
               <td>
-                <button data-action="page-duplicate" data-id="{{ loop.index }}" title="Duplicate"><i class="fa fa-files-o"></i></button>
-                <button data-action="page-delete" data-id="{{ loop.index }}" title="Delete"><i class="fa fa-trash-o"></i></button>
+                <button data-action="page-duplicate" title="Duplicate"><i class="fa fa-files-o"></i></button>
+                <button data-action="page-delete" title="Delete"><i class="fa fa-trash-o"></i></button>
               </td>
               <td class="inverse handle" title="Drag to reorder">
                 <i class="fa fa-bars"></i>
