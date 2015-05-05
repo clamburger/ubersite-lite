@@ -16,7 +16,7 @@ $fileUploadErrors = [
 ];
 
 // Allow access if there are no users in the database
-if (!$user->isLeader() && count($people) > 0) {
+if (count($people) > 0 && !$user->isLeader()) {
     Utils::send403($twig);
 }
 
