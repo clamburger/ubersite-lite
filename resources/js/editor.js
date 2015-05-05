@@ -18,6 +18,7 @@ $( document ).ready(function() {
             var nextRow = row.next();
             nextRow.find('button').prop('disabled', false);
             nextRow.attr('data-id', data);
+            nextRow.find('a').attr('href', '/editor/' + data);
             var cell = nextRow.children().first();
             cell.text(data);
             cell.effect('highlight');
@@ -26,6 +27,7 @@ $( document ).ready(function() {
         var clone = row.clone(true);
         clone.children().first().text('');
         clone.find('button').prop('disabled', true);
+        clone.find('a').removeAttr('href');
         clone.removeAttr('data-id');
         clone.insertAfter(row).effect('highlight');
     });
@@ -84,6 +86,7 @@ $( document ).ready(function() {
             var row = $(value);
             row.attr('data-id', index + 1);
             row.children().first().text(index + 1);
+            row.find('a').attr('href', '/editor/' + id + '/' + (index + 1));
         });
     }
 
