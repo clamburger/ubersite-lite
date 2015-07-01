@@ -220,7 +220,7 @@ $( document ).ready(function() {
     });
 
     $('button[data-action=add-question]').click(function(event) {
-        var section = $(event.target).attr('data-id');
+        var section = $(event.target).parent().parent().attr('data-id');
         var question = $(event.target).prev().prev().val();
         var answerType = $(event.target).prev().val();
 
