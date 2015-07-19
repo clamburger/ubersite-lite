@@ -104,8 +104,6 @@ class Question implements \JsonSerializable
     // TODO: not entirely pleased with having to include $users, perhaps there's a better way
     public function renderFeedback($allResponses, $users)
     {
-        dump($allResponses);
-
         $output = "<h4>{$this->question}</h4>\n";
         $output .= "<ul>";
         if (!isset($allResponses[$this->id])) {
