@@ -26,8 +26,8 @@ if ($SEGMENTS[2] == 'smallgroup' && strlen((string)$user->smallGroup) > 0) {
 
 // Find the responses
 $query = "SELECT Name, Username, Responses FROM responses
-          INNER JOIN `users` USING(Username) WHERE Role = 'camper' $where
-          AND QuizId = ? ORDER BY Name ASC";
+          INNER JOIN `users` USING(Username) WHERE QuizId = ?
+          $where ORDER BY Name ASC";
 $stmt = $dbh->prepare($query);
 
 if ($smallgroup) {
