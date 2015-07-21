@@ -405,7 +405,7 @@ textarea.invisible, input.invisible, select.invisible {
   padding: 3px;
   display: block;
   background-color: transparent;
-  font-family: "Tahoma", Verdana, Arial, Sans-Serif;
+  font-family: "Tahoma", Verdana, Arial, sans-serif;
 }
 
 select.invisible {
@@ -464,4 +464,31 @@ textarea.invisible:focus, input.invisible:focus {
 
 .being-dragged {
   background-color: white;
+}
+
+.fake-question {
+  padding: 15px 3px;
+}
+
+.fake-question-title {
+  font-weight: bold;
+}
+
+.editor .section .h3 {
+  margin-left: -1px;
+}
+
+.fake-question-answer {
+  margin-top: 5px;
+}
+
+.fake-question-answer input[type=text] {
+  height: 25px;
+  padding: 0 4px;
+}
+
+.fake-question-answer ul {
+  list-style-type: none;
+  padding: 0;
+  margin-bottom: 0;
 }

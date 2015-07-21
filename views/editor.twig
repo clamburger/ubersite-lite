@@ -86,30 +86,49 @@
               </label>
             </div>
             <input class="h3 invisible" placeholder="Section Title" value="{{ section.title }}" data-action="update-section-title" data-id="{{ loop.index0 }}" />
-            <ul>
             {% for question in section.questions %}
-              <li data-section="{{ loop.parent.loop.index0 }}" data-question="{{ question.id }}">
-                {{ question.question }} <em>({{ question.answerType }})</em>
-                &nbsp;<a data-action="delete-question">✕</a>
-                {% if question.answerOptions %}
-                  <br><small>{{ question.answerOptions | join('; ') }}</small>
+              <div class="fake-question" data-section="{{ loop.parent.loop.index0 }}" data-question="{{ question.id }}">
+                <div class="fake-question-title">{{ question.question }} <a data-action="delete-question">✕</a></div>
+                <div class="fake-question-answer">
+                {% if question.answerType == 'Text' %}
+                  <input type="text" disabled tabindex="-1">
+                {% elseif question.answerType == 'Dropdown' %}
+                  <select tabindex="-1">
+                    <option></option>
+                    {% for option in question.answerOptions %}
+                    <option>{{ option }}</option>
+                    {% endfor %}
+                  </select>
+                {% elseif question.answerType == 'Radio' %}
+                  <ul>
+                    {% for option in question.answerOptions %}
+                    <li>
+                      <label>
+                        <input type="radio" tabindex="-1" name="question-{{ question.id }}"> {{ option }}
+                      </label>
+                    </li>
+                    {% endfor %}
+                  </ul>
                 {% endif %}
-              </li>
+                </div>
+              </div>
             {% endfor %}
-            </ul>
-            <div>
-              <input type="text" placeholder="Question text" required style="width: 300px;" />
-              <select>
-                {% for answerType in answerTypes %}
-                <option value="{{ answerType }}">{{ answerType }}</option>
-                {% endfor %}
-              </select>
-              <button data-action="add-question">Add question</button>
-              <div style="display: none;">
-                <ul>
-                  <li><input type="text" placeholder="Answer option" /> <a data-action="delete-radio-box">✕</a></li>
-                  <li><button data-action="add-radio-box">Add another option</button></li>
-                </ul>
+            <div class="fake-question">
+              <div class="fake-question-title">Add a new question to this section:</div>
+              <div class="fake-question-answer">
+                <input type="text" placeholder="Question text" required style="width: 300px;" />
+                <select>
+                  {% for answerType in answerTypes %}
+                  <option value="{{ answerType }}">{{ answerType }}</option>
+                  {% endfor %}
+                </select>
+                <button data-action="add-question">Add question</button>
+                <div style="display: none;">
+                  <ul>
+                    <li><input type="text" placeholder="Answer option" /> <a data-action="delete-radio-box">✕</a></li>
+                    <li><button data-action="add-radio-box">Add another option</button></li>
+                  </ul>
+                </div>
               </div>
             </div>
           </div>
