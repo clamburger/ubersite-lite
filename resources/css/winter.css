@@ -44,8 +44,8 @@ input.invisible:focus {
 
 
 /* Tables */
-th {
-  /*background-color: #60A4F4;*/
+.fancy th {
+  background-color: #60A4F4;
 }
 
 .formTable input, .formTable select {
@@ -61,8 +61,8 @@ th {
   background-color: #60a4f4;
 }
 
-table, th, td {
-  /*border-color: #2A2AA5;*/
+table.fancy, .fancy th, .fancy td {
+  border-color: #2A2AA5;
 }
 
 .inverse {

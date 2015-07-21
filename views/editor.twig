@@ -11,7 +11,7 @@
     {# List of questionnaires #}
 
     {% if questionnaires | length > 0 %}
-      <table class="progress">
+      <table class="fancy progress">
         <tr>
           <th>ID</th>
           <th>Title</th>
@@ -49,7 +49,7 @@
 
       <div class="editor workspace">
         <input type="hidden" id="page-number" value="{{ pageNumber }}" />
-        <table class='progress'>
+        <table class='fancy progress'>
           <tr><th colspan="2">{{ questionnaire.title }}</th></tr>
           {% for pageRow in questionnaire.pages %}
             <tr>
@@ -164,7 +164,7 @@
       </div>
 
       {% if questionnaire.pages | length > 0 %}
-        <table class="progress sortable" id="page-list">
+        <table class="fancy progress sortable" id="page-list">
           <thead>
             <tr>
               <th>&nbsp;</th>
