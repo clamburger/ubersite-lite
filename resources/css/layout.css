@@ -532,3 +532,7 @@ textarea.invisible:focus, input.invisible:focus {
   cursor: pointer;
   border: 1px solid #DDD;
 }
+
+.save-question {
+  margin-top: 6px;
+}
