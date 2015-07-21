@@ -214,13 +214,13 @@ $( document ).ready(function() {
             return false;
         }
         showAjax();
-        var section = $(event.target).parent().attr('data-section');
-        var question = $(event.target).parent().attr('data-question');
+        var section = $(event.target).parents('.section').attr('data-id');
+        var question = $(event.target).parents('.fake-question').attr('data-question');
         $.post('/ajax', {id: id, action: 'delete-question', page: page, section: section, question: question}, reloadPage);
     });
 
     $('button[data-action=add-question]').click(function(event) {
-        var section = $(event.target).parent().parent().attr('data-id');
+        var section = $(event.target).parents('.section').attr('data-id');
         var question = $(event.target).prev().prev().val();
         var answerType = $(event.target).prev().val();
 
