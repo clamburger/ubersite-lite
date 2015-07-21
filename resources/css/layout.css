@@ -509,6 +509,10 @@ textarea.invisible:focus, input.invisible:focus {
   text-align: left;
 }
 
+.aligned-labels input {
+  width: 300px;
+}
+
 .aligned-labels input, .aligned-labels select {
   margin: 4px 0;
 }

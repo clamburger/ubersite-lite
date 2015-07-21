@@ -269,12 +269,16 @@ $( document ).ready(function() {
         var element = $(event.target).parent().prev().clone(true);
         element.find('input').val('');
         $(event.target).parent().before(element);
-
         $(event.target).parents('ul').find('input[type=text]').eq(-2).focus();
+        $(event.target).parents('ul').find('a').show();
     });
 
     $('a[data-action=delete-radio-box]').click(function(event) {
-        if ($(event.target).parent().siblings().length > 1) {
+        var siblings = $(event.target).parent().siblings().length;
+        if (siblings > 1) {
+            if (siblings == 2) {
+                $(event.target).parents('tr').find('a').hide();
+            }
             $(event.target).parent().remove();
         }
     });
