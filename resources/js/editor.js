@@ -221,8 +221,8 @@ $( document ).ready(function() {
 
     $('button[data-action=add-question]').click(function(event) {
         var section = $(event.target).parents('.section').attr('data-id');
-        var question = $(event.target).prev().prev().val();
-        var answerType = $(event.target).prev().val();
+        var question = $(event.target).prev().find('input[type=text]').val();
+        var answerType = $(event.target).prev().find('select').val();
 
         if (question == '') {
             alert("You need to fill in the question text.");
@@ -235,7 +235,7 @@ $( document ).ready(function() {
 
         if (answerType == 'Radio' || answerType == 'Dropdown') {
             var answerOptions = [];
-            $(event.target).next().find('input[type=text]').each(function() {
+            $(event.target).prev().find('.answer-options input[type=text]').each(function() {
                 if ($(this).val() != '') {
                     answerOptions.push($(this).val());
                 }
