@@ -14,7 +14,7 @@
     {% for section in page.sections %}
       <div class="section">
         {% if loop.length > 1 %}
-          <h3>{{ section.title }}</h3>
+          <div class="section-title">{{ section.title }}</div>
         {% endif %}
         {{ section.feedback | raw }}
       </div>

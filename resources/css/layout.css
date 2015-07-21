@@ -44,7 +44,7 @@ input.h2, input.h3 {
   width: 400px;
 }
 
-h3, input.h3 {
+h3 {
   padding: 0;
   font-size: 16px;
   font-weight: bold;
@@ -467,15 +467,11 @@ textarea.invisible:focus, input.invisible:focus {
 }
 
 .fake-question {
-  padding: 15px 3px;
+  padding: 15px 5px;
 }
 
 .fake-question-title {
   font-weight: bold;
-}
-
-.editor .section .h3 {
-  margin-left: -1px;
 }
 
 .fake-question-answer {
@@ -491,4 +487,13 @@ textarea.invisible:focus, input.invisible:focus {
   list-style-type: none;
   padding: 0;
   margin-bottom: 0;
+}
+
+.section-title {
+  font-size: x-large;
+}
+
+.section-title.invisible {
+  padding: 4px;
+  width: 500px;
 }
