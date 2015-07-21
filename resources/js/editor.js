@@ -251,9 +251,13 @@ $( document ).ready(function() {
         $.post('/ajax', data, reloadPage);
     });
 
+    $('button[data-action=show-add-question]').click(function(event) {
+        $(event.target).parents('.fake-question').next().toggle();
+    });
+
     $('.editor .section select').change(function(event) {
         var selected = $(event.target).val();
-        var extraBoxes = $(event.target).siblings('div');
+        var extraBoxes = $(event.target).parents('tbody').children('.answer-options');
         if (selected == 'Radio' || selected == 'Dropdown') {
             extraBoxes.show();
         } else {
@@ -261,10 +265,12 @@ $( document ).ready(function() {
         }
     });
 
-    $('button[data-action=add-radio-box]').click(function(event) {
+    $('input[data-action=add-radio-box]').click(function(event) {
         var element = $(event.target).parent().prev().clone(true);
         element.find('input').val('');
         $(event.target).parent().before(element);
+
+        $(event.target).parents('ul').find('input[type=text]').eq(-2).focus();
     });
 
     $('a[data-action=delete-radio-box]').click(function(event) {

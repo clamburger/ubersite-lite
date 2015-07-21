@@ -114,21 +114,36 @@
               </div>
             {% endfor %}
             <div class="fake-question">
+              <button class="icon" data-action="show-add-question">Add question</button>
+            </div>
+            <div class="fake-question add-question" style="display: none;">
               <div class="fake-question-title">Add a new question to this section:</div>
               <div class="fake-question-answer">
-                <input type="text" placeholder="Question text" required style="width: 300px;" />
-                <select>
-                  {% for answerType in answerTypes %}
-                  <option value="{{ answerType }}">{{ answerType }}</option>
-                  {% endfor %}
-                </select>
+                <table class="aligned-labels">
+                  <tr>
+                    <th>Question Text</th>
+                    <td><input type="text" placeholder="Question text" required style="width: 300px;" /></td>
+                  </tr>
+                  <tr>
+                    <th>Question Type</th>
+                    <td><select>
+                    {% for answerType in answerTypes %}
+                      <option value="{{ answerType }}">{{ answerType }}</option>
+                    {% endfor %}
+                  </select></td>
+                  </tr>
+                  <tr class="answer-options" style="display: none;">
+                    <th>Options</th>
+                    <td>
+                      <ul>
+                        <li><input type="text" placeholder="Option text" /> <a data-action="delete-radio-box">✕</a></li>
+                        <li><input type="text" class="add-radio-box" data-action="add-radio-box" placeholder="Click to add option"></li>
+                      </ul>
+                    </td>
+                  </tr>
+                </table>
+
                 <button data-action="add-question">Add question</button>
-                <div style="display: none;">
-                  <ul>
-                    <li><input type="text" placeholder="Answer option" /> <a data-action="delete-radio-box">✕</a></li>
-                    <li><button data-action="add-radio-box">Add another option</button></li>
-                  </ul>
-                </div>
               </div>
             </div>
           </div>
