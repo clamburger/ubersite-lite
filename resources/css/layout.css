@@ -429,6 +429,18 @@ textarea.invisible:focus, input.invisible:focus {
   text-align: right;
 }
 
+.editor-section-controls button {
+  background-color: #EFEFEF;
+  border: 1px solid silver;
+  border-radius: 3px;
+  padding: 5px 13px;
+  font-size: 16px;
+}
+
+.editor-section-controls button:hover {
+  border-color: grey;
+}
+
 #ajax-status th {
   background-color: #62F4B0;
 }
