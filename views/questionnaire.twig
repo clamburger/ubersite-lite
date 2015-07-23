@@ -48,39 +48,41 @@
   {% for section in page.sections %}
     <div class="section fieldset">
       {% if section.collapsible %}
-        <div class="toggle">click to view questions</div>
+        <button class="icon toggle">click to view questions</button>
       {% endif %}
       {% if loop.length > 1 %}
       <div class="section-title">{{ section.title }}</div>
       {% endif %}
 
-      <div class="question-group" style="{{ section.collapsible ? "display: none" : "" }}">
+      <div style="{{ section.collapsible ? "display: none" : "" }}">
         {% for question in section.questions %}
-          <div class='question question-{{ question.answerType | lower }}'>
-            {% if question.answerType == 'Radio' %}
-              {{ question.question }}
-              <ul>
-                {% for option in question.answerOptions %}
-                  <li>
-                    <label><input type="radio" name="{{ question.id }}" value="{{ loop.index }}"> {{ option }}</label>
-                  </li>
-                {% endfor %}
-              </ul>
-              {% if question.answerOther %}
-                <textarea rows="1" name="{{ question.id }}-other"></textarea>
+          <div class='fake-question'>
+            <div class="fake-question-title">{{ question.question }}</div>
+            <div class="fake-question-answer">
+              {% if question.answerType == 'Text' %}
+                <textarea rows="1" id="question-{{ question.id }}" name="{{ question.id }}"></textarea>
+              {% elseif question.answerType == 'Dropdown' %}
+                <select id="question-{{ question.id }}" name="{{ question.id }}">
+                  <option></option>
+                  {% for option in question.answerOptions %}
+                    <option value="{{ loop.index }}">{{ option }}</option>
+                  {% endfor %}
+                </select>
+              {% elseif question.answerType == 'Radio' %}
+                <ul>
+                  {% for option in question.answerOptions %}
+                    <li>
+                      <label>
+                        <input type="radio" name="{{ question.id }}" value="{{ loop.index }}"> {{ option }}
+                      </label>
+                    </li>
+                  {% endfor %}
+                </ul>
+                {% if question.answerOther %}
+                  <textarea rows="1" name="{{ question.id }}-other"></textarea>
+                {% endif %}
               {% endif %}
-            {% elseif question.answerType == 'Dropdown' %}
-              <label for="question-{{ question.id }}">{{ question.question }}</label>
-              <select id="question-{{ question.id }}" name="{{ question.id }}">
-                <option value="0">--</option>
-                {% for option in question.answerOptions %}
-                  <option value="{{ loop.index }}">{{ option }}</option>
-                {% endfor %}
-              </select>
-            {% else %}
-              <label for="question-{{ question.id }}">{{ question.question }}</label>
-              <textarea rows="1" id="question-{{ question.id }}" name="{{ question.id }}"></textarea>
-            {% endif %}
+            </div>
           </div>
         {% endfor %}
       </div>

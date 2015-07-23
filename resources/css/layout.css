@@ -347,16 +347,7 @@ table.fancy {
 }
 
 .toggle {
-  border: 1px solid black;
-  background-color: white;
-  padding: 3px 10px;;
-  cursor: pointer;
   float: right;
-  font-size: 13px;
-}
-
-.toggle:hover {
-  box-shadow: 0 0 2px black;
 }
 
 textarea {
@@ -435,6 +426,7 @@ textarea.invisible:focus, input.invisible:focus {
   border-radius: 3px;
   padding: 5px 13px;
   font-size: 16px;
+  cursor: pointer;
 }
 
 .editor-section-controls button:hover, button.icon:hover {
@@ -489,13 +481,20 @@ textarea.invisible:focus, input.invisible:focus {
   margin-bottom: 0;
 }
 
+.fake-question-answer textarea {
+  padding: 6px;
+  width: 100%;
+}
+
 .section-title {
   font-size: x-large;
+  margin-left: 5px;
 }
 
 .section-title.invisible {
   padding: 4px;
   width: 500px;
+  margin-left: 0;
 }
 
 .aligned-labels {
