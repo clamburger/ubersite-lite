@@ -22,3 +22,18 @@ Run `composer install` once in order to download the dependencies that Übersite
 
 Once you've got the web server set up, open the site in the browser and you'll be greeted with a
 very short setup process which will create the database and allow you to import users.
+
+
+## Docker
+
+Run the following to build the container:
+
+  $ docker build -t survey .
+  $ docker run survey:latest
+
+and then access your local machine on port 80. Once you have assigned the site name and imported
+users, you should run the following to import a templated questionaire:
+
+  $ docker exec <containername> /usr/bin/sqlite3 /var/www/html/config/database.db < ./questionaire_template.sql
+
+
